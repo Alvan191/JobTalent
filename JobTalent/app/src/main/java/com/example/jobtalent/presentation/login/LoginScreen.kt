@@ -1,4 +1,4 @@
-package com.example.jobtalent.navigation.login
+package com.example.jobtalent.login
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
