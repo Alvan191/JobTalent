@@ -26,4 +26,8 @@ sealed class Screen (val route: String){
     data object Paymentsum: Screen ("payment_summary")
     data object Paymentsucc: Screen ("payment_succes")
     data object Trackingsc: Screen ("tracking_screen")
+    data object Ratingsc: Screen ("rating_screen")
+    data object Metodepayment: Screen ("metode_pembayaran_screen")
+    data object Komentarsc: Screen ("komentar_screen")
+    data object Postingdet: Screen ("detail_postingan")
 }

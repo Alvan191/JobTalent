@@ -30,7 +30,10 @@ import com.example.jobtalent.navigation.Screen
 import com.example.jobtalent.presentation.ChatScreen
 import com.example.jobtalent.presentation.CommunityScreen
 import com.example.jobtalent.presentation.HomeScreen
+import com.example.jobtalent.presentation.MetodePembayaranScreen
+import com.example.jobtalent.presentation.Postingan
 import com.example.jobtalent.presentation.ProfileScreen
+import com.example.jobtalent.presentation.RatingJasa
 import com.example.jobtalent.presentation.detailScreen.AccountScreen
 import com.example.jobtalent.presentation.detailScreen.DetailChatScreen
 import com.example.jobtalent.presentation.detailScreen.LanguageSettingsScreen
@@ -143,10 +146,19 @@ fun JobTalentApp(
                 PaymentSummaryScreen(navController)
             }
             composable(Screen.Paymentsucc.route){
-                PaymentSuccessScreen()
+                PaymentSuccessScreen(navController)
             }
             composable(Screen.Trackingsc.route){
-                TrackingScreen()
+                TrackingScreen(navController)
+            }
+            composable(Screen.Ratingsc.route){
+                RatingJasa(navController)
+            }
+            composable(Screen.Metodepayment.route){
+                MetodePembayaranScreen(navController)
+            }
+            composable(Screen.Postingdet.route){
+                Postingan()
             }
         }
     }
@@ -163,22 +175,22 @@ fun BottomBar(
 
         val navigationItems = listOf(
             NavigationItem(
-                title = "Home",
+                title = "Beranda",
                 icon = Icons.Default.Home,
                 screen = Screen.Home
             ),
             NavigationItem(
-                title = "Chat",
+                title = "Pesan",
                 icon = Icons.Default.ChatBubble,
                 screen = Screen.Chat
             ),
             NavigationItem(
-                title = "Community",
+                title = "Komunitas",
                 icon = Icons.Default.Diversity3,
                 screen = Screen.Community
             ),
             NavigationItem(
-                title = "Profile",
+                title = "Profil",
                 icon = Icons.Default.Person,
                 screen = Screen.Profile
             )

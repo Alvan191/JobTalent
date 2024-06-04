@@ -45,60 +45,66 @@ import com.example.jobtalent.R
 fun LanguageSettingsScreen(
     navController: NavController
 ) {
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = {
-                    Text(
-                        text = "Bahasa",
-                        style = TextStyle(
-                            fontSize = 16.sp,
-                            fontFamily = FontFamily(Font(R.font.roboto_bold)),
-                            fontWeight = FontWeight(600),
-                            color = Color(0xFF000000)
+    Column (
+        modifier = Modifier
+            .background(Color(0xfff8f8f8))
+            .fillMaxSize()
+            .padding(15.dp)
+    ){
+        Scaffold(
+            topBar = {
+                TopAppBar(
+                    title = {
+                        Text(
+                            text = "     Bahasa",
+                            style = TextStyle(
+                                fontSize = 16.sp,
+                                fontFamily = FontFamily(Font(R.font.roboto_bold)),
+                                fontWeight = FontWeight(600),
+                                color = Color(0xFF000000)
+                            )
                         )
-                    )
-                },
-                navigationIcon = {
-                    Box(
-                        modifier = Modifier
-                            .size(44.dp)
-                            .shadow(8.dp, CircleShape)
-                            .clip(CircleShape)
-                            .background(Color.White)
-                            .clickable(onClick = { navController.popBackStack() })
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.ArrowBack,
-                            contentDescription = "Back",
-                            tint = Color.Black,
+                    },
+                    navigationIcon = {
+                        Box(
                             modifier = Modifier
-                                .size(24.dp)
-                                .align(Alignment.Center)
-                        )
+                                .size(44.dp)
+                                .shadow(8.dp, CircleShape)
+                                .clip(CircleShape)
+                                .background(Color.White)
+                                .clickable(onClick = { navController.popBackStack() })
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.ArrowBack,
+                                contentDescription = "Back",
+                                tint = Color.Black,
+                                modifier = Modifier
+                                    .size(24.dp)
+                                    .align(Alignment.Center)
+                            )
+                        }
                     }
-                }
-            )
-        }
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(it)
-                .padding(16.dp)
+                )
+            }
         ) {
-            var selectedLanguage by remember { mutableStateOf("Indonesia (ID)") }
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(it)
+            ) {
+                var selectedLanguage by remember { mutableStateOf("Indonesia (ID)") }
 
-            LanguageOption(
-                language = "Indonesia (ID)",
-                isSelected = selectedLanguage == "Indonesia (ID)",
-                onSelect = { selectedLanguage = it }
-            )
-            LanguageOption(
-                language = "English (US)",
-                isSelected = selectedLanguage == "English (US)",
-                onSelect = { selectedLanguage = it }
-            )
+                LanguageOption(
+                    language = "Indonesia (ID)",
+                    isSelected = selectedLanguage == "Indonesia (ID)",
+                    onSelect = { selectedLanguage = it }
+                )
+                LanguageOption(
+                    language = "English (US)",
+                    isSelected = selectedLanguage == "English (US)",
+                    onSelect = { selectedLanguage = it }
+                )
+            }
         }
     }
 }

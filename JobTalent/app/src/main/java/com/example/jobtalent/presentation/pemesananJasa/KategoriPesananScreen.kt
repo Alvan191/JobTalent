@@ -55,6 +55,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.jobtalent.R
 import com.example.jobtalent.data.KatPesananItem
+import com.example.jobtalent.navigation.Screen
 import com.example.jobtalent.presentation.model.KategoriKerja
 import com.example.jobtalent.presentation.model.KategoriPemangkas
 import com.example.jobtalent.presentation.model.KategoriPenjahit
@@ -144,9 +145,9 @@ fun KategoriPesananScreen(
             }
             items(itemsToShow) { item ->
                 when (item) {
-                    is KategoriPenjahit -> ColumnItem(item)
-                    is KategoriPemangkas -> PemangkasColumnItem(item)
-                    is KategoriServis -> ServisColumnItem(item)
+                    is KategoriPenjahit -> ColumnItem(item, navController)
+                    is KategoriPemangkas -> PemangkasColumnItem(item, navController)
+                    is KategoriServis -> ServisColumnItem(item, navController)
                 }
             }
         }
@@ -154,9 +155,10 @@ fun KategoriPesananScreen(
 }
 
 @Composable
-fun <katJahit : KategoriPenjahit> ColumnItem(item: katJahit) {
+fun <katJahit : KategoriPenjahit> ColumnItem(item: katJahit, navController: NavController) {
     Card (
         modifier = Modifier
+            .clickable { navController.navigate(Screen.Metodepayment.route) }
             .padding(3.dp)
             .fillMaxWidth()
             .wrapContentHeight(),
@@ -321,9 +323,10 @@ fun <katJahit : KategoriPenjahit> ColumnItem(item: katJahit) {
 }
 
 @Composable
-fun <katPangkas : KategoriPemangkas> PemangkasColumnItem(item: katPangkas) {
+fun <katPangkas : KategoriPemangkas> PemangkasColumnItem(item: katPangkas, navController: NavController) {
     Card (
         modifier = Modifier
+            .clickable { navController.navigate(Screen.Metodepayment.route) }
             .padding(3.dp)
             .fillMaxWidth()
             .wrapContentHeight(),
@@ -488,9 +491,10 @@ fun <katPangkas : KategoriPemangkas> PemangkasColumnItem(item: katPangkas) {
 }
 
 @Composable
-fun <katServis : KategoriServis> ServisColumnItem(item: katServis) {
+fun <katServis : KategoriServis> ServisColumnItem(item: katServis, navController: NavController) {
     Card (
         modifier = Modifier
+            .clickable { navController.navigate(Screen.Metodepayment.route) }
             .padding(3.dp)
             .fillMaxWidth()
             .wrapContentHeight(),

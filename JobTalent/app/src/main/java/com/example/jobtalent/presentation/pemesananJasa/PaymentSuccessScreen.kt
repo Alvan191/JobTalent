@@ -29,10 +29,15 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.jobtalent.R
+import com.example.jobtalent.navigation.Screen
 
 @Composable
-fun PaymentSuccessScreen() {
+fun PaymentSuccessScreen(
+    navController: NavController
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -92,7 +97,7 @@ fun PaymentSuccessScreen() {
         }
         Spacer(modifier = Modifier.height(16.dp))
         OutlinedButton(
-            onClick = { /* Handle back to home click */ },
+            onClick = { navController.navigate(Screen.Home.route) },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(50.dp),
@@ -125,5 +130,5 @@ fun PaymentSuccessIllustration(illustration: Painter) {
 @Preview
 @Composable
 private fun PaymentSuccessScreenPreview() {
-    PaymentSuccessScreen()
+    PaymentSuccessScreen(navController = rememberNavController())
 }

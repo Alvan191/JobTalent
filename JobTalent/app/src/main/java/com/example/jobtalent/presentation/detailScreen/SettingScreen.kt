@@ -54,66 +54,72 @@ import com.example.jobtalent.navigation.Screen
 fun SettingsScreen(
     navController: NavController
 ) {
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = {
-                    Text(
-                        text = "Pengaturan",
-                        style = TextStyle(
-                            fontSize = 16.sp,
-                            fontFamily = FontFamily(Font(R.font.roboto_bold)),
-                            fontWeight = FontWeight(600),
-                            color = Color(0xFF000000)
+    Column (
+        modifier = Modifier
+            .background(Color(0xfff8f8f8))
+            .fillMaxSize()
+            .padding(15.dp)
+    ){
+        Scaffold(
+            topBar = {
+                TopAppBar(
+                    title = {
+                        Text(
+                            text = "     Pengaturan",
+                            style = TextStyle(
+                                fontSize = 16.sp,
+                                fontFamily = FontFamily(Font(R.font.roboto_bold)),
+                                fontWeight = FontWeight(600),
+                                color = Color(0xFF000000)
+                            )
                         )
-                    )
-                },
-                navigationIcon = {
-                    Box(
-                        modifier = Modifier
-                            .size(44.dp)
-                            .shadow(8.dp, CircleShape)
-                            .clip(CircleShape)
-                            .background(Color.White)
-                            .clickable(onClick = { navController.popBackStack() })
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.ArrowBack,
-                            contentDescription = "Back",
-                            tint = Color.Black,
+                    },
+                    navigationIcon = {
+                        Box(
                             modifier = Modifier
-                                .size(24.dp)
-                                .align(Alignment.Center)
-                        )
+                                .size(44.dp)
+                                .shadow(8.dp, CircleShape)
+                                .clip(CircleShape)
+                                .background(Color.White)
+                                .clickable(onClick = { navController.popBackStack() })
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.ArrowBack,
+                                contentDescription = "Back",
+                                tint = Color.Black,
+                                modifier = Modifier
+                                    .size(24.dp)
+                                    .align(Alignment.Center)
+                            )
+                        }
                     }
-                }
-            )
-        }
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(it)
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+                )
+            }
         ) {
-            SettingsItem(
-                iconRes = R.drawable.language,
-                label = "Bahasa",
-                onClick = { navController.navigate(Screen.Bahasasc.route) }
-            )
-            SettingsItemWithSwitch(
-                iconRes = R.drawable.notifications,
-                label = "Notifikasi",
-                checked = true,
-                onCheckedChange = {  }
-            )
-            SettingsItem(
-                iconRes = R.drawable.logout,
-                label = "Keluar Akun",
-                onClick = {  }
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(it),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                SettingsItem(
+                    iconRes = R.drawable.language,
+                    label = "Bahasa",
+                    onClick = { navController.navigate(Screen.Bahasasc.route) }
+                )
+                SettingsItemWithSwitch(
+                    iconRes = R.drawable.notifications,
+                    label = "Notifikasi",
+                    checked = true,
+                    onCheckedChange = { }
+                )
+                SettingsItem(
+                    iconRes = R.drawable.logout,
+                    label = "Keluar Akun",
+                    onClick = { }
 
-            )
+                )
+            }
         }
     }
 }
