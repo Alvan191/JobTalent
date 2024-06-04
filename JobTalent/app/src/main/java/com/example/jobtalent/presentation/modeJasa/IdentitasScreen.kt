@@ -54,252 +54,261 @@ fun IdentitasScreen(
 ) {
     LazyColumn(
         modifier = Modifier
-            .padding(15.dp)
+            .fillMaxSize()
             .background(
                 color = Color.White
             )
     ) {
         item {
-            Box(
+            Column (
                 modifier = Modifier
-                    .size(44.dp)
-                    .shadow(8.dp, CircleShape)
-                    .clip(CircleShape)
-                    .background(Color.White)
-                    .clickable(onClick = { navController.popBackStack() })
-            ) {
-                Icon(
-                    imageVector = Icons.Default.ArrowBack,
-                    contentDescription = "Back",
-                    tint = Color.Black,
-                    modifier = Modifier
-                        .size(24.dp)
-                        .align(Alignment.Center)
-                )
-            }
-            Column(
-                modifier = Modifier
-                    .fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text(
-                    text = "Daftar Penyedia Jasa",
-                    style = TextStyle(
-                        fontSize = 16.sp,
-                        fontFamily = FontFamily(Font(R.font.roboto_black)),
-                        fontWeight = FontWeight(500),
-                        color = Color(0xFF000000)
+                    .padding(15.dp)
+                    .fillMaxSize()
+                    .background(
+                        color = Color.White
                     )
-                )
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(
-                    text = "Konfirmasi Identitas Anda",
-                    style = TextStyle(
-                        fontSize = 12.sp,
-                        fontFamily = FontFamily(Font(R.font.roboto_medium)),
-                        fontWeight = FontWeight(400),
-                        color = Color(0xFF717171),
+            ){
+                Box(
+                    modifier = Modifier
+                        .size(44.dp)
+                        .shadow(8.dp, CircleShape)
+                        .clip(CircleShape)
+                        .background(Color.White)
+                        .clickable(onClick = { navController.popBackStack() })
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.ArrowBack,
+                        contentDescription = "Back",
+                        tint = Color.Black,
+                        modifier = Modifier
+                            .size(24.dp)
+                            .align(Alignment.Center)
                     )
-                )
-                Spacer(modifier = Modifier.height(16.dp))
-
-
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp, vertical = 8.dp),
-                    shape = RoundedCornerShape(16.dp),
-                    elevation = CardDefaults.cardElevation(2.dp)
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .wrapContentHeight()
-                            .clip(RoundedCornerShape(8.dp))
-                            .background(Color.White)
-                            .padding(top = 15.dp)
-                    ) {
-                        Column(
-                            modifier = Modifier
-                                .padding(10.dp)
-                        ) {
-                            Text(
-                                text = "Foto selfie dengan KTP",
-                                style = TextStyle(
-                                    fontSize = 15.sp,
-                                    fontFamily = FontFamily(Font(R.font.roboto_medium)),
-                                    fontWeight = FontWeight(400),
-                                    color = Color.Black
-                                )
-                            )
-                            Spacer(modifier = Modifier.height(6.dp))
-                            Text(
-                                text = "Detail terlihat dengan jelas dan pemilik KTP memegang kartu identitasnya sendiri",
-                                style = TextStyle(
-                                    fontSize = 12.sp,
-                                    fontFamily = FontFamily(Font(R.font.roboto_medium)),
-                                    fontWeight = FontWeight(400),
-                                    color = Color(0xFF717171),
-                                )
-                            )
-                            Spacer(modifier = Modifier.height(6.dp))
-
-                            Column(
-                                horizontalAlignment = Alignment.CenterHorizontally,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                            ) {
-                                Image(
-                                    painter = painterResource(id = R.drawable.gambar_fotoktp),
-                                    contentDescription = "foto ktp",
-                                    modifier = Modifier
-                                        .height(180.dp)
-                                        .fillMaxWidth()
-                                        .padding(horizontal = 23.dp)
-                                )
-
-                                Button(
-                                    onClick = { },
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(horizontal = 20.dp)
-                                        .height(50.dp),
-                                    border = BorderStroke(1.dp, Color(0xFF005695)),
-                                    shape = RoundedCornerShape(8.dp),
-                                    colors = ButtonDefaults.buttonColors(
-                                        containerColor = Color.White
-                                    ),
-                                ) {
-                                    Row(
-                                        verticalAlignment = Alignment.CenterVertically,
-                                        horizontalArrangement = Arrangement.Center
-                                    ) {
-                                        Icon(
-                                            imageVector = Icons.Default.FileUpload,
-                                            contentDescription = "File Upload",
-                                            tint = Color(0xFF005695)
-                                        )
-                                        Spacer(modifier = Modifier.width(8.dp))
-                                        Text(
-                                            text = "Unggah Foto",
-                                            style = TextStyle(color = Color(0xFF005695))
-                                        )
-                                    }
-                                }
-                            }
-                        }
-                    }
                 }
-                Spacer(modifier = Modifier.height(16.dp))
-
-                Card(
+                Column(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp, vertical = 8.dp),
-                    shape = RoundedCornerShape(16.dp),
-                    elevation = CardDefaults.cardElevation(2.dp)
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .wrapContentHeight()
-                            .clip(RoundedCornerShape(8.dp))
-                            .background(Color.White)
-                            .padding(top = 15.dp)
-                    ) {
-                        Column(
-                            modifier = Modifier
-                                .padding(10.dp)
-                        ) {
-                            Text(
-                                text = "Foto KTP",
-                                style = TextStyle(
-                                    fontSize = 15.sp,
-                                    fontFamily = FontFamily(Font(R.font.roboto_medium)),
-                                    fontWeight = FontWeight(400),
-                                    color = Color.Black
-                                )
-                            )
-                            Spacer(modifier = Modifier.height(6.dp))
-                            Text(
-                                text = "Detail KTP terlihat dengan jelas",
-                                style = TextStyle(
-                                    fontSize = 12.sp,
-                                    fontFamily = FontFamily(Font(R.font.roboto_medium)),
-                                    fontWeight = FontWeight(400),
-                                    color = Color(0xFF717171),
-                                )
-                            )
-                            Spacer(modifier = Modifier.height(6.dp))
-
-                            Column(
-                                horizontalAlignment = Alignment.CenterHorizontally,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                            ) {
-                                Image(
-                                    painter = painterResource(id = R.drawable.gambar_ktp),
-                                    contentDescription = "gambar ktp",
-                                    modifier = Modifier
-                                        .height(180.dp)
-                                        .fillMaxWidth()
-                                        .padding(horizontal = 23.dp)
-                                )
-
-                                Button(
-                                    onClick = { },
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(horizontal = 20.dp)
-                                        .height(50.dp),
-                                    border = BorderStroke(1.dp, Color(0xFF005695)),
-                                    shape = RoundedCornerShape(8.dp),
-                                    colors = ButtonDefaults.buttonColors(
-                                        containerColor = Color.White
-                                    ),
-                                ) {
-                                    Row(
-                                        verticalAlignment = Alignment.CenterVertically,
-                                        horizontalArrangement = Arrangement.Center
-                                    ) {
-                                        Icon(
-                                            imageVector = Icons.Default.FileUpload,
-                                            contentDescription = "File Upload",
-                                            tint = Color(0xFF005695)
-                                        )
-                                        Spacer(modifier = Modifier.width(8.dp))
-                                        Text(
-                                            text = "Unggah Foto",
-                                            style = TextStyle(color = Color(0xFF005695))
-                                        )
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-
-                Spacer(modifier = Modifier.height(20.dp))
-                Button(
-                    onClick = { navController.navigate(Screen.DataPelengkap.route) },
-                    modifier = Modifier
-                        .height(56.dp)
-                        .fillMaxWidth()
-                        .background(
-                            color = Color(0xFF005695),
-                            shape = RoundedCornerShape(size = 8.dp)
-                        ),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFF005695)
-                    ),
+                        .fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
-                        text = "Selanjutnya",
-                        color = Color.White,
-                        fontFamily = FontFamily(Font(R.font.roboto_medium)),
-                        fontWeight = FontWeight(650),
-                        fontSize = 18.sp
+                        text = "Daftar Penyedia Jasa",
+                        style = TextStyle(
+                            fontSize = 16.sp,
+                            fontFamily = FontFamily(Font(R.font.roboto_black)),
+                            fontWeight = FontWeight(500),
+                            color = Color(0xFF000000)
+                        )
                     )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text(
+                        text = "Konfirmasi Identitas Anda",
+                        style = TextStyle(
+                            fontSize = 12.sp,
+                            fontFamily = FontFamily(Font(R.font.roboto_medium)),
+                            fontWeight = FontWeight(400),
+                            color = Color(0xFF717171),
+                        )
+                    )
+                    Spacer(modifier = Modifier.height(16.dp))
+
+
+                    Card(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp, vertical = 8.dp),
+                        shape = RoundedCornerShape(16.dp),
+                        elevation = CardDefaults.cardElevation(2.dp)
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .wrapContentHeight()
+                                .clip(RoundedCornerShape(8.dp))
+                                .background(Color.White)
+                                .padding(top = 15.dp)
+                        ) {
+                            Column(
+                                modifier = Modifier
+                                    .padding(10.dp)
+                            ) {
+                                Text(
+                                    text = "Foto selfie dengan KTP",
+                                    style = TextStyle(
+                                        fontSize = 15.sp,
+                                        fontFamily = FontFamily(Font(R.font.roboto_medium)),
+                                        fontWeight = FontWeight(400),
+                                        color = Color.Black
+                                    )
+                                )
+                                Spacer(modifier = Modifier.height(6.dp))
+                                Text(
+                                    text = "Detail terlihat dengan jelas dan pemilik KTP memegang kartu identitasnya sendiri",
+                                    style = TextStyle(
+                                        fontSize = 12.sp,
+                                        fontFamily = FontFamily(Font(R.font.roboto_medium)),
+                                        fontWeight = FontWeight(400),
+                                        color = Color(0xFF717171),
+                                    )
+                                )
+                                Spacer(modifier = Modifier.height(6.dp))
+
+                                Column(
+                                    horizontalAlignment = Alignment.CenterHorizontally,
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                ) {
+                                    Image(
+                                        painter = painterResource(id = R.drawable.gambar_fotoktp),
+                                        contentDescription = "foto ktp",
+                                        modifier = Modifier
+                                            .height(180.dp)
+                                            .fillMaxWidth()
+                                            .padding(horizontal = 23.dp)
+                                    )
+
+                                    Button(
+                                        onClick = { },
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .padding(horizontal = 20.dp)
+                                            .height(50.dp),
+                                        border = BorderStroke(1.dp, Color(0xFF005695)),
+                                        shape = RoundedCornerShape(8.dp),
+                                        colors = ButtonDefaults.buttonColors(
+                                            containerColor = Color.White
+                                        ),
+                                    ) {
+                                        Row(
+                                            verticalAlignment = Alignment.CenterVertically,
+                                            horizontalArrangement = Arrangement.Center
+                                        ) {
+                                            Icon(
+                                                imageVector = Icons.Default.FileUpload,
+                                                contentDescription = "File Upload",
+                                                tint = Color(0xFF005695)
+                                            )
+                                            Spacer(modifier = Modifier.width(8.dp))
+                                            Text(
+                                                text = "Unggah Foto",
+                                                style = TextStyle(color = Color(0xFF005695))
+                                            )
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    Card(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp, vertical = 8.dp),
+                        shape = RoundedCornerShape(16.dp),
+                        elevation = CardDefaults.cardElevation(2.dp)
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .wrapContentHeight()
+                                .clip(RoundedCornerShape(8.dp))
+                                .background(Color.White)
+                                .padding(top = 15.dp)
+                        ) {
+                            Column(
+                                modifier = Modifier
+                                    .padding(10.dp)
+                            ) {
+                                Text(
+                                    text = "Foto KTP",
+                                    style = TextStyle(
+                                        fontSize = 15.sp,
+                                        fontFamily = FontFamily(Font(R.font.roboto_medium)),
+                                        fontWeight = FontWeight(400),
+                                        color = Color.Black
+                                    )
+                                )
+                                Spacer(modifier = Modifier.height(6.dp))
+                                Text(
+                                    text = "Detail KTP terlihat dengan jelas",
+                                    style = TextStyle(
+                                        fontSize = 12.sp,
+                                        fontFamily = FontFamily(Font(R.font.roboto_medium)),
+                                        fontWeight = FontWeight(400),
+                                        color = Color(0xFF717171),
+                                    )
+                                )
+                                Spacer(modifier = Modifier.height(6.dp))
+
+                                Column(
+                                    horizontalAlignment = Alignment.CenterHorizontally,
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                ) {
+                                    Image(
+                                        painter = painterResource(id = R.drawable.gambar_ktp),
+                                        contentDescription = "gambar ktp",
+                                        modifier = Modifier
+                                            .height(180.dp)
+                                            .fillMaxWidth()
+                                            .padding(horizontal = 23.dp)
+                                    )
+
+                                    Button(
+                                        onClick = { },
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .padding(horizontal = 20.dp)
+                                            .height(50.dp),
+                                        border = BorderStroke(1.dp, Color(0xFF005695)),
+                                        shape = RoundedCornerShape(8.dp),
+                                        colors = ButtonDefaults.buttonColors(
+                                            containerColor = Color.White
+                                        ),
+                                    ) {
+                                        Row(
+                                            verticalAlignment = Alignment.CenterVertically,
+                                            horizontalArrangement = Arrangement.Center
+                                        ) {
+                                            Icon(
+                                                imageVector = Icons.Default.FileUpload,
+                                                contentDescription = "File Upload",
+                                                tint = Color(0xFF005695)
+                                            )
+                                            Spacer(modifier = Modifier.width(8.dp))
+                                            Text(
+                                                text = "Unggah Foto",
+                                                style = TextStyle(color = Color(0xFF005695))
+                                            )
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.height(20.dp))
+                    Button(
+                        onClick = { navController.navigate(Screen.DataPelengkap.route) },
+                        modifier = Modifier
+                            .height(56.dp)
+                            .fillMaxWidth()
+                            .background(
+                                color = Color(0xFF005695),
+                                shape = RoundedCornerShape(size = 8.dp)
+                            ),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color(0xFF005695)
+                        ),
+                    ) {
+                        Text(
+                            text = "Selanjutnya",
+                            color = Color.White,
+                            fontFamily = FontFamily(Font(R.font.roboto_medium)),
+                            fontWeight = FontWeight(650),
+                            fontSize = 18.sp
+                        )
+                    }
                 }
             }
         }

@@ -39,6 +39,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -70,6 +74,8 @@ fun PortofolioScreen(
     navController: NavController,
     isiPorto: List<DesainPortofolio> = PortofolioItem.dataPortofolio
 ) {
+    var isExpanded by remember { mutableStateOf(false) }
+
     LazyColumn {
         item {
             Column (
@@ -214,15 +220,31 @@ fun PortofolioScreen(
                         }
                         Spacer(modifier = Modifier.height(8.dp))
                         Text(
-                            text = "Saya adalah seorang penjahit pakaian dan seragam yang handal saat ini membuka jasa jahit rumahan di Solo. Saya sangat tertarik untuk membuat dan mendesain pakaian yang mem... Lihat semua",
+                            text = "Saya adalah seorang penjahit, ahli dalam menciptakan pakaian dan barang-barang tekstil dengan menggunakan mesin jahit, jarum, dan benang. Pekerjaan saya membutuhkan keterampilan dalam memotong pola, menjahit, dan ${if (isExpanded) "" else "Lihat semua"}",
                             style = TextStyle(
                                 fontSize = 12.sp,
                                 lineHeight = 18.sp,
                                 fontFamily = FontFamily(Font(R.font.roboto_light)),
                                 fontWeight = FontWeight(700),
                                 color = Color(0xFF515B6F),
-                            )
+                            ),
+                            modifier = Modifier.clickable {
+                                isExpanded = !isExpanded
+                            }
                         )
+                        if (isExpanded) {
+                            Text(
+                                text = "menyelesaikan produk akhir dengan rapi dan presisi.",
+                                style = TextStyle(
+                                    fontSize = 12.sp,
+                                    lineHeight = 18.sp,
+                                    fontFamily = FontFamily(Font(R.font.roboto_light)),
+                                    fontWeight = FontWeight(700),
+                                    color = Color(0xFF515B6F),
+                                )
+                            )
+                        }
+
                         Spacer(modifier = Modifier.height(8.dp))
                         Box(
                             modifier = Modifier

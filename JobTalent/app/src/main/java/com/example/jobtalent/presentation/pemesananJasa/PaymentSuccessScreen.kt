@@ -21,12 +21,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.login.R
+import com.example.jobtalent.R
 
 @Composable
 fun PaymentSuccessScreen() {
@@ -39,8 +42,12 @@ fun PaymentSuccessScreen() {
     ) {
         Text(
             text = "Pembayaran Sukses",
-            fontWeight = FontWeight.Bold,
-            fontSize = 24.sp
+            style = TextStyle(
+                fontSize = 20.sp,
+                fontFamily = FontFamily(Font(R.font.roboto_black)),
+                fontWeight = FontWeight(700),
+                color = Color(0xFF000000)
+            )
         )
         Spacer(modifier = Modifier.height(32.dp))
         Image(
@@ -50,9 +57,14 @@ fun PaymentSuccessScreen() {
         )
         Spacer(modifier = Modifier.height(32.dp))
         Text(
-            text = "Transaksi Anda telah berhasil diselesaikan!",
-            fontSize = 16.sp,
-            textAlign = TextAlign.Center
+            text = "Transaksi Anda telah berhasil \ndiselesaikan!",
+            style = TextStyle(
+                fontSize = 16.sp,
+                fontFamily = FontFamily(Font(R.font.roboto_medium)),
+                fontWeight = FontWeight(400),
+                color = Color(0xFF000000),
+                textAlign = TextAlign.Center,
+            )
         )
         Spacer(modifier = Modifier.height(32.dp))
         Button(
@@ -66,7 +78,17 @@ fun PaymentSuccessScreen() {
             ),
             onClick = { }
         ) {
-            Text(text = "Kembali ke Chat")
+            Text(
+                text = "Kembali ke Chat",
+                style = TextStyle(
+                    fontSize = 16.sp,
+                    fontFamily = FontFamily(Font(R.font.roboto_bold)),
+                    fontWeight = FontWeight(400),
+                    color = Color(0xFFFFFFFF),
+
+                    textAlign = TextAlign.Center,
+                )
+            )
         }
         Spacer(modifier = Modifier.height(16.dp))
         OutlinedButton(
@@ -77,7 +99,16 @@ fun PaymentSuccessScreen() {
             shape = RoundedCornerShape(8.dp),
             border = BorderStroke(1.dp, Color(0xFF007BFF))
         ) {
-            Text(text = "Kembali ke Home", color = Color(0xFF007BFF), fontSize = 16.sp)
+            Text(
+                text = "Kembali ke Home",
+                style = TextStyle(
+                    fontSize = 16.sp,
+                    fontFamily = FontFamily(Font(R.font.roboto_bold)),
+                    fontWeight = FontWeight(500),
+                    color = Color(0xFF000000),
+                    textAlign = TextAlign.Center,
+                )
+            )
         }
     }
 }

@@ -55,66 +55,74 @@ fun KategoriJasaScreen(
 ) {
     Column (
         modifier = Modifier
-            .padding(15.dp)
             .fillMaxSize()
             .background(
                 color = Color.White
             )
     ){
-        Box(
-            modifier = Modifier
-                .size(44.dp)
-                .shadow(8.dp, CircleShape)
-                .clip(CircleShape)
-                .background(Color.White)
-                .clickable(onClick = {navController.popBackStack()})
-        ) {
-            Icon(
-                imageVector = Icons.Default.ArrowBack,
-                contentDescription = "Back",
-                tint = Color.Black,
-                modifier = Modifier
-                    .size(24.dp)
-                    .align(Alignment.Center)
-            )
-        }
         Column(
             modifier = Modifier
-                .fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally
+                .padding(15.dp)
+                .fillMaxSize()
+                .background(
+                    color = Color.White
+                )
         ) {
-            Text(
-                text = "Daftar Penyedia Jasa",
-                style = TextStyle(
-                    fontSize = 16.sp,
-                    fontFamily = FontFamily(Font(R.font.roboto_black)),
-                    fontWeight = FontWeight(500),
-                    color = Color(0xFF000000)
+            Box(
+                modifier = Modifier
+                    .size(44.dp)
+                    .shadow(8.dp, CircleShape)
+                    .clip(CircleShape)
+                    .background(Color.White)
+                    .clickable(onClick = { navController.popBackStack() })
+            ) {
+                Icon(
+                    imageVector = Icons.Default.ArrowBack,
+                    contentDescription = "Back",
+                    tint = Color.Black,
+                    modifier = Modifier
+                        .size(24.dp)
+                        .align(Alignment.Center)
                 )
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(
-                text = "Apa ketegori jasa yang ingin Anda tawarkan",
-                style = TextStyle(
-                    fontSize = 12.sp,
-                    fontFamily = FontFamily(Font(R.font.roboto_medium)),
-                    fontWeight = FontWeight(400),
-                    color = Color(0xFF717171),
+            }
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = "Daftar Penyedia Jasa",
+                    style = TextStyle(
+                        fontSize = 16.sp,
+                        fontFamily = FontFamily(Font(R.font.roboto_black)),
+                        fontWeight = FontWeight(500),
+                        color = Color(0xFF000000)
+                    )
                 )
-            )
-        }
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(
+                    text = "Apa ketegori jasa yang ingin Anda tawarkan",
+                    style = TextStyle(
+                        fontSize = 12.sp,
+                        fontFamily = FontFamily(Font(R.font.roboto_medium)),
+                        fontWeight = FontWeight(400),
+                        color = Color(0xFF717171),
+                    )
+                )
+            }
 
-        LazyVerticalGrid(
-            contentPadding = PaddingValues(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-            horizontalArrangement = Arrangement.spacedBy(16.dp), columns = GridCells.Fixed(2),
-            modifier = modifier.fillMaxSize()
-        ) {
-            items(kategorijasa, key = { it.id }) { kategorijasadaftar ->
-                GridScItem(
-                    kategorijasadaftar = kategorijasadaftar,
-                    onClick = { navController.navigate(route = Screen.JenisJasa.route) }
-                )
+            LazyVerticalGrid(
+                contentPadding = PaddingValues(16.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                horizontalArrangement = Arrangement.spacedBy(16.dp), columns = GridCells.Fixed(2),
+                modifier = modifier.fillMaxSize()
+            ) {
+                items(kategorijasa, key = { it.id }) { kategorijasadaftar ->
+                    GridScItem(
+                        kategorijasadaftar = kategorijasadaftar,
+                        onClick = { navController.navigate(route = Screen.JenisJasa.route) }
+                    )
+                }
             }
         }
     }

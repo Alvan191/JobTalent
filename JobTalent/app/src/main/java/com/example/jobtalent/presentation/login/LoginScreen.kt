@@ -1,5 +1,6 @@
-package com.example.jobtalent.login
+package com.example.jobtalent.presentation.login
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -29,9 +30,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
@@ -45,15 +48,30 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.jobtalent.R
+import com.example.jobtalent.data.DataStore
+import com.example.jobtalent.data.SharedPreferencesManager
 import com.example.jobtalent.navigation.Screen
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen(
     navController: NavController
 ) {
-    var email by remember { mutableStateOf("") }
-    var katasandi by remember { mutableStateOf("") }
+    val context = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
+
+    val sharedPreferencesManager = remember {
+        SharedPreferencesManager(context)
+    }
+    val dataStore = DataStore(context)
+
+    var email by remember {
+        mutableStateOf("")
+    }
+    var password by remember {
+        mutableStateOf("")
+    }
     var katasandiVisible by remember { mutableStateOf(false) }
 
     Column(
@@ -129,9 +147,9 @@ fun LoginScreen(
         OutlinedTextField(
             modifier = Modifier
                 .fillMaxWidth(),
-            value = katasandi,
+            value = password,
             onValueChange = {
-                katasandi = it
+                password = it
             },
             label = {
                 Text(
@@ -185,7 +203,22 @@ fun LoginScreen(
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color(0xFF005695)
             ),
-            onClick = { navController.navigate(Screen.JobScreen.route)},
+            onClick = {
+                if (email.isBlank() || password.isBlank()){
+                    Toast.makeText(context, "Email dan Password Wajib Diisi", Toast.LENGTH_SHORT).show()
+                } else {
+                    sharedPreferencesManager.email = email
+                    sharedPreferencesManager.password = password
+                    coroutineScope.launch {
+                        dataStore.saveStatus(true)
+                    }
+                    navController.navigate(Screen.JobScreen.route) {
+                        popUpTo(Screen.Login.route) {
+                            inclusive = true
+                        }
+                    }
+                }
+            },
         ) {
             Text(
                 text = "Masuk",

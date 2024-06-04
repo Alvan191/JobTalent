@@ -15,9 +15,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.example.jobtalent.navigation.login.LoginScreen
-import com.example.jobtalent.navigation.login.RegistrasiScreen
-import com.example.jobtalent.navigation.login.SplashScreen
+import com.example.jobtalent.presentation.login.LoginScreen
+import com.example.jobtalent.presentation.login.RegistrasiScreen
+import com.example.jobtalent.presentation.login.SplashScreen
 import com.example.jobtalent.navigation.Screen
 import com.example.jobtalent.presentation.ChatScreen
 import com.example.jobtalent.presentation.CommunityScreen
@@ -56,46 +56,7 @@ class MainActivity : ComponentActivity() {
                             JobTalentApp(modifier = Modifier)
                         }
                         composable(Screen.Home.route){
-                            HomeScreen(modifier = Modifier)
-                        }
-                        composable(Screen.Chat.route){
-                            ChatScreen(modifier = Modifier, navController)
-                        }
-                        composable(Screen.Community.route){
-                            CommunityScreen(modifier = Modifier)
-                        }
-                        composable(Screen.Profile.route){
-                            ProfileScreen(navController)
-                        }
-                        composable(Screen.KategoriJasa.route){
-                            KategoriJasaScreen(modifier = Modifier, navController = navController)
-                        }
-                        composable(Screen.JenisJasa.route){
-                            JenisJasaScreen(modifier = Modifier, navController)
-                        }
-                        composable(Screen.NamaTampilan.route){
-                            NamaTampilanScreen(modifier = Modifier, navController)
-                        }
-                        composable(Screen.Pengalaman.route){
-                            PengalamanScreen(modifier = Modifier, navController)
-                        }
-                        composable(Screen.Identitas.route){
-                            IdentitasScreen(modifier = Modifier, navController)
-                        }
-                        composable(Screen.DataPelengkap.route){
-                            DataPelengkapScreen(modifier = Modifier, navController)
-                        }
-                        composable(Screen.Portofolios.route){
-                            PortofolioScreen(modifier = Modifier, navController)
-                        }
-                        composable(
-                            Screen.DetailChatsss.route + "/{tampilchatId}",
-                            arguments = listOf(navArgument("tampilchatId") { type = NavType.IntType })
-                        ) { navBackStackEntry ->
-                            DetailChatScreen(
-                                navController = navController,
-                                tampilchatId = navBackStackEntry.arguments?.getInt("tampilchatId")
-                            )
+                            HomeScreen(modifier = Modifier, navController)
                         }
                     }
                 )

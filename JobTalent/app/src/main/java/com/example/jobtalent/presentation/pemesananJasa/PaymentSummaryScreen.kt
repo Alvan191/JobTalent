@@ -2,7 +2,9 @@ package com.example.jobtalent.presentation.pemesananJasa
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -26,6 +28,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -35,25 +38,60 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.login.R
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.example.jobtalent.R
+import com.example.jobtalent.navigation.Screen
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PaymentSummaryScreen() {
+fun PaymentSummaryScreen(
+    navController: NavController
+) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(text = "Ringkasan Pembayaran") },
+                title = {
+                    Text(
+                        text = "    Ringkasan Pembayaran",
+                        style = TextStyle(
+                            fontSize = 16.sp,
+                            fontFamily = FontFamily(Font(R.font.roboto_bold)),
+                            fontWeight = FontWeight(600),
+                            color = Color(0xFF000000),
+
+                            )
+                    )
+                },
                 navigationIcon = {
-                    IconButton(onClick = { /* Handle back navigation */ }) {
-                        Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Back")
+                    Box(
+                        modifier = Modifier
+                            .size(44.dp)
+                            .shadow(8.dp, CircleShape)
+                            .clip(CircleShape)
+                            .background(Color.White)
+                            .clickable(onClick = { navController.popBackStack() })
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.ArrowBack,
+                            contentDescription = "Back",
+                            tint = Color.Black,
+                            modifier = Modifier
+                                .size(24.dp)
+                                .align(Alignment.Center)
+                        )
                     }
                 }
             )
@@ -70,12 +108,23 @@ fun PaymentSummaryScreen() {
             Card(
                 shape = RoundedCornerShape(8.dp),
                 elevation = CardDefaults.cardElevation(4.dp),
+                colors = CardDefaults.cardColors(
+                    containerColor = Color.White
+                ),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(bottom = 16.dp)
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
-                    Text("Nama Penyedia Jasa", fontWeight = FontWeight.Bold)
+                    Text(
+                        text = "Nama Penyedia Jasa",
+                        style = TextStyle(
+                            fontSize = 14.sp,
+                            fontFamily = FontFamily(Font(R.font.roboto_medium)),
+                            fontWeight = FontWeight(500),
+                            color = Color(0xFF000000)
+                        )
+                    )
                     Spacer(modifier = Modifier.height(8.dp))
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Image(
@@ -85,8 +134,24 @@ fun PaymentSummaryScreen() {
                         )
                         Spacer(modifier = Modifier.width(8.dp))
                         Column {
-                            Text("Anto Ramadhan", fontWeight = FontWeight.Bold, fontSize = 20.sp)
-                            Text("Penjahit", fontSize = 16.sp)
+                            Text(
+                                text = "Anto Ramadhan",
+                                style = TextStyle(
+                                    fontSize = 14.sp,
+                                    fontFamily = FontFamily(Font(R.font.roboto_medium)),
+                                    fontWeight = FontWeight(500),
+                                    color = Color(0xFF000000)
+                                )
+                            )
+                            Text(
+                                text = "Penjahit",
+                                style = TextStyle(
+                                    fontSize = 12.sp,
+                                    fontFamily = FontFamily(Font(R.font.roboto_light)),
+                                    fontWeight = FontWeight(800),
+                                    color = Color(0xFFB2B2B2)
+                                )
+                            )
                         }
                     }
                 }
@@ -94,19 +159,42 @@ fun PaymentSummaryScreen() {
             Card(
                 shape = RoundedCornerShape(8.dp),
                 elevation = CardDefaults.cardElevation(4.dp),
+                colors = CardDefaults.cardColors(
+                    containerColor = Color.White
+                ),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(bottom = 16.dp)
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
-                    Text("Detail Jasa", fontWeight = FontWeight.Bold)
+                    Text(
+                        text = "Detail Jasa",
+                        style = TextStyle(
+                            fontSize = 14.sp,
+                            fontFamily = FontFamily(Font(R.font.roboto_medium)),
+                            fontWeight = FontWeight(500),
+                            color = Color(0xFF000000)
+                        )
+                    )
                     Spacer(modifier = Modifier.height(8.dp))
-                    Text("Menjahit baju kebaya wisuda")
+                    Text(
+                        text = "Menjahit baju kebaya wisuda",
+                        style = TextStyle(
+                            fontSize = 12.sp,
+                            fontFamily = FontFamily(Font(R.font.roboto_light)),
+                            fontWeight = FontWeight(800),
+                            color = Color(0xFF000000),
+
+                            )
+                    )
                 }
             }
             Card(
                 shape = RoundedCornerShape(8.dp),
                 elevation = CardDefaults.cardElevation(4.dp),
+                colors = CardDefaults.cardColors(
+                    containerColor = Color.White
+                ),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(bottom = 10.dp)
@@ -120,23 +208,49 @@ fun PaymentSummaryScreen() {
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Column(modifier = Modifier.padding(8.dp)) {
-                        Text("Nominal Pembayaran", fontWeight = FontWeight.Bold)
+                        Text(
+                            text = "Nominal Pembayaran",
+                            style = TextStyle(
+                                fontSize = 14.sp,
+                                fontFamily = FontFamily(Font(R.font.roboto_medium)),
+                                fontWeight = FontWeight(500),
+                                color = Color(0xFF000000)
+                            )
+                        )
                         Spacer(modifier = Modifier.height(8.dp))
                         TextField(
                             value = paymentAmount,
                             onValueChange = { paymentAmount = it },
                             placeholder = { Text("Rp.") },
                             singleLine = true,
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            colors = TextFieldDefaults.textFieldColors(
+                                containerColor = Color.White,
+                                focusedIndicatorColor = Color.Transparent,
+                                unfocusedIndicatorColor = Color.Transparent
+                            ),
                         )
                         Spacer(modifier = Modifier.height(8.dp))
-                        Text("Jumlah sesuai tarif yang telah disepakati.")
+                        Text(
+                            text = "Jumlah sesuai tarif yang telah disepakati.",
+                            style = TextStyle(
+                                fontSize = 9.sp,
+                                fontFamily = FontFamily(Font(R.font.roboto_light)),
+                                fontWeight = FontWeight(500),
+                                color = Color(0x6E000000),
+
+                                )
+                        )
                     }
                 }
             }
             Card(
                 shape = RoundedCornerShape(8.dp),
                 elevation = CardDefaults.cardElevation(4.dp),
+                colors = CardDefaults.cardColors(
+                    containerColor = Color.White
+                ),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(bottom = 16.dp)
@@ -155,8 +269,24 @@ fun PaymentSummaryScreen() {
                     )
                     Spacer(modifier = Modifier.width(8.dp))
                     Column {
-                        Text("08********", fontWeight = FontWeight.Bold, fontSize = 18.sp)
-                        Text("Dana")
+                        Text(
+                            text = "08********",
+                            style = TextStyle(
+                                fontSize = 14.sp,
+                                fontFamily = FontFamily(Font(R.font.roboto_medium)),
+                                fontWeight = FontWeight(400),
+                                color = Color(0xFF000000)
+                            )
+                        )
+                        Text(
+                            text = "Dana",
+                            style = TextStyle(
+                                fontSize = 14.sp,
+                                fontFamily = FontFamily(Font(R.font.roboto_medium)),
+                                fontWeight = FontWeight(400),
+                                color = Color(0xFF000000)
+                            )
+                        )
                     }
                 }
             }
@@ -171,9 +301,18 @@ fun PaymentSummaryScreen() {
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFF005695)
                 ),
-                onClick = { }
+                onClick = { navController.navigate(Screen.Paymentsucc.route) }
             ) {
-                Text(text = "Lakukan Pembelajaran")
+                Text(
+                    text = "Lakukan Pembayaran",
+                    style = TextStyle(
+                        fontSize = 16.sp,
+                        fontFamily = FontFamily(Font(R.font.roboto_medium)),
+                        fontWeight = FontWeight(400),
+                        color = Color(0xFFFFFFFF),
+                        textAlign = TextAlign.Center,
+                    )
+                )
             }
         }
     }
@@ -184,5 +323,5 @@ fun PaymentSummaryScreen() {
 @Preview
 @Composable
 private fun PaymentSummaryScreenPreview() {
-    PaymentSummaryScreen()
+    PaymentSummaryScreen(navController = rememberNavController())
 }

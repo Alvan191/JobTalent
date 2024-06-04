@@ -1,4 +1,6 @@
 package com.example.jobtalent.presentation.model
 
-class FileModel {
-}
+data class FileModel (
+    var fileName: String? = null,
+    var data: String? = null
+)

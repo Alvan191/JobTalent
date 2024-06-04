@@ -6,10 +6,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -18,10 +16,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CalendarMonth
+import androidx.compose.material.icons.filled.NavigateNext
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
@@ -30,6 +28,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -37,6 +36,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -45,35 +45,56 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.jobtalent.R
-import com.example.jobtalent.data.KategoriItem
-import com.example.jobtalent.presentation.model.KategoriKerja
+import com.example.jobtalent.data.DataStore
+import com.example.jobtalent.data.SharedPreferencesManager
+import com.example.jobtalent.navigation.Screen
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
     modifier: Modifier,
-    kategoriItem: List<KategoriKerja> = KategoriItem.dataKategori
+    navController: NavController
 ) {
+    // Menerapkan SharedPreferences
+    val context = LocalContext.current
+    val sharedPreferencesManager = remember {
+        SharedPreferencesManager(context)
+    }
+    val email = sharedPreferencesManager.email ?: ""
+
+    // Menerapkan Calender
+    val currentDate = LocalDate.now()
+    val dayOfWeek = currentDate.dayOfWeek.getDisplayName(java.time.format.TextStyle.SHORT, Locale("id", "ID"))
+    val formattedDate = currentDate.format(DateTimeFormatter.ofPattern("d MMM yyyy", Locale("id", "ID")))
+    val displayText = "$dayOfWeek, $formattedDate"
+
+
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
+            .padding(10.dp)
             .background(
                 color = Color.White
             ),
-        contentPadding = PaddingValues(horizontal = 10.dp, vertical = 10.dp)
     ) {
         item {
             Row(
@@ -81,7 +102,12 @@ fun HomeScreen(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
-                    text = "Hi, Anto 😊",
+                    text = buildAnnotatedString {
+                        append("Hi, ")
+                        withStyle(style = SpanStyle(MaterialTheme.colorScheme.primary)) {
+                            append(email + "😍")
+                        }
+                    },
                     style = TextStyle(
                         fontSize = 20.sp,
                         fontFamily = FontFamily(Font(R.font.roboto_black)),
@@ -93,6 +119,8 @@ fun HomeScreen(
                     imageVector = Icons.Default.Notifications,
                     contentDescription = "Notification Icon",
                     tint = Color(0xFF005695),
+                    modifier = Modifier
+                        .clickable { navController.navigate(Screen.Notificationn.route) }
                 )
             }
 
@@ -106,7 +134,7 @@ fun HomeScreen(
                     tint = Color(0xFF848484),
                 )
                 Text(
-                    text = "Sab, 4 Mei 2024",
+                    text = displayText,
                     style = TextStyle(
                         fontSize = 14.sp,
                         fontFamily = FontFamily(Font(R.font.roboto_black)),
@@ -180,7 +208,7 @@ fun HomeScreen(
                         spotColor = Color(0x1A000000),
                         ambientColor = Color(0x1A000000)
                     )
-                    .padding(16.dp)
+                    .padding(start = 16.dp, top = 16.dp, end = 16.dp)
             ) {
                 Row(
                     horizontalArrangement = Arrangement.SpaceBetween,
@@ -199,7 +227,7 @@ fun HomeScreen(
                         )
                         Spacer(modifier = Modifier.height(25.dp))
                         Button(
-                            onClick = { /* TODO: Handle click */ },
+                            onClick = { navController.navigate(Screen.Tipss.route) },
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = Color(0xFFBDEBF1)
                             ),
@@ -229,7 +257,7 @@ fun HomeScreen(
             }
             Spacer(modifier = Modifier.height(15.dp))
             Text(
-                text = "Tips untuk kamu",
+                text = "Kategori",
                 style = TextStyle(
                     fontSize = 16.sp,
                     fontFamily = FontFamily(Font(R.font.roboto_black)),
@@ -238,18 +266,202 @@ fun HomeScreen(
                 )
             )
             Spacer(modifier = Modifier.height(10.dp))
-        }
 
-        //Halaman List Kategorinya
-
-        items(kategoriItem, key = { it.id }) { kategori ->
-            ColumnItem(
-                kategori = kategori,
+            Row (
+                horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier
-            )
-        }
+                    .fillMaxWidth()
+            ){
+                Card (
+                    modifier = Modifier
+                        .clickable { navController.navigate(Screen.KategoriPesanan.route) }
+                        .padding(start = 7.dp)
+                        .width(175.dp)
+                        .wrapContentHeight(),
+                    colors = CardDefaults.cardColors(
+                        containerColor = Color.White
+                    ),
+                    elevation = CardDefaults.cardElevation(4.dp)
+                ){
+                    Column(
+                        modifier
+                            .padding(10.dp)
+                    ){
+                        Image(
+                            painter = painterResource(id = R.drawable.umkm),
+                            contentDescription = "umkm",
+                            modifier = Modifier
+                                .clip(RoundedCornerShape(5.dp))
+                                .size(width = 153.dp, height = 90.dp),
+                            contentScale = ContentScale.Crop
+                        )
+                        Spacer(modifier = Modifier.height(10.dp))
+                        Text(
+                            text = "UMKM",
+                            fontFamily = FontFamily(Font(R.font.roboto_black)),
+                            fontSize = 22.sp,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                        )
+                        Spacer(modifier = Modifier.height(5.dp))
+                        Text(
+                            text = "Tersedia 50 Jasa",
+                            fontFamily = FontFamily(Font(R.font.roboto_black)),
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight(500),
+                            color = Color(0xFF979797),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                        )
+                        Spacer(modifier = Modifier.height(10.dp))
+                    }
+                }
+                Card (
+                    modifier = Modifier
+                        .clickable { /*isi navigasi*/ }
+                        .padding(end = 7.dp)
+                        .width(175.dp)
+                        .wrapContentHeight(),
+                    colors = CardDefaults.cardColors(
+                        containerColor = Color.White
+                    ),
+                    elevation = CardDefaults.cardElevation(4.dp)
+                ){
+                    Column(
+                        modifier
+                            .padding(10.dp)
+                    ){
+                        Image(
+                            painter = painterResource(id = R.drawable.musisi),
+                            contentDescription = "musisi",
+                            modifier = Modifier
+                                .clip(RoundedCornerShape(5.dp))
+                                .size(width = 153.dp, height = 90.dp),
+                            contentScale = ContentScale.Crop
+                        )
+                        Spacer(modifier = Modifier.height(10.dp))
+                        Text(
+                            text = "Musisi",
+                            fontFamily = FontFamily(Font(R.font.roboto_black)),
+                            fontSize = 22.sp,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                        )
+                        Spacer(modifier = Modifier.height(5.dp))
+                        Text(
+                            text = "Tersedia 30 Jasa",
+                            fontFamily = FontFamily(Font(R.font.roboto_black)),
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight(500),
+                            color = Color(0xFF979797),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                        )
+                        Spacer(modifier = Modifier.height(10.dp))
+                    }
+                }
+            }
+            Spacer(modifier = Modifier.height(15.dp))
+            Row (
+                horizontalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier
+                    .fillMaxWidth()
+            ){
+                Card (
+                    modifier = Modifier
+                        .clickable { /*isi navigasi*/ }
+                        .padding(start = 7.dp)
+                        .width(175.dp)
+                        .wrapContentHeight(),
+                    colors = CardDefaults.cardColors(
+                        containerColor = Color.White
+                    ),
+                    elevation = CardDefaults.cardElevation(4.dp)
+                ){
+                    Column(
+                        modifier
+                            .padding(10.dp)
+                    ){
+                        Image(
+                            painter = painterResource(id = R.drawable.event),
+                            contentDescription = "event",
+                            modifier = Modifier
+                                .clip(RoundedCornerShape(5.dp))
+                                .size(width = 153.dp, height = 90.dp),
+                            contentScale = ContentScale.Crop
+                        )
+                        Spacer(modifier = Modifier.height(10.dp))
+                        Text(
+                            text = "Event",
+                            fontFamily = FontFamily(Font(R.font.roboto_black)),
+                            fontSize = 22.sp,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                        )
+                        Spacer(modifier = Modifier.height(5.dp))
+                        Text(
+                            text = "Tersedia 15 Jasa",
+                            fontFamily = FontFamily(Font(R.font.roboto_black)),
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight(500),
+                            color = Color(0xFF979797),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                        )
+                        Spacer(modifier = Modifier.height(10.dp))
+                    }
+                }
+                Card (
+                    modifier = Modifier
+                        .clickable { /*isi navigasi*/ }
+                        .padding(end = 7.dp)
+                        .width(175.dp)
+                        .wrapContentHeight(),
+                    colors = CardDefaults.cardColors(
+                        containerColor = Color.White
+                    ),
+                    elevation = CardDefaults.cardElevation(4.dp)
+                ){
+                    Column(
+                        modifier
+                            .padding(10.dp)
+                    ){
+                        Image(
+                            painter = painterResource(id = R.drawable.desain),
+                            contentDescription = "desain",
+                            modifier = Modifier
+                                .clip(RoundedCornerShape(5.dp))
+                                .size(width = 153.dp, height = 90.dp),
+                            contentScale = ContentScale.Crop
+                        )
+                        Spacer(modifier = Modifier.height(10.dp))
+                        Text(
+                            text = "Desain",
+                            fontFamily = FontFamily(Font(R.font.roboto_black)),
+                            fontSize = 22.sp,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                        )
+                        Spacer(modifier = Modifier.height(5.dp))
+                        Text(
+                            text = "Tersedia 25 Jasa",
+                            fontFamily = FontFamily(Font(R.font.roboto_black)),
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight(500),
+                            color = Color(0xFF979797),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                        )
+                        Spacer(modifier = Modifier.height(10.dp))
+                    }
+                }
+            }
 
-        item {
+
             Spacer(modifier = Modifier.height(15.dp))
             Text(
                 text = "Kemajuan Terbaru",
@@ -262,193 +474,160 @@ fun HomeScreen(
             )
             Spacer(modifier = Modifier.height(10.dp))
 
-            Card (
-                colors = CardDefaults.cardColors(
-                    containerColor = Color.White
-                ),
-                elevation = CardDefaults.cardElevation(10.dp)
-            ){
-                Box(
+            Column {
+                Card(
+                    colors = CardDefaults.cardColors(
+                        containerColor = Color.White
+                    ),
                     modifier = Modifier
-                        .padding(10.dp)
-                        .fillMaxWidth()
-                        .height(height = 160.dp)
-                        .background(
-                            color = Color.White
-                        )
+                        .clickable { navController.navigate(Screen.Trackingsc.route) },
+                    elevation = CardDefaults.cardElevation(10.dp)
                 ) {
-                    Column {
-                        Row(
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            Image(
-                                painter = painterResource(id = R.drawable.john_kramer),
-                                contentDescription = "image description",
-                                contentScale = ContentScale.FillBounds,
-                                modifier = Modifier
-                                    .width(width = 50.dp)
-                                    .height(height = 50.dp)
-                                    .clip(RoundedCornerShape(4.dp))
+                    Box(
+                        modifier = Modifier
+                            .padding(10.dp)
+                            .fillMaxWidth()
+                            .height(height = 160.dp)
+                            .background(
+                                color = Color.White
                             )
-                            Column(
-                                modifier = Modifier.padding(start = 8.dp)
+                    ) {
+                        Column {
+                            Row(
+                                modifier = Modifier.fillMaxWidth()
                             ) {
-                                Text(
-                                    text = "John Kramer",
-                                    style = TextStyle(
-                                        fontSize = 14.sp,
-                                        fontFamily = FontFamily(Font(R.font.roboto_black)),
-                                        fontWeight = FontWeight(500),
-                                        color = Color(0xFF000000)
-                                    )
+                                Image(
+                                    painter = painterResource(id = R.drawable.john_kramer),
+                                    contentDescription = "image description",
+                                    contentScale = ContentScale.FillBounds,
+                                    modifier = Modifier
+                                        .width(width = 50.dp)
+                                        .height(height = 50.dp)
+                                        .clip(RoundedCornerShape(4.dp))
                                 )
-                                Spacer(modifier = Modifier.height(10.dp))
-                                Text(
-                                    text = "Desain",
-                                    style = TextStyle(
-                                        fontSize = 12.sp,
-                                        fontFamily = FontFamily(Font(R.font.roboto_black)),
-                                        fontWeight = FontWeight(300),
-                                        color = Color(0xFFB2B2B2)
+                                Row (
+                                    horizontalArrangement = Arrangement.SpaceBetween,
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                ){
+                                    Column(
+                                        modifier = Modifier.padding(start = 8.dp)
+                                    ) {
+                                        Text(
+                                            text = "John Kramer",
+                                            style = TextStyle(
+                                                fontSize = 14.sp,
+                                                fontFamily = FontFamily(Font(R.font.roboto_black)),
+                                                fontWeight = FontWeight(500),
+                                                color = Color(0xFF000000)
+                                            )
+                                        )
+                                        Spacer(modifier = Modifier.height(10.dp))
+                                        Text(
+                                            text = "Desain",
+                                            style = TextStyle(
+                                                fontSize = 12.sp,
+                                                fontFamily = FontFamily(Font(R.font.roboto_black)),
+                                                fontWeight = FontWeight(300),
+                                                color = Color(0xFFB2B2B2)
+                                            )
+                                        )
+                                    }
+                                    Icon(
+                                        imageVector = Icons.Default.NavigateNext,
+                                        contentDescription = "next",
+                                        modifier = Modifier
+                                            .size(35.dp)
                                     )
-                                )
+                                }
                             }
-                        }
-                        Spacer(modifier = Modifier.height(10.dp))
-                        Text(
-                            text = "Proses Pengerjaan",
-                            style = TextStyle(
-                                fontSize = 14.sp,
-                                fontFamily = FontFamily(Font(R.font.roboto_black)),
-                                fontWeight = FontWeight(300),
-                                color = Color(0xFF2D8F49)
-                                )
-                            )
-                        Box(
-                            modifier = Modifier
-                                .padding(top = 20.dp, start = 10.dp, end = 10.dp)
-                                .fillMaxWidth()
-                                .height(height = 6.dp)
-                                .background(
-                                    color = Color(0xFF005695),
-                                    shape = RoundedCornerShape(1.dp)
-                                )
-                        )
-                        Row(
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            Column (
-                                modifier = Modifier
-                                    .padding(top = 10.dp)
-                            ){
+                            Spacer(modifier = Modifier.height(10.dp))
                             Text(
-                                text = "Diterima",
+                                text = "Proses Pengerjaan",
                                 style = TextStyle(
-                                    fontSize = 12.sp,
+                                    fontSize = 14.sp,
                                     fontFamily = FontFamily(Font(R.font.roboto_black)),
-                                    fontWeight = FontWeight(400),
-                                    color = Color(0xFF000000)
-                                )
-                            )
-                            Text(
-                                text = "Apr 03, 2024 ",
-                                style = TextStyle(
-                                    fontSize = 12.sp,
-                                    fontFamily = FontFamily(Font(R.font.roboto_light)),
                                     fontWeight = FontWeight(300),
-                                    color = Color(0xFF000000)
+                                    color = Color(0xFF2D8F49)
                                 )
                             )
-                        }
-                            Column  (
+                            Box(
                                 modifier = Modifier
-                                    .padding(top = 10.dp)
-                            ){
-                            Text(
-                                text = "Selesai",
-                                style = TextStyle(
-                                    fontSize = 12.sp,
-                                    fontFamily = FontFamily(Font(R.font.roboto_black)),
-                                    fontWeight = FontWeight(400),
-                                    color = Color(0xFF000000)
-                                )
+                                    .padding(top = 20.dp, start = 10.dp, end = 10.dp)
+                                    .fillMaxWidth()
+                                    .height(height = 6.dp)
+                                    .background(
+                                        color = Color(0xFF005695),
+                                        shape = RoundedCornerShape(1.dp)
+                                    )
                             )
-                            Text(
-                                text = "Apr 05, 2024 ",
-                                style = TextStyle(
-                                    fontSize = 12.sp,
-                                    fontFamily = FontFamily(Font(R.font.roboto_light)),
-                                    fontWeight = FontWeight(300),
-                                    color = Color(0xFF000000)
-                                )
-                            )
-                        }
+                            Row(
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                Column(
+                                    modifier = Modifier
+                                        .padding(top = 10.dp)
+                                ) {
+                                    Text(
+                                        text = "Diterima",
+                                        style = TextStyle(
+                                            fontSize = 12.sp,
+                                            fontFamily = FontFamily(Font(R.font.roboto_black)),
+                                            fontWeight = FontWeight(400),
+                                            color = Color(0xFF000000)
+                                        )
+                                    )
+                                    Text(
+                                        text = "Apr 03, 2024 ",
+                                        style = TextStyle(
+                                            fontSize = 12.sp,
+                                            fontFamily = FontFamily(Font(R.font.roboto_light)),
+                                            fontWeight = FontWeight(300),
+                                            color = Color(0xFF000000)
+                                        )
+                                    )
+                                }
+                                Column(
+                                    modifier = Modifier
+                                        .padding(top = 10.dp)
+                                ) {
+                                    Text(
+                                        text = "Selesai",
+                                        style = TextStyle(
+                                            fontSize = 12.sp,
+                                            fontFamily = FontFamily(Font(R.font.roboto_black)),
+                                            fontWeight = FontWeight(400),
+                                            color = Color(0xFF000000)
+                                        )
+                                    )
+                                    Text(
+                                        text = "Apr 05, 2024 ",
+                                        style = TextStyle(
+                                            fontSize = 12.sp,
+                                            fontFamily = FontFamily(Font(R.font.roboto_light)),
+                                            fontWeight = FontWeight(300),
+                                            color = Color(0xFF000000)
+                                        )
+                                    )
+                                }
+                            }
                         }
                     }
                 }
             }
+            Spacer(modifier = Modifier.height(15.dp))
         }
     }
 }
 
-@Composable
-fun ColumnItem(kategori: KategoriKerja, modifier: Modifier) {
-    Card (
-        modifier = Modifier
-            .padding(5.dp)
-            .fillMaxWidth()
-            .height(height = 90.dp)
-            .aspectRatio(4f),
-        colors = CardDefaults.cardColors(
-            containerColor = Color.White
-        ),
-        elevation = CardDefaults.cardElevation(4.dp)
-    ){
-        Box(
-            modifier
-                .padding(10.dp)
-        ){
-            Row (){
-                Image(
-                    painter = painterResource(id = kategori.photo),
-                    contentDescription = kategori.name,
-                    modifier = Modifier
-                        .clip(RoundedCornerShape(5.dp))
-                        .size(width = 135.dp, height = 90.dp)
-                        .fillMaxSize(),
-                    contentScale = ContentScale.Crop
-                )
-                Spacer(modifier = Modifier.width(13.dp))
-                Column (
-                    modifier = Modifier.align(Alignment.CenterVertically)
-                ){
-                    Text(
-                        text = kategori.name,
-                        fontFamily = FontFamily(Font(R.font.roboto_black)),
-                        fontSize = 22.sp,
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                    )
-                    Spacer(modifier = Modifier.height(10.dp))
-                    Text(
-                        text = kategori.tersedia,
-                        fontFamily = FontFamily(Font(R.font.roboto_black)),
-                        fontSize = 14.sp,
-                        fontWeight = FontWeight(500),
-                        color = Color(0xFF979797),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                    )
-                }
-            }
-        }
-    }
-}
+
+
+
 
 @Preview
 @Composable
 private fun HomeScreenPreview() {
-    HomeScreen(modifier = Modifier)
+    HomeScreen(modifier = Modifier, navController = rememberNavController())
 }

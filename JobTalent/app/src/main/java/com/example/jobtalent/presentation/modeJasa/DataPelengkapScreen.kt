@@ -57,7 +57,13 @@ fun DataPelengkapScreen(
     var alamat by remember { mutableStateOf("") }
     var kota by remember { mutableStateOf("") }
 
-    LazyColumn {
+    LazyColumn (
+        modifier = Modifier
+            .fillMaxSize()
+            .background(
+                color = Color.White
+            )
+    ){
         item {
             Column(
                 modifier = Modifier

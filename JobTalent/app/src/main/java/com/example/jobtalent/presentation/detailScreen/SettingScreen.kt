@@ -1,4 +1,4 @@
-package com.example.login.ui.theme
+package com.example.jobtalent.presentation.detailScreen
 
 
 
@@ -6,6 +6,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -14,9 +15,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.NavigateNext
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -29,25 +32,59 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.login.R
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.example.jobtalent.R
+import com.example.jobtalent.navigation.Screen
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SettingsScreen() {
+fun SettingsScreen(
+    navController: NavController
+) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(text = "Pengaturan") },
+                title = {
+                    Text(
+                        text = "Pengaturan",
+                        style = TextStyle(
+                            fontSize = 16.sp,
+                            fontFamily = FontFamily(Font(R.font.roboto_bold)),
+                            fontWeight = FontWeight(600),
+                            color = Color(0xFF000000)
+                        )
+                    )
+                },
                 navigationIcon = {
-                    IconButton(onClick = { /* Handle back navigation */ }) {
-                        Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Back")
+                    Box(
+                        modifier = Modifier
+                            .size(44.dp)
+                            .shadow(8.dp, CircleShape)
+                            .clip(CircleShape)
+                            .background(Color.White)
+                            .clickable(onClick = { navController.popBackStack() })
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.ArrowBack,
+                            contentDescription = "Back",
+                            tint = Color.Black,
+                            modifier = Modifier
+                                .size(24.dp)
+                                .align(Alignment.Center)
+                        )
                     }
                 }
             )
@@ -61,20 +98,20 @@ fun SettingsScreen() {
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             SettingsItem(
-                iconRes = R.drawable.language, // Replace with your language icon drawable resource
+                iconRes = R.drawable.language,
                 label = "Bahasa",
-                onClick = { /* Handle language click */ }
+                onClick = { navController.navigate(Screen.Bahasasc.route) }
             )
             SettingsItemWithSwitch(
-                iconRes = R.drawable.notifications, // Replace with your notification icon drawable resource
+                iconRes = R.drawable.notifications,
                 label = "Notifikasi",
-                checked = true, // Initial state of the switch
-                onCheckedChange = { /* Handle switch state change */ }
+                checked = true,
+                onCheckedChange = {  }
             )
             SettingsItem(
-                iconRes = R.drawable.logout, // Replace with your logout icon drawable resource
+                iconRes = R.drawable.logout,
                 label = "Keluar Akun",
-                onClick = { /* Handle logout click */ }
+                onClick = {  }
 
             )
         }
@@ -97,10 +134,19 @@ fun SettingsItem(iconRes: Int, label: String, onClick: () -> Unit) {
             modifier = Modifier.size(24.dp)
         )
         Spacer(modifier = Modifier.width(16.dp))
-        Text(text = label, fontSize = 16.sp, fontWeight = FontWeight.Medium)
+        Text(
+            text = label,
+            style = TextStyle(
+                fontSize = 14.sp,
+                fontFamily = FontFamily(Font(R.font.roboto_light)),
+                fontWeight = FontWeight(700),
+                color = Color(0xFF000000),
+
+                )
+        )
         Spacer(modifier = Modifier.weight(1f))
         Icon(
-            painter = painterResource(id = R.drawable.switchbutton), // Replace with your arrow right icon drawable resource
+            imageVector = Icons.Default.NavigateNext, // Replace with your arrow right icon drawable resource
             contentDescription = null,
             tint = Color.Gray
         )
@@ -123,7 +169,15 @@ fun SettingsItemWithSwitch(iconRes: Int, label: String, checked: Boolean, onChec
             modifier = Modifier.size(24.dp)
         )
         Spacer(modifier = Modifier.width(16.dp))
-        Text(text = label, fontSize = 16.sp, fontWeight = FontWeight.Medium)
+        Text(
+            text = label,
+            style = TextStyle(
+                fontSize = 14.sp,
+                fontFamily = FontFamily(Font(R.font.roboto_light)),
+                fontWeight = FontWeight(700),
+                color = Color(0xFF000000),
+                )
+        )
         Spacer(modifier = Modifier.weight(1f))
         Switch(
             checked = switchState.value,
@@ -139,5 +193,5 @@ fun SettingsItemWithSwitch(iconRes: Int, label: String, checked: Boolean, onChec
 @Preview
 @Composable
 private fun SettingScreenPreview() {
-    SettingsScreen()
+    SettingsScreen(navController = rememberNavController())
 }

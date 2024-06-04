@@ -1,11 +1,15 @@
 package com.example.jobtalent.presentation.detailScreen
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -22,20 +26,56 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.example.jobtalent.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LanguageSettingsScreen() {
+fun LanguageSettingsScreen(
+    navController: NavController
+) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(text = "Bahasa") },
+                title = {
+                    Text(
+                        text = "Bahasa",
+                        style = TextStyle(
+                            fontSize = 16.sp,
+                            fontFamily = FontFamily(Font(R.font.roboto_bold)),
+                            fontWeight = FontWeight(600),
+                            color = Color(0xFF000000)
+                        )
+                    )
+                },
                 navigationIcon = {
-                    IconButton(onClick = { /* Handle back navigation */ }) {
-                        Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Back")
+                    Box(
+                        modifier = Modifier
+                            .size(44.dp)
+                            .shadow(8.dp, CircleShape)
+                            .clip(CircleShape)
+                            .background(Color.White)
+                            .clickable(onClick = { navController.popBackStack() })
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.ArrowBack,
+                            contentDescription = "Back",
+                            tint = Color.Black,
+                            modifier = Modifier
+                                .size(24.dp)
+                                .align(Alignment.Center)
+                        )
                     }
                 }
             )
@@ -72,7 +112,17 @@ fun LanguageOption(language: String, isSelected: Boolean, onSelect: (String) -> 
             .padding(vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Text(text = language, fontSize = 16.sp, modifier = Modifier.weight(1f))
+        Text(
+            text = language,
+            style = TextStyle(
+                fontSize = 14.sp,
+                lineHeight = 20.sp,
+                fontFamily = FontFamily(Font(R.font.roboto_medium)),
+                fontWeight = FontWeight(800),
+                color = Color(0xFF000000)
+            ),
+            modifier = Modifier.weight(1f)
+        )
         RadioButton(
             selected = isSelected,
             onClick = { onSelect(language) }
@@ -83,5 +133,5 @@ fun LanguageOption(language: String, isSelected: Boolean, onSelect: (String) -> 
 @Preview
 @Composable
 private fun LanguageSettingsScreenPreview() {
-    LanguageSettingsScreen()
+    LanguageSettingsScreen(navController = rememberNavController())
 }

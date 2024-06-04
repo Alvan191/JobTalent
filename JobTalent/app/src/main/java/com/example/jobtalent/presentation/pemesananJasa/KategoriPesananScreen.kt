@@ -55,7 +55,6 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.jobtalent.R
 import com.example.jobtalent.data.KatPesananItem
-import com.example.jobtalent.data.KategoriItem
 import com.example.jobtalent.presentation.model.KategoriKerja
 import com.example.jobtalent.presentation.model.KategoriPemangkas
 import com.example.jobtalent.presentation.model.KategoriPenjahit

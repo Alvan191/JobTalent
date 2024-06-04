@@ -34,6 +34,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -42,6 +43,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
@@ -54,12 +56,22 @@ import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.jobtalent.R
+import com.example.jobtalent.data.SharedPreferencesManager
 import com.example.jobtalent.navigation.Screen
 
 @Composable
 fun ProfileScreen(
     navController: NavController,
+    modifier: Modifier
 ) {
+    val context = LocalContext.current
+
+    val sharedPreferencesManager = remember {
+        SharedPreferencesManager(context)
+    }
+
+    val email = sharedPreferencesManager.email ?: ""
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -123,7 +135,7 @@ fun ProfileScreen(
                             .padding(top = 10.dp)
                     )
                     Text(
-                        text = "anto89@gmail.com",
+                        text = email,
                         style = TextStyle(
                             fontSize = 13.sp,
                             lineHeight = 16.sp,
@@ -157,8 +169,8 @@ fun ProfileScreen(
                 LazyRow (
                     modifier = Modifier
                         .fillMaxWidth()
+                        .clickable { navController.navigate(Screen.Accountsc.route) }
                 ){
-
                     item {
                         Icon(
                             imageVector = Icons.Default.Person,
@@ -196,9 +208,9 @@ fun ProfileScreen(
                 LazyRow (
                     modifier = Modifier
                         .fillMaxWidth()
+                        .clickable { navController.navigate(Screen.Settingss.route) }
                         .padding(top = 26.dp)
                 ){
-
                     item {
                         Icon(
                             imageVector = Icons.Default.Settings,
@@ -237,6 +249,7 @@ fun ProfileScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(top = 26.dp)
+                        .clickable {  }
                 ){
 
                     item {
@@ -304,5 +317,5 @@ fun ProfileScreen(
 @Preview
 @Composable
 private fun ProfileScreenPreview() {
-    ProfileScreen(navController = rememberNavController())
+    ProfileScreen(navController = rememberNavController(), modifier = Modifier)
 }

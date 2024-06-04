@@ -1,4 +1,4 @@
-package com.example.jobtalent.login
+package com.example.jobtalent.presentation.login
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
