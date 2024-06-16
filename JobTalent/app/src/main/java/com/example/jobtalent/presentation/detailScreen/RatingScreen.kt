@@ -28,6 +28,10 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -35,10 +39,12 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.foundation.text.BasicTextField
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 
@@ -46,6 +52,9 @@ import androidx.navigation.compose.rememberNavController
 fun RatingJasa(
     navController: NavController
 ) {
+    var selectedRating by remember { mutableStateOf(0) }
+    var reviewText by remember { mutableStateOf(TextFieldValue("")) }
+
     Column (
         modifier = Modifier
             .fillMaxSize()
@@ -108,36 +117,16 @@ fun RatingJasa(
                 modifier = Modifier
                     .fillMaxWidth()
             ){
-                Icon(
-                    imageVector = Icons.Default.Star,
-                    contentDescription = "Star Icon",
-                    tint = Color(0xff717171),
-                    modifier = Modifier.size(50.dp)
-                )
-                Icon(
-                    imageVector = Icons.Default.Star,
-                    contentDescription = "Star Icon",
-                    tint = Color(0xff717171),
-                    modifier = Modifier.size(50.dp)
-                )
-                Icon(
-                    imageVector = Icons.Default.Star,
-                    contentDescription = "Star Icon",
-                    tint = Color(0xff717171),
-                    modifier = Modifier.size(50.dp)
-                )
-                Icon(
-                    imageVector = Icons.Default.Star,
-                    contentDescription = "Star Icon",
-                    tint = Color(0xff717171),
-                    modifier = Modifier.size(50.dp)
-                )
-                Icon(
-                    imageVector = Icons.Default.Star,
-                    contentDescription = "Star Icon",
-                    tint = Color(0xff717171),
-                    modifier = Modifier.size(50.dp)
-                )
+                for (i in 1..5) {
+                    Icon(
+                        imageVector = Icons.Default.Star,
+                        contentDescription = "Star Icon",
+                        tint = if (i <= selectedRating) Color(0xffffd700) else Color(0xff717171),
+                        modifier = Modifier
+                            .size(50.dp)
+                            .clickable { selectedRating = i }
+                    )
+                }
             }
         }
 
@@ -163,15 +152,29 @@ fun RatingJasa(
                     shape = RoundedCornerShape(5.dp)
                 )
         ){
-            Text(
-                text = "Masukkan tanggapan Anda disini",
-                style = TextStyle(
+            BasicTextField(
+                value = reviewText,
+                onValueChange = { reviewText = it },
+                textStyle = TextStyle(
                     fontSize = 12.sp,
                     fontWeight = FontWeight.W300,
-                    color = Color(0x96717171)),
+                    color = Color(0xFF000000)
+                ),
                 modifier = Modifier
-                    .offset(17.dp, 19.dp)
-            )
+                    .padding(17.dp)
+                    .fillMaxSize()
+            ) { innerTextField ->
+                if (reviewText.text.isEmpty()) {
+                    Text(
+                        text = "Masukkan tanggapan Anda disini",
+                        style = TextStyle(
+                            fontSize = 12.sp,
+                            fontWeight = FontWeight.W300,
+                            color = Color(0x96717171)),
+                    )
+                }
+                innerTextField()
+            }
         }
         Spacer(modifier = Modifier.height(350.dp))
         Button(
@@ -205,5 +208,5 @@ fun RatingJasa(
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun RatingJasaPreview() {
-        RatingJasa(navController = rememberNavController())
+    RatingJasa(navController = rememberNavController())
 }

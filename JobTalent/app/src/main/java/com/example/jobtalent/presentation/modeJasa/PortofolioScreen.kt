@@ -107,9 +107,8 @@ fun PortofolioScreen(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(15.dp),
-                        horizontalArrangement = Arrangement.SpaceBetween,
+                        horizontalArrangement = Arrangement.End,
                     ){
-                        Box(modifier = Modifier)
                         Box(
                             modifier = Modifier
                                 .size(37.dp)

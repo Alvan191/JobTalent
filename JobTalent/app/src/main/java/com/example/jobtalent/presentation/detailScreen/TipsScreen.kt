@@ -161,7 +161,7 @@ fun GridTips(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(180.dp)
-                .zIndex(0f), // Card berada di bawah lingkaran
+                .zIndex(0f),
             colors = CardDefaults.cardColors(
                 containerColor = Color.White
             ),
