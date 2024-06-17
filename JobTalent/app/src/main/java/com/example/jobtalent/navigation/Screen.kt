@@ -30,4 +30,5 @@ sealed class Screen (val route: String){
     data object Metodepayment: Screen ("metode_pembayaran_screen")
     data object Komentarsc: Screen ("komentar_screen")
     data object Postingdet: Screen ("detail_postingan")
+    data object DetJasa: Screen ("detail_pesanan_jasa")
 }

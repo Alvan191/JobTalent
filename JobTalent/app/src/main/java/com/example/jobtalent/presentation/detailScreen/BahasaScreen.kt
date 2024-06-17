@@ -56,13 +56,14 @@ fun LanguageSettingsScreen(
                 TopAppBar(
                     title = {
                         Text(
-                            text = "     Bahasa",
+                            text = "Bahasa",
                             style = TextStyle(
                                 fontSize = 16.sp,
                                 fontFamily = FontFamily(Font(R.font.roboto_bold)),
                                 fontWeight = FontWeight(600),
                                 color = Color(0xFF000000)
-                            )
+                            ),
+                            modifier = Modifier.padding(start = 15.dp)
                         )
                     },
                     navigationIcon = {

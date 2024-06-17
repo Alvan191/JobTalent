@@ -1,4 +1,4 @@
-package com.example.jobtalent.presentation.detailScreen
+package com.example.jobtalent.presentation.pemesananJasa
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

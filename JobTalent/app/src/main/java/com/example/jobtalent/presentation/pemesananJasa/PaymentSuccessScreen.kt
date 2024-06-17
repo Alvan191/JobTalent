@@ -81,7 +81,7 @@ fun PaymentSuccessScreen(
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color(0xFF005695)
             ),
-            onClick = { }
+            onClick = { navController.navigate(Screen.Chat.route)}
         ) {
             Text(
                 text = "Kembali ke Chat",

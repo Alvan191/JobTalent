@@ -140,7 +140,8 @@ fun CommunityScreen(
                     desc_content = "Wahhh baru kali ini dapat penjahit yang bertalenta, gesit, ramah, kreatif, ... pokoknya sangat recomended lah \uD83D\uDE2D\uD83D\uDE2D\uD83D\uDE23",
                     image_content = R.drawable.image_empat,
                     like = "500",
-                    comment = "50 komentar"
+                    comment = "50 komentar",
+                    onClick = { navController.navigate(Screen.Komentarsc.route) }
                 )
                 Spacer(modifier = Modifier.height(20.dp))
                 ContentLazy(
@@ -150,7 +151,8 @@ fun CommunityScreen(
                     desc_content = "Wahhh baru kali ini dapat penjahit yang bertalenta, gesit, ramah, kreatif, ... pokoknya sangat recomended lah \uD83D\uDE2D\uD83D\uDE2D\uD83D\uDE23",
                     image_content = R.drawable.image_lima,
                     like = "200",
-                    comment = "15 komentar"
+                    comment = "15 komentar",
+                    onClick = { navController.navigate(Screen.Komentarsc.route) }
                 )
                 Spacer(modifier = Modifier.height(20.dp))
                 ContentLazySec(
@@ -159,7 +161,8 @@ fun CommunityScreen(
                     time = "55 menit",
                     desc_content = "Wahhh baru kali ini dapat penjahit yang bertalenta, gesit, ramah, kreatif, ... pokoknya sangat recomended lah \uD83D\uDE2D\uD83D\uDE2D\uD83D\uDE23",
                     like = "110",
-                    comment = "23 komentar"
+                    comment = "23 komentar",
+                    onClick = { navController.navigate(Screen.Komentarsc.route) }
                 )
                 Spacer(modifier = Modifier.height(20.dp))
                 ContentLazy(
@@ -169,7 +172,8 @@ fun CommunityScreen(
                     desc_content = "Wahhh baru kali ini dapat penjahit yang bertalenta, gesit, ramah, kreatif, ... pokoknya sangat recomended lah \uD83D\uDE2D\uD83D\uDE2D\uD83D\uDE23",
                     image_content = R.drawable.image_empat,
                     like = "430",
-                    comment = "160 komentar"
+                    comment = "160 komentar",
+                    onClick = { navController.navigate(Screen.Komentarsc.route) }
                 )
                 Spacer(modifier = Modifier.height(8.dp))
             }
@@ -178,7 +182,7 @@ fun CommunityScreen(
 }
 
 @Composable
-fun ContentLazy(image: Int, name: String, time: String, desc_content: String, image_content: Int, like: String, comment: String) {
+fun ContentLazy(image: Int, name: String, time: String, desc_content: String, image_content: Int, like: String, comment: String, onClick: () -> Unit) {
     var isClicked by remember { mutableStateOf(false) }
     val iconColor = if (isClicked) Color(0xFF3F9AFA) else Color.Black
 
@@ -332,6 +336,7 @@ fun ContentLazy(image: Int, name: String, time: String, desc_content: String, im
                             tint = Color.Black,
                             modifier = Modifier
                                 .size(22.dp)
+                                .clickable (onClick = onClick)
                         )
                         Icon(
                             imageVector = Icons.Default.Share,
@@ -347,7 +352,7 @@ fun ContentLazy(image: Int, name: String, time: String, desc_content: String, im
 }
 
 @Composable
-fun ContentLazySec(image: Int, name: String, time: String, desc_content: String, like: String, comment: String) {
+fun ContentLazySec(image: Int, name: String, time: String, desc_content: String, like: String, comment: String, onClick: () -> Unit) {
     var isClicked by remember { mutableStateOf(false) }
     val iconColor = if (isClicked) Color(0xFF3F9AFA) else Color.Black
 
@@ -494,6 +499,7 @@ fun ContentLazySec(image: Int, name: String, time: String, desc_content: String,
                             tint = Color.Black,
                             modifier = Modifier
                                 .size(22.dp)
+                                .clickable (onClick = onClick)
                         )
                         Icon(
                             imageVector = Icons.Default.Share,

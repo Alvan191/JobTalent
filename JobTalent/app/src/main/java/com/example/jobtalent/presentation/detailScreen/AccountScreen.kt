@@ -6,12 +6,14 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -40,6 +42,7 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -65,13 +68,14 @@ fun AccountScreen(
                 TopAppBar(
                     title = {
                         Text(
-                            text = "    Akun Saya",
+                            text = "Akun Saya",
                             style = TextStyle(
                                 fontSize = 16.sp,
                                 fontFamily = FontFamily(Font(R.font.roboto_bold)),
                                 fontWeight = FontWeight(600),
                                 color = Color(0xFF000000)
-                            )
+                            ),
+                            modifier = Modifier.padding(start = 15.dp)
                         )
                     },
                     navigationIcon = {
@@ -206,32 +210,36 @@ fun AccountScreen(
                         visualTransformation = PasswordVisualTransformation(),
                         modifier = Modifier.fillMaxWidth()
                     )
-                    Spacer(modifier = Modifier.height(32.dp))
-                    Button(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(55.dp)
-                            .background(
-                                color = Color(0xFF005695),
-                                shape = RoundedCornerShape(size = 5.dp)
-                            )
-                            .padding(start = 15.dp, top = 10.dp, end = 15.dp, bottom = 10.dp),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = Color(0xFF005695)
-                        ),
+                    Spacer(modifier = Modifier.height(40.dp))
+                    Row (
+                        horizontalArrangement = Arrangement.Center,
+                        modifier = Modifier.fillMaxWidth()
+                    ){
+                        Button(
+                            modifier = Modifier
+                                .width(120.dp)
+                                .height(55.dp)
+                                .background(
+                                    color = Color(0xFF005695),
+                                    shape = RoundedCornerShape(size = 10.dp)
+                                ),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color(0xFF005695)
+                            ),
 
-                        onClick = { navController.popBackStack() }
-                    ) {
-                        Text(
-                            text = "Simpan",
-                            style = TextStyle(
-                                fontSize = 14.sp,
-                                fontFamily = FontFamily(Font(R.font.roboto_medium)),
-                                fontWeight = FontWeight(400),
-                                color = Color(0xFFFFFFFF),
-
+                            onClick = { navController.popBackStack() }
+                        ) {
+                            Text(
+                                text = "Simpan",
+                                style = TextStyle(
+                                    fontSize = 14.sp,
+                                    fontFamily = FontFamily(Font(R.font.roboto_medium)),
+                                    fontWeight = FontWeight(400),
+                                    color = Color(0xFFFFFFFF),
+                                    textAlign = TextAlign.Center
                                 )
-                        )
+                            )
+                        }
                     }
                 }
             }

@@ -65,21 +65,21 @@ fun PaymentSummaryScreen(
             TopAppBar(
                 title = {
                     Text(
-                        text = "    Ringkasan Pembayaran",
+                        text = "Ringkasan Pembayaran",
                         style = TextStyle(
                             fontSize = 16.sp,
                             fontFamily = FontFamily(Font(R.font.roboto_bold)),
                             fontWeight = FontWeight(600),
-                            color = Color(0xFF000000),
-
-                            )
+                            color = Color(0xFF000000)
+                        ),
+                        modifier = Modifier.padding(start = 15.dp)
                     )
                 },
                 navigationIcon = {
                     Box(
                         modifier = Modifier
+                            .padding(start = 10.dp)
                             .size(44.dp)
-                            .shadow(8.dp, CircleShape)
                             .clip(CircleShape)
                             .background(Color.White)
                             .clickable(onClick = { navController.popBackStack() })

@@ -158,7 +158,7 @@ fun KategoriPesananScreen(
 fun <katJahit : KategoriPenjahit> ColumnItem(item: katJahit, navController: NavController) {
     Card (
         modifier = Modifier
-            .clickable { navController.navigate(Screen.Metodepayment.route) }
+            .clickable { navController.navigate(Screen.DetJasa.route) }
             .padding(3.dp)
             .fillMaxWidth()
             .wrapContentHeight(),
@@ -326,7 +326,7 @@ fun <katJahit : KategoriPenjahit> ColumnItem(item: katJahit, navController: NavC
 fun <katPangkas : KategoriPemangkas> PemangkasColumnItem(item: katPangkas, navController: NavController) {
     Card (
         modifier = Modifier
-            .clickable { navController.navigate(Screen.Metodepayment.route) }
+            .clickable { navController.navigate(Screen.DetJasa.route) }
             .padding(3.dp)
             .fillMaxWidth()
             .wrapContentHeight(),
@@ -494,7 +494,7 @@ fun <katPangkas : KategoriPemangkas> PemangkasColumnItem(item: katPangkas, navCo
 fun <katServis : KategoriServis> ServisColumnItem(item: katServis, navController: NavController) {
     Card (
         modifier = Modifier
-            .clickable { navController.navigate(Screen.Metodepayment.route) }
+            .clickable { navController.navigate(Screen.DetJasa.route) }
             .padding(3.dp)
             .fillMaxWidth()
             .wrapContentHeight(),

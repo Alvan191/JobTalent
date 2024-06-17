@@ -146,13 +146,12 @@ fun SettingsItem(iconRes: Int, label: String, onClick: () -> Unit) {
                 fontSize = 14.sp,
                 fontFamily = FontFamily(Font(R.font.roboto_light)),
                 fontWeight = FontWeight(700),
-                color = Color(0xFF000000),
-
-                )
+                color = Color(0xFF000000)
+            )
         )
         Spacer(modifier = Modifier.weight(1f))
         Icon(
-            imageVector = Icons.Default.NavigateNext, // Replace with your arrow right icon drawable resource
+            imageVector = Icons.Default.NavigateNext,
             contentDescription = null,
             tint = Color.Gray
         )

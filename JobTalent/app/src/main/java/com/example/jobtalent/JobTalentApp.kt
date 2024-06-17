@@ -30,7 +30,8 @@ import com.example.jobtalent.navigation.Screen
 import com.example.jobtalent.presentation.ChatScreen
 import com.example.jobtalent.presentation.CommunityScreen
 import com.example.jobtalent.presentation.HomeScreen
-import com.example.jobtalent.presentation.MetodePembayaranScreen
+import com.example.jobtalent.presentation.KomentarScreen
+import com.example.jobtalent.presentation.pemesananJasa.MetodePembayaranScreen
 import com.example.jobtalent.presentation.Postingan
 import com.example.jobtalent.presentation.ProfileScreen
 import com.example.jobtalent.presentation.RatingJasa
@@ -47,6 +48,7 @@ import com.example.jobtalent.presentation.modeJasa.KategoriJasaScreen
 import com.example.jobtalent.presentation.modeJasa.NamaTampilanScreen
 import com.example.jobtalent.presentation.modeJasa.PengalamanScreen
 import com.example.jobtalent.presentation.modeJasa.PortofolioScreen
+import com.example.jobtalent.presentation.pemesananJasa.DetailJasaScreen
 import com.example.jobtalent.presentation.pemesananJasa.KategoriPesananScreen
 import com.example.jobtalent.presentation.pemesananJasa.PaymentSummaryScreen
 
@@ -158,7 +160,13 @@ fun JobTalentApp(
                 MetodePembayaranScreen(navController)
             }
             composable(Screen.Postingdet.route){
-                Postingan()
+                Postingan(navController)
+            }
+            composable(Screen.Komentarsc.route){
+                KomentarScreen(navController)
+            }
+            composable(Screen.DetJasa.route){
+                DetailJasaScreen(navController)
             }
         }
     }

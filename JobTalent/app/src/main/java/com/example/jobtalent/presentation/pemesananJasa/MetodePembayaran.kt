@@ -1,4 +1,4 @@
-package com.example.jobtalent.presentation
+package com.example.jobtalent.presentation.pemesananJasa
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -30,6 +30,8 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -38,7 +40,6 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.jobtalent.R
 import com.example.jobtalent.navigation.Screen
-import com.example.jobtalent.ui.theme.JobTalentTheme
 
 @Composable
 fun MetodePembayaranScreen(
@@ -46,7 +47,7 @@ fun MetodePembayaranScreen(
 ) {
     Column (
         modifier = Modifier
-            .background(Color(0xfff8f8f8))
+            .background(color = Color.White)
             .fillMaxSize()
             .padding(15.dp)
     ) {
@@ -59,7 +60,6 @@ fun MetodePembayaranScreen(
             Box (
                 modifier = Modifier
                     .size(45.dp)
-                    .shadow(8.dp, CircleShape)
                     .clip(CircleShape)
                     .background(Color.White)
                     .clickable(onClick = { navController.popBackStack() })
@@ -74,21 +74,31 @@ fun MetodePembayaranScreen(
                 )
             }
             Text(
-                text = "  Metode Pembayaran",
+                text = "Metode Pembayaran",
                 style = TextStyle(
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.W600,
-                    color = Color(0xff000000)),
-                modifier = Modifier.padding(horizontal = 50.dp, vertical = 8.dp)
+                    fontSize = 16.sp,
+                    fontFamily = FontFamily(Font(R.font.roboto_bold)),
+                    fontWeight = FontWeight(600),
+                    color = Color(0xFF000000)
+                ),
+                modifier = Modifier.padding(start = 15.dp)
             )
         }
+        Spacer(modifier = Modifier.height(40.dp))
         Text(
             text = "Bank/ Virtual Account",
-            modifier = Modifier.padding(vertical = 10.dp)
+            style = TextStyle(
+                fontSize = 14.sp,
+                fontFamily = FontFamily(Font(R.font.roboto_medium)),
+                fontWeight = FontWeight(400),
+                color = Color(0xFF000000)
+            )
         )
+        Spacer(modifier = Modifier.height(10.dp))
         Box(
             modifier = Modifier
                 .requiredHeight(height = 60.dp)
+                .shadow(5.dp)
                 .clip(shape = RoundedCornerShape(5.dp))
                 .background(color = Color.White)
                 .offset(x = 10.dp)
@@ -122,14 +132,22 @@ fun MetodePembayaranScreen(
                     .offset(x = 50.dp, y = 0.dp)
             )
         }
+        Spacer(modifier = Modifier.height(20.dp))
         Text(
             text = "E-Wallet",
-            modifier = Modifier.padding(vertical = 20.dp),
+            style = TextStyle(
+                fontSize = 14.sp,
+                fontFamily = FontFamily(Font(R.font.roboto_medium)),
+                fontWeight = FontWeight(400),
+                color = Color(0xFF000000)
+            )
         )
+        Spacer(modifier = Modifier.height(10.dp))
 
         Box (
             modifier = Modifier
                 .fillMaxWidth()
+                .shadow(5.dp)
                 .clickable { navController.navigate(Screen.Paymentsum.route) }
                 .requiredHeight(height = 60.dp)
                 .clip(shape = RoundedCornerShape(5.dp))
@@ -145,8 +163,7 @@ fun MetodePembayaranScreen(
                     .background(color = Color(0xffd9e7f2))
                     .align(alignment = Alignment.CenterStart)
 
-            ){
-            }
+            ){}
             Image(
                 painter = painterResource(id = R.drawable.logodana),
                 contentDescription = "Logo Dana",
@@ -162,11 +179,13 @@ fun MetodePembayaranScreen(
                     .offset(x = 50.dp, y = 0.dp)
             )
         }
+
         Spacer(
             modifier = Modifier.height(15.dp))
         Box (
             modifier = Modifier
                 .fillMaxWidth()
+                .shadow(5.dp)
                 .requiredHeight(height = 60.dp)
                 .clip(shape = RoundedCornerShape(5.dp))
                 .background(color = Color.White)
@@ -198,11 +217,13 @@ fun MetodePembayaranScreen(
                     .offset(x = 50.dp, y = 0.dp)
             )
         }
+
         Spacer(
             modifier = Modifier.height(15.dp))
         Box (
             modifier = Modifier
                 .fillMaxWidth()
+                .shadow(5.dp)
                 .requiredHeight(height = 60.dp)
                 .clip(shape = RoundedCornerShape(5.dp))
                 .background(color = Color.White)

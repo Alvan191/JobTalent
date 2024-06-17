@@ -1,4 +1,4 @@
-package com.example.jobtalent.presentation.detailScreen
+package com.example.jobtalent.presentation.pemesananJasa
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -66,6 +66,9 @@ fun DetailJasaScreen(
     Column (
         modifier = Modifier
             .fillMaxSize()
+            .background(
+                color = Color.White
+            ),
     ){
         Box(
             modifier = Modifier.fillMaxSize()
@@ -388,7 +391,7 @@ fun DetailJasaScreen(
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Button(
-                        onClick = {  },
+                        onClick = { navController.navigate(Screen.Chat.route) },
                         modifier = Modifier
                             .height(45.dp)
                             .weight(1f)
@@ -411,7 +414,7 @@ fun DetailJasaScreen(
                     }
                     Spacer(modifier = Modifier.width(16.dp))
                     Button(
-                        onClick = {  },
+                        onClick = { navController.navigate(Screen.Metodepayment.route) },
                         modifier = Modifier
                             .height(45.dp)
                             .weight(1f)

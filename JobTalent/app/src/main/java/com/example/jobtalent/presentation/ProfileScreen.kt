@@ -22,9 +22,11 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForwardIos
 import androidx.compose.material.icons.filled.Call
+import androidx.compose.material.icons.filled.NavigateNext
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.PersonOutline
+import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -42,6 +44,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -166,125 +169,27 @@ fun ProfileScreen(
                     .fillMaxSize()
                     .padding(start = 20.dp, top = 20.dp, end = 20.dp),
             ) {
-                LazyRow (
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clickable { navController.navigate(Screen.Accountsc.route) }
-                ){
-                    item {
-                        Icon(
-                            imageVector = Icons.Default.Person,
-                            contentDescription = "person",
-                            tint = Color(0xFF005695),
-                            modifier = Modifier
-                                .size(32.dp)
-                        )
-                        Row (
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(start = 20.dp, top = 3.dp)
-                        ){
-                            Text(
-                                text = "Akun Saya",
-                                style = TextStyle(
-                                    fontSize = 18.sp,
-                                    fontFamily = FontFamily(Font(R.font.roboto_medium)),
-                                    fontWeight = FontWeight(500),
-                                    color = Color(0xFF2F2F31)
-                                ),
-                            )
-                            Spacer(modifier = Modifier.width(130.dp))
-                            Icon(
-                                imageVector = Icons.Default.ArrowForwardIos,
-                                contentDescription = "arrow next",
-                                tint = Color(0xFF005695),
-                            )
-                        }
-                    }
-                }
+                RowProItem(
+                    icon = Icons.Default.Person,
+                    label = "Akun Saya",
+                    iconSec = Icons.Default.NavigateNext,
+                    onClick = {navController.navigate(Screen.Accountsc.route)}
+                )
+                Spacer(modifier = Modifier.height(26.dp))
+                RowProItem(
+                    icon = Icons.Default.Settings,
+                    label = "Pengaturan",
+                    iconSec = Icons.Default.NavigateNext,
+                    onClick = {navController.navigate(Screen.Settingss.route)}
+                )
+                Spacer(modifier = Modifier.height(26.dp))
+                RowProItem(
+                    icon = Icons.Default.Phone,
+                    label = "Hubungi",
+                    iconSec = Icons.Default.NavigateNext,
+                    onClick = { }
+                )
 
-                LazyRow (
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clickable { navController.navigate(Screen.Settingss.route) }
-                        .padding(top = 26.dp)
-                ){
-                    item {
-                        Icon(
-                            imageVector = Icons.Default.Settings,
-                            contentDescription = "settings",
-                            tint = Color(0xFF005695),
-                            modifier = Modifier
-                                .size(32.dp)
-                        )
-                        Row (
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(start = 20.dp, top = 3.dp)
-                        ){
-                            Text(
-                                text = "Pengaturan",
-                                style = TextStyle(
-                                    fontSize = 18.sp,
-                                    fontFamily = FontFamily(Font(R.font.roboto_medium)),
-                                    fontWeight = FontWeight(500),
-                                    color = Color(0xFF2F2F31)
-                                ),
-                            )
-                            Spacer(modifier = Modifier.width(123.dp))
-                            Icon(
-                                imageVector = Icons.Default.ArrowForwardIos,
-                                contentDescription = "arrow next",
-                                tint = Color(0xFF005695),
-                            )
-                        }
-                    }
-                }
-
-                LazyRow (
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 26.dp)
-                        .clickable {  }
-                ){
-
-                    item {
-                        Icon(
-                            imageVector = Icons.Default.Call,
-                            contentDescription = "call",
-                            tint = Color(0xFF005695),
-                            modifier = Modifier
-                                .size(32.dp)
-                        )
-                        Row (
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(start = 20.dp, top = 3.dp)
-                        ){
-                            Text(
-                                text = "Hubungi",
-                                style = TextStyle(
-                                    fontSize = 18.sp,
-                                    fontFamily = FontFamily(Font(R.font.roboto_medium)),
-                                    fontWeight = FontWeight(500),
-                                    color = Color(0xFF2F2F31)
-                                ),
-                            )
-                            Spacer(modifier = Modifier.width(148.dp))
-                            Icon(
-                                imageVector = Icons.Default.ArrowForwardIos,
-                                contentDescription = "arrow next",
-                                tint = Color(0xFF005695),
-                            )
-                        }
-                    }
-                }
                 Spacer(modifier = Modifier.height(135.dp))
                 Button(
                     onClick = { navController.navigate(Screen.KategoriJasa.route) },
@@ -312,6 +217,50 @@ fun ProfileScreen(
         }
     }
 }
+
+@Composable
+fun RowProItem(icon: ImageVector, label: String, iconSec: ImageVector, onClick: () -> Unit) {
+    Row (
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(onClick = onClick)
+    ) {
+        Icon(
+            imageVector = icon,
+            contentDescription = null,
+            tint = Color(0xFF005695),
+            modifier = Modifier
+                .size(32.dp)
+        )
+        Row(
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 20.dp)
+        ) {
+            Text(
+                text = label,
+                style = TextStyle(
+                    fontSize = 18.sp,
+                    fontFamily = FontFamily(Font(R.font.roboto_medium)),
+                    fontWeight = FontWeight(500),
+                    color = Color(0xFF2F2F31)
+                )
+            )
+            Icon(
+                imageVector = iconSec,
+                contentDescription = "arrow next",
+                tint = Color(0xFF005695),
+                modifier = Modifier
+                    .size(32.dp)
+            )
+        }
+    }
+}
+
+
 
 
 @Preview
