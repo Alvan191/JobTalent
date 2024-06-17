@@ -89,7 +89,7 @@ fun JobTalentApp(
                 ChatScreen(modifier = Modifier, navController)
             }
             composable(Screen.Community.route){
-                CommunityScreen(modifier = Modifier)
+                CommunityScreen(navController)
             }
             composable(Screen.Profile.route){
                 ProfileScreen(navController, modifier = Modifier)
