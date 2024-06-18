@@ -30,12 +30,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
@@ -49,6 +51,10 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.jobtalent.R
+import com.example.jobtalent.data.DataStore
+import com.example.jobtalent.data.SharedPreferencesManager
+import com.example.jobtalent.navigation.Screen
+import kotlinx.coroutines.launch
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -56,6 +62,15 @@ import com.example.jobtalent.R
 fun AccountScreen(
     navController: NavController
 ) {
+    val context = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
+    val sharedPreferencesManager = remember { SharedPreferencesManager(context) }
+    val dataStore = DataStore(context)
+
+    var namaLengkap by remember { mutableStateOf("") }
+    var nomorTelepon by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf("") }
+    var kataSandi by remember { mutableStateOf("") }
 
     Column (
         modifier = Modifier
@@ -107,12 +122,6 @@ fun AccountScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-
-                var namaLengkap by remember { mutableStateOf("") }
-                var nomorTelepon by remember { mutableStateOf("") }
-                var email by remember { mutableStateOf("") }
-                var kataSandi by remember { mutableStateOf("") }
-
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
@@ -227,7 +236,13 @@ fun AccountScreen(
                                 containerColor = Color(0xFF005695)
                             ),
 
-                            onClick = { navController.popBackStack() }
+                            onClick = {
+                                sharedPreferencesManager.name = namaLengkap
+                                coroutineScope.launch {
+                                    dataStore.saveStatus(true)
+                                }
+                                navController.navigate(Screen.Profile.route)
+                            }
                         ) {
                             Text(
                                 text = "Simpan",

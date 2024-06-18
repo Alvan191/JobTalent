@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1035637824253",
+    "project_id": "jobtalent-8e0a7",
+    "storage_bucket": "jobtalent-8e0a7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1035637824253:android:c1d5d9af70b99d3bee3c94",
+        "android_client_info": {
+          "package_name": "com.example.jobtalent"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSH3risMxRZTQue26kjhivaYL5Yp9qbdo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

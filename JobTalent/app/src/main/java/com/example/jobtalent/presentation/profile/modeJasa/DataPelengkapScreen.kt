@@ -1,4 +1,4 @@
-package com.example.jobtalent.presentation.modeJasa
+package com.example.jobtalent.presentation.profile.modeJasa
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border

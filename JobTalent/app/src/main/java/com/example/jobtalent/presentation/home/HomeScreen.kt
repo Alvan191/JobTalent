@@ -1,4 +1,4 @@
-package com.example.jobtalent.presentation
+package com.example.jobtalent.presentation.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -37,7 +37,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -65,6 +64,7 @@ import com.example.jobtalent.R
 import com.example.jobtalent.data.DataStore
 import com.example.jobtalent.data.SharedPreferencesManager
 import com.example.jobtalent.navigation.Screen
+import com.google.firebase.auth.FirebaseAuth
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Locale
@@ -77,8 +77,13 @@ fun HomeScreen(
 ) {
     // Menerapkan SharedPreferences
     val context = LocalContext.current
+    val currentUser = FirebaseAuth.getInstance().currentUser?.email?.substringBefore("@") ?: "N/A"
+
     val sharedPreferencesManager = remember { SharedPreferencesManager(context) }
-    val email = sharedPreferencesManager.email ?: ""
+    val dataStore = DataStore(context)
+    val nameUp = sharedPreferencesManager.name ?: ""
+
+    val namaTampil = if (sharedPreferencesManager.name.isNullOrEmpty()) currentUser else sharedPreferencesManager.name
 
     // Menerapkan Calender
     val currentDate = LocalDate.now()
@@ -110,9 +115,8 @@ fun HomeScreen(
                     Text(
                         text = buildAnnotatedString {
                             append("Hi, ")
-                            val emailPrefix = email.split("@")[0]
                             withStyle(style = SpanStyle(MaterialTheme.colorScheme.primary)) {
-                                append(emailPrefix + "😍")
+                                append("$namaTampil 😍")
                             }
                         },
                         style = TextStyle(

@@ -1,4 +1,4 @@
-package com.example.jobtalent.presentation
+package com.example.jobtalent.presentation.profile
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -14,18 +14,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowForwardIos
-import androidx.compose.material.icons.filled.Call
 import androidx.compose.material.icons.filled.NavigateNext
-import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.PersonOutline
 import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Button
@@ -36,7 +29,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -59,21 +51,15 @@ import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.jobtalent.R
-import com.example.jobtalent.data.SharedPreferencesManager
 import com.example.jobtalent.navigation.Screen
+import com.google.firebase.auth.FirebaseAuth
 
 @Composable
 fun ProfileScreen(
     navController: NavController,
     modifier: Modifier
 ) {
-    val context = LocalContext.current
-
-    val sharedPreferencesManager = remember {
-        SharedPreferencesManager(context)
-    }
-
-    val email = sharedPreferencesManager.email ?: ""
+    val currentUser = FirebaseAuth.getInstance().currentUser?.email
 
     Box(
         modifier = Modifier
@@ -141,7 +127,7 @@ fun ProfileScreen(
                             .padding(top = 10.dp)
                     )
                     Text(
-                        text = email,
+                        text = "$currentUser",
                         style = TextStyle(
                             fontSize = 13.sp,
                             lineHeight = 16.sp,

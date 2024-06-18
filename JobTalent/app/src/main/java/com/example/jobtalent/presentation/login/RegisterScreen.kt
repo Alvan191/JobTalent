@@ -1,5 +1,6 @@
 package com.example.jobtalent.presentation.login
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -33,6 +34,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
@@ -40,19 +42,27 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.jobtalent.R
 import com.example.jobtalent.navigation.Screen
+import com.example.jobtalent.presentation.login.model_login.LoginViewModel
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RegistrasiScreen(
-    navController: NavController
+    navController: NavController,
+    viewModel: LoginViewModel = hiltViewModel()
 ) {
+    val context = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
+    val state = viewModel.state.collectAsState(initial = null)
+
     var email by remember { mutableStateOf("") }
-    var katasandi by remember { mutableStateOf("") }
-    var konfirmasiKataSandi by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+    var passwordConfirm by remember { mutableStateOf("") }
     var katasandiVisible by remember { mutableStateOf(false) }
     var konfirmasiKataSandiVisible by remember { mutableStateOf(false) }
 
@@ -131,9 +141,9 @@ fun RegistrasiScreen(
         OutlinedTextField(
             modifier = Modifier
                 .fillMaxWidth(),
-            value = katasandi,
+            value = password,
             onValueChange = {
-                katasandi = it
+                password = it
             },
             label = {
                 Text(
@@ -167,9 +177,9 @@ fun RegistrasiScreen(
         OutlinedTextField(
             modifier = Modifier
                 .fillMaxWidth(),
-            value = konfirmasiKataSandi,
+            value = passwordConfirm,
             onValueChange = {
-                konfirmasiKataSandi = it
+                passwordConfirm = it
             },
             label = {
                 Text(
@@ -209,7 +219,31 @@ fun RegistrasiScreen(
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color(0xFF005695)
             ),
-            onClick = { navController.navigate(Screen.Login.route) }
+            onClick = {
+                coroutineScope.launch {
+                    if (email.isBlank() || password.isBlank()) {
+                        Toast.makeText(
+                            context,
+                            "Email dan Password Wajib Diisi",
+                            Toast.LENGTH_SHORT
+                        )
+                            .show()
+                    } else if (password != passwordConfirm) {
+                        Toast.makeText(
+                            context,
+                            "Password dan Konfirmasi Password tidak cocok",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else {
+                        viewModel.registerUser(email, password) {
+                            navController.navigate(Screen.Login.route)
+                            email = ""
+                            password = ""
+                            passwordConfirm = ""
+                        }
+                    }
+                }
+            },
         ) {
             Text(
                 text = "Daftar",

@@ -1,25 +1,16 @@
 package com.example.jobtalent.data
 
 import android.content.Context
-import com.example.jobtalent.utils.PreferencesKey.EMAIL_KEY
 import com.example.jobtalent.utils.PreferencesKey.NAME_PREF
-import com.example.jobtalent.utils.PreferencesKey.PASSWORD_KEY
 
 class SharedPreferencesManager(context: Context) {
     private val preferences = context.getSharedPreferences(NAME_PREF, Context.MODE_PRIVATE)
     private val editor = preferences.edit()
 
-    var email
-        get() = preferences.getString(EMAIL_KEY, "")
+    var name
+        get() = preferences.getString(NAME_PREF, "")
         set(value) {
-            editor.putString(EMAIL_KEY, value)
-            editor.commit()
-        }
-
-    var password
-        get() = preferences.getString(PASSWORD_KEY, "")
-        set(value) {
-            editor.putString(PASSWORD_KEY, value)
+            editor.putString(NAME_PREF, value)
             editor.commit()
         }
 

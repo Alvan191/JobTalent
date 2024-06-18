@@ -1,4 +1,4 @@
-package com.example.jobtalent.presentation.pemesananJasa
+package com.example.jobtalent.presentation.home.pemesananJasa
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

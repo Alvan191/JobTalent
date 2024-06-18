@@ -47,25 +47,26 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.jobtalent.R
 import com.example.jobtalent.data.DataStore
 import com.example.jobtalent.data.SharedPreferencesManager
 import com.example.jobtalent.navigation.Screen
+import com.example.jobtalent.presentation.login.model_login.LoginViewModel
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen(
-    navController: NavController
+    navController: NavController,
+    viewModel: LoginViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
-
-    val sharedPreferencesManager = remember { SharedPreferencesManager(context) }
+    val state = viewModel.state.collectAsState(initial = null)
     val dataStore = DataStore(context)
-
     val statusLoggedIn = dataStore.getStatusLogin.collectAsState(initial = false)
 
     var email by remember { mutableStateOf("") }
@@ -212,21 +213,26 @@ fun LoginScreen(
                     containerColor = Color(0xFF005695)
                 ),
                 onClick = {
-                    if (email.isBlank() || password.isBlank()) {
-                        Toast.makeText(
-                            context,
-                            "Email dan Password Wajib Diisi",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    } else {
-                        sharedPreferencesManager.email = email
-                        sharedPreferencesManager.password = password
-                        coroutineScope.launch {
-                            dataStore.saveStatus(true)
-                        }
-                        navController.navigate(Screen.Home.route) {
-                            popUpTo(Screen.Login.route) {
-                                inclusive = true
+                    coroutineScope.launch {
+                        if (email.isBlank() || password.isBlank()) {
+                            Toast.makeText(
+                                context,
+                                "Email dan Password Wajib Diisi",
+                                Toast.LENGTH_SHORT
+                            )
+                                .show()
+                        } else {
+                            viewModel.loginUser(email, password) {
+                                coroutineScope.launch {
+                                    dataStore.saveStatus(true)
+                                }
+                                navController.navigate(Screen.Home.route) {
+                                    popUpTo(Screen.Login.route) {
+                                        inclusive = true
+                                    }
+                                }
+                                email = ""
+                                password = ""
                             }
                         }
                     }

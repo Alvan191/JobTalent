@@ -1,4 +1,4 @@
-package com.example.jobtalent
+package com.example.jobtalent.presentation
 
 import PaymentSuccessScreen
 import TrackingScreen
@@ -6,12 +6,6 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ChatBubble
-import androidx.compose.material.icons.filled.Diversity3
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
@@ -22,7 +16,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -37,37 +30,35 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.jobtalent.R
 import com.example.jobtalent.navigation.NavigationItem
 import com.example.jobtalent.navigation.Screen
-import com.example.jobtalent.presentation.ChatScreen
-import com.example.jobtalent.presentation.CommunityScreen
-import com.example.jobtalent.presentation.HomeScreen
-import com.example.jobtalent.presentation.KomentarScreen
-import com.example.jobtalent.presentation.pemesananJasa.MetodePembayaranScreen
-import com.example.jobtalent.presentation.Postingan
-import com.example.jobtalent.presentation.ProfileScreen
-import com.example.jobtalent.presentation.RatingJasa
+import com.example.jobtalent.presentation.chat.ChatScreen
+import com.example.jobtalent.presentation.community.CommunityScreen
+import com.example.jobtalent.presentation.home.pemesananJasa.MetodePembayaranScreen
 import com.example.jobtalent.presentation.detailScreen.AccountScreen
 import com.example.jobtalent.presentation.detailScreen.DetailChatScreen
 import com.example.jobtalent.presentation.detailScreen.LanguageSettingsScreen
 import com.example.jobtalent.presentation.detailScreen.NotificationScreen
 import com.example.jobtalent.presentation.detailScreen.SettingsScreen
 import com.example.jobtalent.presentation.detailScreen.TipsScreen
+import com.example.jobtalent.presentation.home.HomeScreen
 import com.example.jobtalent.presentation.login.LoginScreen
 import com.example.jobtalent.presentation.login.Onboarding
 import com.example.jobtalent.presentation.login.RegistrasiScreen
 import com.example.jobtalent.presentation.login.SplashScreen
-import com.example.jobtalent.presentation.modeJasa.DataPelengkapScreen
-import com.example.jobtalent.presentation.modeJasa.IdentitasScreen
-import com.example.jobtalent.presentation.modeJasa.JenisJasaScreen
-import com.example.jobtalent.presentation.modeJasa.KategoriJasaScreen
-import com.example.jobtalent.presentation.modeJasa.NamaTampilanScreen
-import com.example.jobtalent.presentation.modeJasa.PengalamanScreen
-import com.example.jobtalent.presentation.modeJasa.PortofolioScreen
-import com.example.jobtalent.presentation.pemesananJasa.DetailJasaScreen
-import com.example.jobtalent.presentation.pemesananJasa.KategoriPesananScreen
-import com.example.jobtalent.presentation.pemesananJasa.PaymentSummaryScreen
-import com.example.jobtalent.presentation.pemesananJasa.ReviewsScreen
+import com.example.jobtalent.presentation.profile.modeJasa.DataPelengkapScreen
+import com.example.jobtalent.presentation.profile.modeJasa.IdentitasScreen
+import com.example.jobtalent.presentation.profile.modeJasa.JenisJasaScreen
+import com.example.jobtalent.presentation.profile.modeJasa.KategoriJasaScreen
+import com.example.jobtalent.presentation.profile.modeJasa.NamaTampilanScreen
+import com.example.jobtalent.presentation.profile.modeJasa.PengalamanScreen
+import com.example.jobtalent.presentation.profile.modeJasa.PortofolioScreen
+import com.example.jobtalent.presentation.home.pemesananJasa.DetailJasaScreen
+import com.example.jobtalent.presentation.home.pemesananJasa.KategoriPesananScreen
+import com.example.jobtalent.presentation.home.pemesananJasa.PaymentSummaryScreen
+import com.example.jobtalent.presentation.home.pemesananJasa.ReviewsScreen
+import com.example.jobtalent.presentation.profile.ProfileScreen
 import com.example.jobtalent.utils.shouldShowBottomBar
 
 @Composable
@@ -266,7 +257,9 @@ fun BottomBar(
                         color = if (currentRoute == item.screen.route) Color(0xFF005695) else Color.Black,
                         fontWeight = if (currentRoute == item.screen.route) FontWeight.Bold else FontWeight.Normal,
                         fontSize = if (currentRoute == item.screen.route) 14.sp else 13.sp,
-                        fontFamily = if (currentRoute == item.screen.route) FontFamily(Font(R.font.roboto_medium)) else FontFamily(Font(R.font.roboto_light)),
+                        fontFamily = if (currentRoute == item.screen.route) FontFamily(Font(R.font.roboto_medium)) else FontFamily(Font(
+                            R.font.roboto_light
+                        )),
                     )
                 },
             )

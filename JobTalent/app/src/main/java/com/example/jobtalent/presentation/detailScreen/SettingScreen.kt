@@ -22,12 +22,12 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.NavigateNext
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -45,26 +45,30 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.jobtalent.R
 import com.example.jobtalent.data.DataStore
 import com.example.jobtalent.data.SharedPreferencesManager
 import com.example.jobtalent.navigation.Screen
+import com.example.jobtalent.presentation.login.model_login.LoginViewModel
 import kotlinx.coroutines.launch
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsScreen(
-    navController: NavController
+    navController: NavController,
+    viewModel: LoginViewModel = hiltViewModel()
 ) {
-    // Menerapkan SharedPreferences
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
+    val state = viewModel.state.collectAsState(initial = null)
+
+    // Menerapkan SharedPreferences
     val sharedPreferencesManager = remember { SharedPreferencesManager(context) }
     val dataStore = DataStore(context)
-    val email = sharedPreferencesManager.email ?: ""
 
     Column (
         modifier = Modifier
@@ -132,15 +136,15 @@ fun SettingsScreen(
                     onClick = {
                         sharedPreferencesManager.clear()
                         coroutineScope.launch {
+                            viewModel.logoutUser()
                             dataStore.clearStatus()
                         }
                         navController.navigate(Screen.Login.route){
-                            popUpTo(Screen.Home.route) {
+                            popUpTo(Screen.Profile.route) {
                                 inclusive = true
                             }
                         }
                     }
-
                 )
             }
         }
