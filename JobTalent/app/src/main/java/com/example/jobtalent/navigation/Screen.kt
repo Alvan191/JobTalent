@@ -1,6 +1,7 @@
 package com.example.jobtalent.navigation
 
 sealed class Screen (val route: String){
+    data object Onboarding: Screen ("onboard")
     data object Splash: Screen ("splash")
     data object Login: Screen ("login")
     data object Register: Screen ("register")
@@ -31,4 +32,5 @@ sealed class Screen (val route: String){
     data object Komentarsc: Screen ("komentar_screen")
     data object Postingdet: Screen ("detail_postingan")
     data object DetJasa: Screen ("detail_pesanan_jasa")
+    data object Reviewsc: Screen ("review")
 }

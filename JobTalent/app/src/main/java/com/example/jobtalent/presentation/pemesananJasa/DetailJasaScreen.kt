@@ -262,7 +262,8 @@ fun DetailJasaScreen(
                                         fontFamily = FontFamily(Font(R.font.roboto_bold)),
                                         fontWeight = FontWeight(500),
                                         color = Color(0xFF0060A5),
-                                    )
+                                    ),
+                                    modifier = Modifier.clickable { navController.navigate(Screen.Reviewsc.route) }
                                 )
                             }
                             Spacer(modifier = Modifier.height(15.dp))

@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -218,19 +219,33 @@ fun PaymentSummaryScreen(
                             )
                         )
                         Spacer(modifier = Modifier.height(8.dp))
-                        TextField(
-                            value = paymentAmount,
-                            onValueChange = { paymentAmount = it },
-                            placeholder = { Text("Rp.") },
-                            singleLine = true,
-                            modifier = Modifier
-                                .fillMaxWidth(),
-                            colors = TextFieldDefaults.textFieldColors(
-                                containerColor = Color.White,
-                                focusedIndicatorColor = Color.Transparent,
-                                unfocusedIndicatorColor = Color.Transparent
-                            ),
-                        )
+                        Row (
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier.wrapContentHeight()
+                        ){
+                            Text(
+                                text = "Rp. ",
+                                style = TextStyle(
+                                    fontSize = 14.sp,
+                                    fontFamily = FontFamily(Font(R.font.roboto_medium)),
+                                    fontWeight = FontWeight(400),
+                                    color = Color(0xFF000000)
+                                )
+                            )
+                            TextField(
+                                value = paymentAmount,
+                                onValueChange = { paymentAmount = it },
+                                placeholder = { Text("0 .") },
+                                singleLine = true,
+                                modifier = Modifier
+                                    .fillMaxWidth(),
+                                colors = TextFieldDefaults.textFieldColors(
+                                    containerColor = Color.White,
+                                    focusedIndicatorColor = Color.Transparent,
+                                    unfocusedIndicatorColor = Color.Transparent
+                                ),
+                            )
+                        }
                         Spacer(modifier = Modifier.height(8.dp))
                         Text(
                             text = "Jumlah sesuai tarif yang telah disepakati.",

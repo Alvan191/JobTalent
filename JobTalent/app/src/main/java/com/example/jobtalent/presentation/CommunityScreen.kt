@@ -65,9 +65,9 @@ fun CommunityScreen(
     Column (
         modifier = Modifier
             .fillMaxSize()
-            .padding(20.dp)
+            .padding(start = 20.dp, end = 20.dp, top = 20.dp)
             .background(
-                color = Color.White
+                color = Color(0xFFF8F8F8)
             ),
     ){
         Row(
@@ -110,7 +110,7 @@ fun CommunityScreen(
             Spacer(modifier = Modifier.width(8.dp))
             Button(
                 onClick = { navController.navigate(Screen.Postingdet.route) },
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF3D4E79)),
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF005695)),
                 shape = RoundedCornerShape(8.dp),
                 modifier = Modifier.height(50.dp)
             ) {
@@ -126,9 +126,9 @@ fun CommunityScreen(
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(bottom = 10.dp)
+                .padding(bottom = 5.dp)
                 .background(
-                    color = Color.White
+                    color = Color(0xFFF8F8F8)
                 ),
         ) {
             item {
@@ -175,7 +175,6 @@ fun CommunityScreen(
                     comment = "160 komentar",
                     onClick = { navController.navigate(Screen.Komentarsc.route) }
                 )
-                Spacer(modifier = Modifier.height(8.dp))
             }
         }
     }

@@ -30,11 +30,13 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
@@ -46,7 +48,10 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.jobtalent.R
+import com.example.jobtalent.data.DataStore
+import com.example.jobtalent.data.SharedPreferencesManager
 import com.example.jobtalent.navigation.Screen
+import kotlinx.coroutines.launch
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -54,6 +59,13 @@ import com.example.jobtalent.navigation.Screen
 fun SettingsScreen(
     navController: NavController
 ) {
+    // Menerapkan SharedPreferences
+    val context = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
+    val sharedPreferencesManager = remember { SharedPreferencesManager(context) }
+    val dataStore = DataStore(context)
+    val email = sharedPreferencesManager.email ?: ""
+
     Column (
         modifier = Modifier
             .background(Color(0xfff8f8f8))
@@ -65,13 +77,14 @@ fun SettingsScreen(
                 TopAppBar(
                     title = {
                         Text(
-                            text = "     Pengaturan",
+                            text = "Pengaturan",
                             style = TextStyle(
                                 fontSize = 16.sp,
                                 fontFamily = FontFamily(Font(R.font.roboto_bold)),
                                 fontWeight = FontWeight(600),
                                 color = Color(0xFF000000)
-                            )
+                            ),
+                            modifier = Modifier.padding(start = 15.dp)
                         )
                     },
                     navigationIcon = {
@@ -116,7 +129,17 @@ fun SettingsScreen(
                 SettingsItem(
                     iconRes = R.drawable.logout,
                     label = "Keluar Akun",
-                    onClick = { }
+                    onClick = {
+                        sharedPreferencesManager.clear()
+                        coroutineScope.launch {
+                            dataStore.clearStatus()
+                        }
+                        navController.navigate(Screen.Login.route){
+                            popUpTo(Screen.Home.route) {
+                                inclusive = true
+                            }
+                        }
+                    }
 
                 )
             }

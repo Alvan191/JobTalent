@@ -85,12 +85,12 @@ fun RatingJasa(
                 )
             }
             Text(
-                text = "  Beri Penilaian",
+                text = "Beri Penilaian",
                 style = TextStyle(
                     fontSize = 20.sp,
                     fontWeight = FontWeight.W600,
                     color = Color(0xff000000)),
-                modifier = Modifier.padding(horizontal = 50.dp, vertical = 8.dp)
+                modifier = Modifier.padding(start = 15.dp)
             )
         }
         Spacer(modifier = Modifier.height(25.dp))

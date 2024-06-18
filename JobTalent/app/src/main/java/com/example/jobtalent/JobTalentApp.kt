@@ -2,7 +2,10 @@ package com.example.jobtalent
 
 import PaymentSuccessScreen
 import TrackingScreen
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ChatBubble
 import androidx.compose.material.icons.filled.Diversity3
@@ -16,7 +19,16 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -41,6 +53,10 @@ import com.example.jobtalent.presentation.detailScreen.LanguageSettingsScreen
 import com.example.jobtalent.presentation.detailScreen.NotificationScreen
 import com.example.jobtalent.presentation.detailScreen.SettingsScreen
 import com.example.jobtalent.presentation.detailScreen.TipsScreen
+import com.example.jobtalent.presentation.login.LoginScreen
+import com.example.jobtalent.presentation.login.Onboarding
+import com.example.jobtalent.presentation.login.RegistrasiScreen
+import com.example.jobtalent.presentation.login.SplashScreen
 import com.example.jobtalent.presentation.modeJasa.DataPelengkapScreen
 import com.example.jobtalent.presentation.modeJasa.IdentitasScreen
 import com.example.jobtalent.presentation.modeJasa.JenisJasaScreen
@@ -51,39 +67,45 @@ import com.example.jobtalent.presentation.modeJasa.PortofolioScreen
 import com.example.jobtalent.presentation.pemesananJasa.DetailJasaScreen
 import com.example.jobtalent.presentation.pemesananJasa.KategoriPesananScreen
 import com.example.jobtalent.presentation.pemesananJasa.PaymentSummaryScreen
+import com.example.jobtalent.presentation.pemesananJasa.ReviewsScreen
+import com.example.jobtalent.utils.shouldShowBottomBar
 
 @Composable
 fun JobTalentApp(
     modifier: Modifier,
     navController: NavHostController = rememberNavController()
 ) {
+    val navBackStack by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStack?.destination?.route
+    val context = LocalContext.current
+
     Scaffold (
         bottomBar = {
-            val navBackStackEntry by navController.currentBackStackEntryAsState()
-            val currentRoute = navBackStackEntry?.destination?.route
-            if (currentRoute != null &&
-                !currentRoute.startsWith(Screen.DetailChatsss.route) &&
-                currentRoute != Screen.Notificationn.route &&
-                currentRoute != Screen.Tipss.route &&
-                currentRoute != Screen.KategoriPesanan.route &&
-                currentRoute != Screen.KategoriJasa.route &&
-                currentRoute != Screen.JenisJasa.route &&
-                currentRoute != Screen.NamaTampilan.route &&
-                currentRoute != Screen.Pengalaman.route &&
-                currentRoute != Screen.Identitas.route &&
-                currentRoute != Screen.DataPelengkap.route &&
-                currentRoute != Screen.Portofolios.route
+            AnimatedVisibility(
+                visible = currentRoute.shouldShowBottomBar()
             ) {
-                BottomBar(navController, modifier)
+                BottomBar(navController)
             }
         },
         modifier = modifier
-    ) {innerPadding ->
+    ) {contentPadding ->
         NavHost(
             navController = navController,
-            startDestination = Screen.Home.route,
-            modifier = modifier.padding(innerPadding)
+            startDestination = Screen.Onboarding.route,
+            modifier = modifier.padding(contentPadding)
         ){
+            composable(Screen.Onboarding.route){
+                Onboarding(navController)
+            }
+            composable(Screen.Splash.route) {
+                SplashScreen(navController)
+            }
+            composable(Screen.Login.route) {
+                LoginScreen(navController)
+            }
+            composable(Screen.Register.route) {
+                RegistrasiScreen(navController)
+            }
             composable(Screen.Home.route){
                 HomeScreen(modifier = Modifier, navController)
             }
@@ -168,6 +190,9 @@ fun JobTalentApp(
             composable(Screen.DetJasa.route){
                 DetailJasaScreen(navController)
             }
+            composable(Screen.Reviewsc.route){
+                ReviewsScreen(navController)
+            }
         }
     }
 }
@@ -175,35 +200,48 @@ fun JobTalentApp(
 @Composable
 fun BottomBar(
     navController: NavHostController,
-    modifier: Modifier
+    modifier: Modifier = Modifier
 ) {
-    NavigationBar {
+    NavigationBar (
+        modifier = modifier,
+        containerColor = Color.White
+    ){
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
 
         val navigationItems = listOf(
             NavigationItem(
                 title = "Beranda",
-                icon = Icons.Default.Home,
+                iconBlack = R.drawable.home_black,
+                iconBlue = R.drawable.home_blue,
                 screen = Screen.Home
             ),
             NavigationItem(
                 title = "Pesan",
-                icon = Icons.Default.ChatBubble,
+                iconBlack = R.drawable.chat_black,
+                iconBlue = R.drawable.chat_blue,
                 screen = Screen.Chat
             ),
             NavigationItem(
                 title = "Komunitas",
-                icon = Icons.Default.Diversity3,
+                iconBlack = R.drawable.community_black,
+                iconBlue = R.drawable.community_blue,
                 screen = Screen.Community
             ),
             NavigationItem(
                 title = "Profil",
-                icon = Icons.Default.Person,
+                iconBlack = R.drawable.person_black,
+                iconBlue = R.drawable.person_blue,
                 screen = Screen.Profile
             )
         )
         navigationItems.map { item ->
+            val iconRes = if (currentRoute == item.screen.route) {
+                item.iconBlue
+            } else {
+                item.iconBlack
+            }
+
             NavigationBarItem(
                 selected = currentRoute == item.screen.route,
                 onClick ={
@@ -215,8 +253,22 @@ fun BottomBar(
                         launchSingleTop =true
                     }
                 },
-                icon = { Icon(imageVector = item.icon, contentDescription = item.title)},
-                label ={ Text(text= item.title)}
+                icon = {
+                    Image(
+                        painter = painterResource(id = iconRes),
+                        contentDescription = item.title,
+                        modifier = Modifier.size(24.dp)
+                    )
+                },
+                label = {
+                    Text(
+                        text = item.title,
+                        color = if (currentRoute == item.screen.route) Color(0xFF005695) else Color.Black,
+                        fontWeight = if (currentRoute == item.screen.route) FontWeight.Bold else FontWeight.Normal,
+                        fontSize = if (currentRoute == item.screen.route) 14.sp else 13.sp,
+                        fontFamily = if (currentRoute == item.screen.route) FontFamily(Font(R.font.roboto_medium)) else FontFamily(Font(R.font.roboto_light)),
+                    )
+                },
             )
         }
     }

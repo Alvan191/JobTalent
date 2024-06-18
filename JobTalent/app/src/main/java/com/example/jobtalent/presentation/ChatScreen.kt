@@ -60,7 +60,7 @@ fun ChatScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(
-                color = Color.White
+                color = Color(0xFFF8F8F8)
             )
     ){
         TopAppBar(

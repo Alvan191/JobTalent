@@ -78,6 +78,9 @@ fun ProfileScreen(
     Box(
         modifier = Modifier
             .fillMaxSize()
+            .background(
+                color = Color(0xFFF8F8F8)
+            ),
     ) {
         Column {
             Box(

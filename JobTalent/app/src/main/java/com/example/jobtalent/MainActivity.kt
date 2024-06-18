@@ -38,28 +38,12 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             JobTalentTheme {
-                val navController = rememberNavController()
-                NavHost(
-                    navController = navController,
-                    startDestination = Screen.Splash.route,
-                    builder = {
-                        composable(Screen.Splash.route) {
-                            SplashScreen(navController)
-                        }
-                        composable(Screen.Login.route) {
-                            LoginScreen(navController)
-                        }
-                        composable(Screen.Register.route) {
-                            RegistrasiScreen(navController)
-                        }
-                        composable(Screen.JobScreen.route){
-                            JobTalentApp(modifier = Modifier)
-                        }
-                        composable(Screen.Home.route){
-                            HomeScreen(modifier = Modifier, navController)
-                        }
-                    }
-                )
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
+                    JobTalentApp(modifier = Modifier)
+                }
             }
         }
     }
