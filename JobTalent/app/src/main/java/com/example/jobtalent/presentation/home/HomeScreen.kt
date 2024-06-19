@@ -80,10 +80,7 @@ fun HomeScreen(
     val currentUser = FirebaseAuth.getInstance().currentUser?.email?.substringBefore("@") ?: "N/A"
 
     val sharedPreferencesManager = remember { SharedPreferencesManager(context) }
-    val dataStore = DataStore(context)
-    val nameUp = sharedPreferencesManager.name ?: ""
-
-    val namaTampil = if (sharedPreferencesManager.name.isNullOrEmpty()) currentUser else sharedPreferencesManager.name
+    val namaTampil = if (sharedPreferencesManager.name.isNullOrEmpty()) currentUser else sharedPreferencesManager.name!!.split(" ").firstOrNull() ?: currentUser
 
     // Menerapkan Calender
     val currentDate = LocalDate.now()

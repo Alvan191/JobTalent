@@ -1,4 +1,4 @@
-package com.example.jobtalent.presentation.detailScreen
+package com.example.jobtalent.presentation.profile.detail_profile
 
 
 

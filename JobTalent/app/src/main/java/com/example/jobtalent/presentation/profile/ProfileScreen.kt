@@ -29,6 +29,9 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -39,7 +42,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -50,16 +52,30 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import coil.compose.rememberAsyncImagePainter
 import com.example.jobtalent.R
+import com.example.jobtalent.data.SharedPreferencesManager
 import com.example.jobtalent.navigation.Screen
+import com.example.jobtalent.presentation.profile.model_view.SharedViewModel
 import com.google.firebase.auth.FirebaseAuth
 
 @Composable
 fun ProfileScreen(
     navController: NavController,
-    modifier: Modifier
+    modifier: Modifier,
+    sharedViewModel: SharedViewModel
 ) {
+    val context = LocalContext.current
+    val sharedPreferencesManager = remember { SharedPreferencesManager(context) }
     val currentUser = FirebaseAuth.getInstance().currentUser?.email
+    val currentUserSec = FirebaseAuth.getInstance().currentUser?.email?.substringBefore("@") ?: "N/A"
+
+    val namaTampil = if (sharedPreferencesManager.name.isNullOrEmpty()) currentUserSec else sharedPreferencesManager.name
+
+    val imageUri by sharedViewModel.imageUri.observeAsState("")
+    val painter = rememberAsyncImagePainter(
+        imageUri.ifEmpty { R.drawable.person_profile }
+    )
 
     Box(
         modifier = Modifier
@@ -106,8 +122,8 @@ fun ProfileScreen(
                     )
                     Spacer(modifier = Modifier.height(40.dp))
                     Image(
-                        painter = painterResource(id = R.drawable.anto),
-                        contentDescription = "Anto Ramadhan",
+                        painter = painter,
+                        contentDescription = null,
                         contentScale = ContentScale.Crop,
                         modifier = Modifier
                             .size(130.dp)
@@ -116,7 +132,7 @@ fun ProfileScreen(
                             .clickable(onClick = { navController.navigate(Screen.Portofolios.route) })
                     )
                     Text(
-                        text = "Anto Ramadhan",
+                        text = "$namaTampil",
                         style = TextStyle(
                             fontSize = 20.sp,
                             fontFamily = FontFamily(Font(R.font.roboto_bold)),
@@ -255,5 +271,5 @@ fun RowProItem(icon: ImageVector, label: String, iconSec: ImageVector, onClick: 
 @Preview
 @Composable
 private fun ProfileScreenPreview() {
-    ProfileScreen(navController = rememberNavController(), modifier = Modifier)
+    ProfileScreen(navController = rememberNavController(), modifier = Modifier, sharedViewModel = SharedViewModel())
 }

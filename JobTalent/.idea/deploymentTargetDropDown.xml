@@ -2,16 +2,16 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="KomentarPreview">
-        <State />
-      </entry>
       <entry key="MetodePembayaranPreview">
         <State />
       </entry>
       <entry key="MetodePembayaranPreview (1)">
         <State />
       </entry>
-      <entry key="ProfileScreenPreview">
+      <entry key="PortofolioScreenPreview">
+        <State />
+      </entry>
+      <entry key="RegisterScreenPreview">
         <State />
       </entry>
       <entry key="Trackprev">

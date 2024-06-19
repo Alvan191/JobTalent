@@ -22,6 +22,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -36,12 +37,12 @@ import com.example.jobtalent.navigation.Screen
 import com.example.jobtalent.presentation.chat.ChatScreen
 import com.example.jobtalent.presentation.community.CommunityScreen
 import com.example.jobtalent.presentation.home.pemesananJasa.MetodePembayaranScreen
-import com.example.jobtalent.presentation.detailScreen.AccountScreen
-import com.example.jobtalent.presentation.detailScreen.DetailChatScreen
-import com.example.jobtalent.presentation.detailScreen.LanguageSettingsScreen
-import com.example.jobtalent.presentation.detailScreen.NotificationScreen
-import com.example.jobtalent.presentation.detailScreen.SettingsScreen
-import com.example.jobtalent.presentation.detailScreen.TipsScreen
+import com.example.jobtalent.presentation.profile.detail_profile.AccountScreen
+import com.example.jobtalent.presentation.chat.detail_chat.DetailChatScreen
+import com.example.jobtalent.presentation.profile.detail_profile.LanguageSettingsScreen
+import com.example.jobtalent.presentation.home.detail_home.NotificationScreen
+import com.example.jobtalent.presentation.profile.detail_profile.SettingsScreen
+import com.example.jobtalent.presentation.home.detail_home.TipsScreen
 import com.example.jobtalent.presentation.home.HomeScreen
 import com.example.jobtalent.presentation.login.LoginScreen
 import com.example.jobtalent.presentation.login.Onboarding
@@ -59,6 +60,7 @@ import com.example.jobtalent.presentation.home.pemesananJasa.KategoriPesananScre
 import com.example.jobtalent.presentation.home.pemesananJasa.PaymentSummaryScreen
 import com.example.jobtalent.presentation.home.pemesananJasa.ReviewsScreen
 import com.example.jobtalent.presentation.profile.ProfileScreen
+import com.example.jobtalent.presentation.profile.model_view.SharedViewModel
 import com.example.jobtalent.utils.shouldShowBottomBar
 
 @Composable
@@ -66,6 +68,8 @@ fun JobTalentApp(
     modifier: Modifier,
     navController: NavHostController = rememberNavController()
 ) {
+    val sharedViewModel: SharedViewModel = viewModel()
+
     val navBackStack by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStack?.destination?.route
     val context = LocalContext.current
@@ -104,10 +108,10 @@ fun JobTalentApp(
                 ChatScreen(modifier = Modifier, navController)
             }
             composable(Screen.Community.route){
-                CommunityScreen(navController)
+                CommunityScreen(navController, sharedViewModel)
             }
             composable(Screen.Profile.route){
-                ProfileScreen(navController, modifier = Modifier)
+                ProfileScreen(navController, modifier = Modifier, sharedViewModel)
             }
             composable(Screen.Notificationn.route){
                 NotificationScreen(navController = navController)
@@ -137,7 +141,7 @@ fun JobTalentApp(
                 DataPelengkapScreen(modifier = Modifier, navController)
             }
             composable(Screen.Portofolios.route){
-                PortofolioScreen(modifier = Modifier, navController)
+                PortofolioScreen(modifier = Modifier, navController, sharedViewModel)
             }
             composable(
                 Screen.DetailChatsss.route + "/{tampilchatId}",

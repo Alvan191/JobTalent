@@ -34,6 +34,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -54,14 +55,22 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import coil.compose.rememberAsyncImagePainter
 import com.example.jobtalent.R
 import com.example.jobtalent.navigation.Screen
+import com.example.jobtalent.presentation.profile.model_view.SharedViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CommunityScreen(
-    navController: NavController
+    navController: NavController,
+    sharedViewModel: SharedViewModel
 ) {
+    val imageUri by sharedViewModel.imageUri.observeAsState("")
+    val painter = rememberAsyncImagePainter(
+        imageUri.ifEmpty { R.drawable.person_profile }
+    )
+
     Column (
         modifier = Modifier
             .fillMaxSize()
@@ -78,7 +87,7 @@ fun CommunityScreen(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Image(
-                painter = painterResource(id = R.drawable.anto),
+                painter = painter,
                 contentDescription = "Anto Ramadhan",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
@@ -517,5 +526,5 @@ fun ContentLazySec(image: Int, name: String, time: String, desc_content: String,
 @Preview
 @Composable
 private fun CommunityScreenPreview() {
-    CommunityScreen(navController = rememberNavController())
+    CommunityScreen(navController = rememberNavController(), sharedViewModel = SharedViewModel())
 }
