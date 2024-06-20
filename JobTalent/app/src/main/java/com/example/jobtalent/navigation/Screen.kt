@@ -33,4 +33,5 @@ sealed class Screen (val route: String){
     data object Postingdet: Screen ("detail_postingan")
     data object DetJasa: Screen ("detail_pesanan_jasa")
     data object Reviewsc: Screen ("review")
+    data object PusatBantu: Screen ("pusat_bantuan")
 }

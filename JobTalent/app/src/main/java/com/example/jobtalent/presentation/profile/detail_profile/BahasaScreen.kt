@@ -69,7 +69,6 @@ fun LanguageSettingsScreen(
                         Box(
                             modifier = Modifier
                                 .size(44.dp)
-                                .shadow(8.dp, CircleShape)
                                 .clip(CircleShape)
                                 .background(Color.White)
                                 .clickable(onClick = { navController.popBackStack() })

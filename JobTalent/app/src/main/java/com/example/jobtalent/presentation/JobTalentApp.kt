@@ -1,5 +1,6 @@
 package com.example.jobtalent.presentation
 
+import HelpCenterScreen
 import PaymentSuccessScreen
 import TrackingScreen
 import androidx.compose.animation.AnimatedVisibility
@@ -187,6 +188,9 @@ fun JobTalentApp(
             }
             composable(Screen.Reviewsc.route){
                 ReviewsScreen(navController)
+            }
+            composable(Screen.PusatBantu.route){
+                HelpCenterScreen(navController)
             }
         }
     }

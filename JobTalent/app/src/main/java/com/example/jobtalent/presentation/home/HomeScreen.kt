@@ -496,7 +496,7 @@ fun TrackingItem(img_tr: Int, name: String, skill: String, progres: String, onCl
                             text = "Diterima",
                             style = TextStyle(
                                 fontSize = 12.sp,
-                                fontFamily = FontFamily(Font(R.font.roboto_black)),
+                                fontFamily = FontFamily(Font(R.font.roboto_bold)),
                                 fontWeight = FontWeight(400),
                                 color = Color(0xFF000000)
                             )
@@ -519,7 +519,7 @@ fun TrackingItem(img_tr: Int, name: String, skill: String, progres: String, onCl
                             text = "Selesai",
                             style = TextStyle(
                                 fontSize = 12.sp,
-                                fontFamily = FontFamily(Font(R.font.roboto_black)),
+                                fontFamily = FontFamily(Font(R.font.roboto_bold)),
                                 fontWeight = FontWeight(400),
                                 color = Color(0xFF000000)
                             )

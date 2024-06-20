@@ -192,7 +192,7 @@ fun ProfileScreen(
                     icon = Icons.Default.Phone,
                     label = "Hubungi",
                     iconSec = Icons.Default.NavigateNext,
-                    onClick = { }
+                    onClick = {navController.navigate(Screen.PusatBantu.route) }
                 )
 
                 Spacer(modifier = Modifier.height(135.dp))
