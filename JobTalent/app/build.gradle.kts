@@ -101,4 +101,7 @@ dependencies {
     // firebase
     // google auth
     implementation(libs.play.services.auth)
+
+    //lottie
+    implementation(libs.lottie.compose)
 }

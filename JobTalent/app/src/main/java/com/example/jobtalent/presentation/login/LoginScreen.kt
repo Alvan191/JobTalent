@@ -67,26 +67,17 @@ fun LoginScreen(
     val coroutineScope = rememberCoroutineScope()
     val sharedPreferencesManager = remember { SharedPreferencesManager(context) }
     val dataStore = DataStore(context)
-    val statusLoggedIn = dataStore.getStatusLogin.collectAsState(initial = false)
 
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var katasandiVisible by remember { mutableStateOf(false) }
 
-    if (statusLoggedIn.value) {
-        navController.navigate(Screen.Home.route) {
-            popUpTo(Screen.Login.route) {
-                inclusive = true
-            }
-        }
-    } else {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(20.dp),
-            verticalArrangement = Arrangement.Center,
-
-            ) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(20.dp),
+        verticalArrangement = Arrangement.Center,
+        ) {
             Row(
                 horizontalArrangement = Arrangement.Center,
                 modifier = Modifier
@@ -284,8 +275,8 @@ fun LoginScreen(
                 )
             }
         }
-    }
 }
+
 
 @Preview
 @Composable

@@ -45,7 +45,6 @@ import com.example.jobtalent.presentation.profile.detail_profile.SettingsScreen
 import com.example.jobtalent.presentation.home.detail_home.TipsScreen
 import com.example.jobtalent.presentation.home.HomeScreen
 import com.example.jobtalent.presentation.login.LoginScreen
-import com.example.jobtalent.presentation.login.Onboarding
 import com.example.jobtalent.presentation.login.RegistrasiScreen
 import com.example.jobtalent.presentation.login.SplashScreen
 import com.example.jobtalent.presentation.profile.modeJasa.DataPelengkapScreen
@@ -59,6 +58,7 @@ import com.example.jobtalent.presentation.home.pemesananJasa.DetailJasaScreen
 import com.example.jobtalent.presentation.home.pemesananJasa.KategoriPesananScreen
 import com.example.jobtalent.presentation.home.pemesananJasa.PaymentSummaryScreen
 import com.example.jobtalent.presentation.home.pemesananJasa.ReviewsScreen
+import com.example.jobtalent.presentation.login.OnboardingScreen
 import com.example.jobtalent.presentation.profile.ProfileScreen
 import com.example.jobtalent.presentation.profile.detail_profile.HelpCenterScreen
 import com.example.jobtalent.presentation.profile.model_view.SharedViewModel
@@ -87,14 +87,14 @@ fun JobTalentApp(
     ) {contentPadding ->
         NavHost(
             navController = navController,
-            startDestination = Screen.Onboarding.route,
+            startDestination = Screen.Splash.route,
             modifier = modifier.padding(contentPadding)
         ){
-            composable(Screen.Onboarding.route){
-                Onboarding(navController)
-            }
-            composable(Screen.Splash.route) {
+            composable(Screen.Splash.route){
                 SplashScreen(navController)
+            }
+            composable(Screen.Onboarding.route) {
+                OnboardingScreen(navController)
             }
             composable(Screen.Login.route) {
                 LoginScreen(navController)
