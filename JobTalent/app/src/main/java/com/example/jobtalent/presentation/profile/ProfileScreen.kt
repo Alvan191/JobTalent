@@ -54,10 +54,9 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.jobtalent.R
-import com.example.jobtalent.data.SharedPreferencesManager
+import com.example.jobtalent.data.sharedpreference.SharedPreferencesManager
 import com.example.jobtalent.navigation.Screen
 import com.example.jobtalent.presentation.profile.model_view.SharedViewModel
-import com.google.firebase.auth.FirebaseAuth
 
 @Composable
 fun ProfileScreen(
@@ -67,8 +66,8 @@ fun ProfileScreen(
 ) {
     val context = LocalContext.current
     val sharedPreferencesManager = remember { SharedPreferencesManager(context) }
-    val currentUser = FirebaseAuth.getInstance().currentUser?.email
-    val currentUserSec = FirebaseAuth.getInstance().currentUser?.email?.substringBefore("@") ?: "N/A"
+    val currentUser = sharedPreferencesManager.email ?: "N/A"
+    val currentUserSec = sharedPreferencesManager.email?.substringBefore("@") ?: "N/A"
 
     val namaTampil = if (sharedPreferencesManager.name.isNullOrEmpty()) currentUserSec else sharedPreferencesManager.name
 

@@ -54,7 +54,7 @@ import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.jobtalent.R
-import com.example.jobtalent.data.PortofolioItem
+import com.example.jobtalent.data.item.PortofolioItem
 import com.example.jobtalent.navigation.Screen
 import com.example.jobtalent.presentation.model.DesainPortofolio
 

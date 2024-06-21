@@ -34,7 +34,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -49,10 +48,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.jobtalent.R
-import com.example.jobtalent.data.DataStore
-import com.example.jobtalent.data.SharedPreferencesManager
+import com.example.jobtalent.data.datastore.DataStore
+import com.example.jobtalent.data.sharedpreference.SharedPreferencesManager
 import com.example.jobtalent.navigation.Screen
-import com.example.jobtalent.presentation.login.model_login.LoginViewModel
+import com.example.jobtalent.data.firebase.model_login.LoginViewModel
 import kotlinx.coroutines.launch
 
 
@@ -66,7 +65,6 @@ fun SettingsScreen(
     val coroutineScope = rememberCoroutineScope()
     val state = viewModel.state.collectAsState(initial = null)
 
-    // Menerapkan SharedPreferences
     val sharedPreferencesManager = remember { SharedPreferencesManager(context) }
     val dataStore = DataStore(context)
 
@@ -135,10 +133,10 @@ fun SettingsScreen(
                     onClick = {
                         sharedPreferencesManager.clear()
                         coroutineScope.launch {
-                            viewModel.logoutUser()
                             dataStore.clearStatus()
                         }
-                        navController.navigate(Screen.Login.route){
+                        navController.navigate(Screen.Login.route)
+                        {
                             popUpTo(Screen.Profile.route) {
                                 inclusive = true
                             }

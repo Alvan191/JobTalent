@@ -61,10 +61,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.jobtalent.R
-import com.example.jobtalent.data.DataStore
-import com.example.jobtalent.data.SharedPreferencesManager
+import com.example.jobtalent.data.sharedpreference.SharedPreferencesManager
 import com.example.jobtalent.navigation.Screen
-import com.google.firebase.auth.FirebaseAuth
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Locale
@@ -75,14 +73,11 @@ fun HomeScreen(
     modifier: Modifier,
     navController: NavController
 ) {
-    // Menerapkan SharedPreferences
     val context = LocalContext.current
-    val currentUser = FirebaseAuth.getInstance().currentUser?.email?.substringBefore("@") ?: "N/A"
-
     val sharedPreferencesManager = remember { SharedPreferencesManager(context) }
-    val namaTampil = if (sharedPreferencesManager.name.isNullOrEmpty()) currentUser else sharedPreferencesManager.name!!.split(" ").firstOrNull() ?: currentUser
+    val currentUser = sharedPreferencesManager.email?.substringBefore("@") ?: "N/A"
+    val namaTampil = if (sharedPreferencesManager.name.isNullOrEmpty()) currentUser else sharedPreferencesManager.name
 
-    // Menerapkan Calender
     val currentDate = LocalDate.now()
     val dayOfWeek = currentDate.dayOfWeek.getDisplayName(java.time.format.TextStyle.SHORT, Locale("id", "ID"))
     val formattedDate = currentDate.format(DateTimeFormatter.ofPattern("d MMM yyyy", Locale("id", "ID")))

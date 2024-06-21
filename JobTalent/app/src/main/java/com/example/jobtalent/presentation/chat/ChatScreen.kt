@@ -43,7 +43,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.jobtalent.R
-import com.example.jobtalent.data.ChatItem
+import com.example.jobtalent.data.item.ChatItem
 import com.example.jobtalent.navigation.Screen
 import com.example.jobtalent.presentation.model.IsiChat
 
@@ -79,7 +79,7 @@ fun ChatScreen(
             actions = {
                 IconButton(onClick = { }) {
                     Icon(
-                        imageVector = Icons.Default.Search, // Replace with your search icon resource
+                        imageVector = Icons.Default.Search,
                         contentDescription = "Search",
                         tint = Color.Black
                     )

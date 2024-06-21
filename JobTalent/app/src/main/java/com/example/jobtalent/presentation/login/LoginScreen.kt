@@ -1,7 +1,6 @@
 package com.example.jobtalent.presentation.login
 
 import android.widget.Toast
-import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -47,25 +46,26 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.jobtalent.R
-import com.example.jobtalent.data.DataStore
-import com.example.jobtalent.data.SharedPreferencesManager
+import com.example.jobtalent.data.API_Network.LoginRequest
+import com.example.jobtalent.data.datastore.DataStore
+import com.example.jobtalent.data.sharedpreference.SharedPreferencesManager
+import com.example.jobtalent.data.ViewModel.LoginViewModel
 import com.example.jobtalent.navigation.Screen
-import com.example.jobtalent.presentation.login.model_login.LoginViewModel
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen(
     navController: NavController,
-    viewModel: LoginViewModel = hiltViewModel()
+    viewModel: LoginViewModel = viewModel()
 ) {
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
-    val state = viewModel.state.collectAsState(initial = null)
+    val sharedPreferencesManager = remember { SharedPreferencesManager(context) }
     val dataStore = DataStore(context)
     val statusLoggedIn = dataStore.getStatusLogin.collectAsState(initial = false)
 
@@ -222,18 +222,24 @@ fun LoginScreen(
                             )
                                 .show()
                         } else {
-                            viewModel.loginUser(email, password) {
+                            val request = LoginRequest(
+                                email = email,
+                                password = password
+                            )
+                            sharedPreferencesManager.email = email
+                            viewModel.loginUser(request, {
                                 coroutineScope.launch {
                                     dataStore.saveStatus(true)
                                 }
-                                navController.navigate(Screen.Home.route) {
+                                navController.navigate(Screen.Home.route){
                                     popUpTo(Screen.Login.route) {
                                         inclusive = true
                                     }
                                 }
-                                email = ""
-                                password = ""
-                            }
+                                Toast.makeText(context, "Login Successful", Toast.LENGTH_SHORT).show()
+                            }, {
+                                Toast.makeText(context, "Login Failed", Toast.LENGTH_SHORT).show()
+                            })
                         }
                     }
                 },

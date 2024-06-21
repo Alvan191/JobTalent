@@ -1,4 +1,4 @@
-package com.example.jobtalent.data
+package com.example.jobtalent.data.item
 
 import com.example.jobtalent.R
 import com.example.jobtalent.presentation.model.KategoriPemangkas

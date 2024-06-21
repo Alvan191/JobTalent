@@ -1,4 +1,4 @@
-package com.example.jobtalent.presentation.login.model_login
+package com.example.jobtalent.data.firebase.model_login
 
 data class LoginState(
     val success: String? = "",

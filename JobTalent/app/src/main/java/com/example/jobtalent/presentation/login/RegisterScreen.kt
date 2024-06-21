@@ -42,27 +42,32 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
 import com.example.jobtalent.R
+import com.example.jobtalent.data.API_Network.RegisterRequest
+import com.example.jobtalent.data.sharedpreference.SharedPreferencesManager
+import com.example.jobtalent.data.ViewModel.RegisterViewModel
 import com.example.jobtalent.navigation.Screen
-import com.example.jobtalent.presentation.login.model_login.LoginViewModel
 import kotlinx.coroutines.launch
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RegistrasiScreen(
     navController: NavController,
-    viewModel: LoginViewModel = hiltViewModel()
+    viewModel: RegisterViewModel = viewModel()
 ) {
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
-    val state = viewModel.state.collectAsState(initial = null)
 
+    var username by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
-    var passwordConfirm by remember { mutableStateOf("") }
+    var confPassword by remember { mutableStateOf("") }
+    var message by remember { mutableStateOf("") }
+
     var katasandiVisible by remember { mutableStateOf(false) }
     var konfirmasiKataSandiVisible by remember { mutableStateOf(false) }
 
@@ -110,6 +115,33 @@ fun RegistrasiScreen(
         )
 
         Spacer(modifier = Modifier.height(16.dp))
+
+        OutlinedTextField(
+            modifier = Modifier
+                .fillMaxWidth(),
+            value = username,
+            onValueChange = {
+                username = it
+            }, label = {
+                Text(
+                    text = "Username",
+                    style = TextStyle(
+                        fontSize = 14.sp,
+                        fontFamily = FontFamily(Font(R.font.roboto_medium)),
+                        fontWeight = FontWeight(400),
+                        color = Color(0xFFAEAEAE),
+                    )
+                )
+            },
+
+            colors = TextFieldDefaults.outlinedTextFieldColors(
+                focusedBorderColor = Color(0xFFAEAEAE),
+                unfocusedBorderColor = Color(0xFFAEAEAE),
+                containerColor = Color(0xFFF5F5F5),
+            )
+        )
+
+        Spacer(modifier = Modifier.height(14.dp))
 
         OutlinedTextField(
             modifier = Modifier
@@ -177,9 +209,9 @@ fun RegistrasiScreen(
         OutlinedTextField(
             modifier = Modifier
                 .fillMaxWidth(),
-            value = passwordConfirm,
+            value = confPassword,
             onValueChange = {
-                passwordConfirm = it
+                confPassword = it
             },
             label = {
                 Text(
@@ -228,19 +260,27 @@ fun RegistrasiScreen(
                             Toast.LENGTH_SHORT
                         )
                             .show()
-                    } else if (password != passwordConfirm) {
+                    } else if (password != confPassword) {
                         Toast.makeText(
                             context,
                             "Password dan Konfirmasi Password tidak cocok",
                             Toast.LENGTH_SHORT
                         ).show()
                     } else {
-                        viewModel.registerUser(email, password) {
+                        val request = RegisterRequest(
+                            username = username,
+                            email = email,
+                            password = password,
+                            confPassword = confPassword
+                        )
+                        viewModel.registerUser(request, {
+                            val sharedPreferencesManager = SharedPreferencesManager(context)
+                            sharedPreferencesManager.name = it.username
                             navController.navigate(Screen.Login.route)
-                            email = ""
-                            password = ""
-                            passwordConfirm = ""
-                        }
+                            Toast.makeText(context, "Registration Success : ${it.username}", Toast.LENGTH_SHORT).show()
+                        }, {
+                            message = "Registration Failed : $it"
+                        })
                     }
                 }
             },

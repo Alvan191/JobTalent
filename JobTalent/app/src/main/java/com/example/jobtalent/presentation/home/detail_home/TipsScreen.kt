@@ -47,7 +47,7 @@ import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.jobtalent.R
-import com.example.jobtalent.data.TipsItem
+import com.example.jobtalent.data.item.TipsItem
 import com.example.jobtalent.presentation.model.IsiTips
 
 @Composable

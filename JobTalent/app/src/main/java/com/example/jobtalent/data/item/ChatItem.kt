@@ -1,6 +1,5 @@
-package com.example.jobtalent.data
+package com.example.jobtalent.data.item
 
-import android.provider.ContactsContract.Contacts.Photo
 import com.example.jobtalent.R
 import com.example.jobtalent.presentation.model.IsiChat
 

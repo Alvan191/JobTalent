@@ -1,6 +1,5 @@
 package com.example.jobtalent.presentation
 
-import HelpCenterScreen
 import PaymentSuccessScreen
 import TrackingScreen
 import androidx.compose.animation.AnimatedVisibility
@@ -61,6 +60,7 @@ import com.example.jobtalent.presentation.home.pemesananJasa.KategoriPesananScre
 import com.example.jobtalent.presentation.home.pemesananJasa.PaymentSummaryScreen
 import com.example.jobtalent.presentation.home.pemesananJasa.ReviewsScreen
 import com.example.jobtalent.presentation.profile.ProfileScreen
+import com.example.jobtalent.presentation.profile.detail_profile.HelpCenterScreen
 import com.example.jobtalent.presentation.profile.model_view.SharedViewModel
 import com.example.jobtalent.utils.shouldShowBottomBar
 

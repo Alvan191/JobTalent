@@ -1,4 +1,4 @@
-package com.example.jobtalent.di
+package com.example.jobtalent.data.firebase.di
 
 import com.example.jobtalent.data.firebase.AuthRepository
 import com.example.jobtalent.data.firebase.AuthRepositoryImpl

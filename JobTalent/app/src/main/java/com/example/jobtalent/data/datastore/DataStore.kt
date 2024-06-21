@@ -1,4 +1,4 @@
-package com.example.jobtalent.data
+package com.example.jobtalent.data.datastore
 
 import android.content.Context
 import androidx.datastore.core.DataStore
