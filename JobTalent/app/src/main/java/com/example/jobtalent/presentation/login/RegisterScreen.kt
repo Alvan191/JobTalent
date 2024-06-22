@@ -50,6 +50,7 @@ import com.example.jobtalent.data.API_Network.RegisterRequest
 import com.example.jobtalent.data.sharedpreference.SharedPreferencesManager
 import com.example.jobtalent.data.ViewModel.RegisterViewModel
 import com.example.jobtalent.navigation.Screen
+import com.example.jobtalent.presentation.login.componentLogin.ContentForm
 import kotlinx.coroutines.launch
 
 
@@ -116,128 +117,41 @@ fun RegistrasiScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        OutlinedTextField(
-            modifier = Modifier
-                .fillMaxWidth(),
+        ContentForm(
             value = username,
-            onValueChange = {
-                username = it
-            }, label = {
-                Text(
-                    text = "Username",
-                    style = TextStyle(
-                        fontSize = 14.sp,
-                        fontFamily = FontFamily(Font(R.font.roboto_medium)),
-                        fontWeight = FontWeight(400),
-                        color = Color(0xFFAEAEAE),
-                    )
-                )
-            },
-
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                focusedBorderColor = Color(0xFFAEAEAE),
-                unfocusedBorderColor = Color(0xFFAEAEAE),
-                containerColor = Color(0xFFF5F5F5),
-            )
+            onValueChange = { username = it },
+            labelText = "Username",
+            modifier = Modifier.fillMaxWidth()
         )
 
         Spacer(modifier = Modifier.height(14.dp))
 
-        OutlinedTextField(
-            modifier = Modifier
-                .fillMaxWidth(),
+        ContentForm(
             value = email,
-            onValueChange = {
-                email = it
-            }, label = {
-                Text(
-                    text = "E-mail",
-                    style = TextStyle(
-                        fontSize = 14.sp,
-                        fontFamily = FontFamily(Font(R.font.roboto_medium)),
-                        fontWeight = FontWeight(400),
-                        color = Color(0xFFAEAEAE),
-                    )
-                )
-            },
-
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                focusedBorderColor = Color(0xFFAEAEAE),
-                unfocusedBorderColor = Color(0xFFAEAEAE),
-                containerColor = Color(0xFFF5F5F5),
-            )
+            onValueChange = { email = it },
+            labelText = "E-mail",
+            modifier = Modifier.fillMaxWidth()
         )
 
         Spacer(modifier = Modifier.height(14.dp))
 
-        OutlinedTextField(
-            modifier = Modifier
-                .fillMaxWidth(),
+        ContentForm(
             value = password,
-            onValueChange = {
-                password = it
-            },
-            label = {
-                Text(
-                    text = "Kata Sandi",
-                    style = TextStyle(
-                        fontSize = 14.sp,
-                        fontFamily = FontFamily(Font(R.font.roboto_medium)),
-                        fontWeight = FontWeight(400),
-                        color = Color(0xFFAEAEAE),
-                    )
-                )
-            },
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                focusedBorderColor = Color(0xFFAEAEAE),
-                unfocusedBorderColor = Color(0xFFAEAEAE),
-                containerColor = Color(0xFFF5F5F5),
-            ),
-            visualTransformation = if (katasandiVisible) VisualTransformation.None else PasswordVisualTransformation(),
-            trailingIcon = {
-                val image = if (katasandiVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff
-                val description = if (katasandiVisible) "Hide password" else "Show password"
-
-                IconButton(onClick = { katasandiVisible = !katasandiVisible }) {
-                    Icon(imageVector = image, contentDescription = description)
-                }
-            }
+            onValueChange = { password = it },
+            labelText = "Kata Sandi",
+            modifier = Modifier.fillMaxWidth(),
+            isPassword = true,
+            katasandiVisible = remember { mutableStateOf(katasandiVisible) }
         )
 
         Spacer(modifier = Modifier.height(14.dp))
-
-        OutlinedTextField(
-            modifier = Modifier
-                .fillMaxWidth(),
+        ContentForm(
             value = confPassword,
-            onValueChange = {
-                confPassword = it
-            },
-            label = {
-                Text(
-                    text = "Konfirmasi Kata Sandi",
-                    style = TextStyle(
-                        fontSize = 14.sp,
-                        fontFamily = FontFamily(Font(R.font.roboto_medium)),
-                        fontWeight = FontWeight(400),
-                        color = Color(0xFFAEAEAE),
-                    )
-                )
-                    },
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                focusedBorderColor = Color(0xFFAEAEAE),
-                unfocusedBorderColor = Color(0xFFAEAEAE),
-                containerColor = Color(0xFFF5F5F5),
-            ),
-            visualTransformation = if (konfirmasiKataSandiVisible) VisualTransformation.None else PasswordVisualTransformation(),
-            trailingIcon = {
-                val image = if (konfirmasiKataSandiVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff
-                val description = if (konfirmasiKataSandiVisible) "Hide password" else "Show password"
-
-                IconButton(onClick = { konfirmasiKataSandiVisible = !konfirmasiKataSandiVisible }) {
-                    Icon(imageVector = image, contentDescription = description)
-                }
-            }
+            onValueChange = { confPassword = it },
+            labelText = "Konfirmasi Kata Sandi",
+            modifier = Modifier.fillMaxWidth(),
+            isPassword = true,
+            katasandiVisible = remember { mutableStateOf(konfirmasiKataSandiVisible) }
         )
 
         Spacer(modifier = Modifier.height(70.dp))

@@ -15,13 +15,13 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
@@ -33,7 +33,6 @@ import androidx.compose.material.icons.filled.Send
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -65,7 +64,7 @@ import com.example.jobtalent.data.item.ChatItem
 import com.example.jobtalent.presentation.model.IsiChat
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterial3Api::class)
+
 @Composable
 fun DetailChatScreen(
     modifier: Modifier = Modifier,
@@ -79,39 +78,40 @@ fun DetailChatScreen(
         tampilchat.id == tampilchatId
     }
 
-    Scaffold(
-        topBar = {
-            HeaderChat(newChatList, navController)
-        },
-        bottomBar = {
-            MessageInputt(
-                onMessageSent = { message ->
-                    scope.launch {
-                        messages = messages + Pair(message, true)
-                    }
-                },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 3.dp)
-                    .imePadding()
-            )
-        },
-        modifier = modifier
-            .fillMaxSize()
-    ) { paddingValues ->
-        Column(
+    Column(
+        verticalArrangement = Arrangement.SpaceBetween,
+        modifier = Modifier
+            .background(Color(0xFFE4E4E4))
+    ) {
+        Column (
             modifier = Modifier
-                .padding(paddingValues)
-                .fillMaxSize()
-                .background(Color(0xFFE4E4E4))
-        ) {
-            DetailChat(
-                modifier = Modifier.weight(1f),
-                messages = messages
-            )
+                .fillMaxWidth()
+                .weight(1f)
+                .padding(15.dp)
+        ){
+            HeaderChat(newChatList, navController)
+            Box(modifier = Modifier
+                .fillMaxWidth()
+                .height(1.dp)
+                .background(Color.White))
+            DetailChat(messages = messages)
         }
+
+        MessageInputt(
+            onMessageSent = { message ->
+                scope.launch {
+                    messages = messages + Pair(message, true)
+                }
+            },
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxWidth()
+                .padding(bottom = 3.dp)
+                .imePadding()
+        )
     }
 }
+
 
 @Composable
 fun HeaderChat(
@@ -173,10 +173,12 @@ fun HeaderChat(
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class)
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
-private fun DetailChat(modifier: Modifier = Modifier, messages: List<Pair<String, Boolean>>) {
-    LazyColumn {
+private fun DetailChat(messages: List<Pair<String, Boolean>>) {
+    LazyColumn(
+        modifier = Modifier.wrapContentSize()
+    ) {
         item {
             ContentChat()
         }
@@ -229,43 +231,35 @@ fun ContentChat() {
                 )
             }
         }
-
-
         Spacer(modifier = Modifier.height(8.dp))
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(10.dp)
         ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
+            Box(
+                modifier = Modifier
+                    .size(width = 300.dp, height = 80.dp)
+                    .clip(customShape_two)
+                    .background(Color(0xFFFFFFFF))
+                    .padding(16.dp)
             ) {
-                Box(
-                    modifier = Modifier
-                        .size(width = 300.dp, height = 100.dp)
-                        .clip(customShape_two)
-                        .background(Color(0xFFFFFFFF))
-                        .padding(16.dp)
-                ) {
-                    Text(
-                        text = "Selamat siang pak Anto, terimakasih sudah menyempatkan waktu untuk melihat porto saya",
-                        color = Color.Black,
-                        fontSize = 16.sp
-                    )
-                }
-                Spacer(modifier = Modifier.width(15.dp))
                 Text(
-                    text = "13.00",
-                    style = TextStyle(
-                        fontSize = 12.sp,
-                        fontFamily = FontFamily(Font(R.font.roboto_medium)),
-                        fontWeight = FontWeight(300),
-                        color = Color(0xFFB2B2B2)
-                    )
+                    text = "Selamat siang pak Anto, terimakasih sudah menyempatkan waktu untuk melihat porto saya",
+                    color = Color.Black,
+                    fontSize = 16.sp
                 )
             }
+            Spacer(modifier = Modifier.width(15.dp))
+            Text(
+                text = "13.00",
+                style = TextStyle(
+                    fontSize = 12.sp,
+                    fontFamily = FontFamily(Font(R.font.roboto_medium)),
+                    fontWeight = FontWeight(300),
+                    color = Color(0xFFB2B2B2)
+                )
+            )
         }
     }
 }
@@ -317,7 +311,6 @@ fun ChatBubblee(
 ) {
     val bubbleColor = if (isUserMe) Color(0xFF005695) else Color.White
     val textColor = if (isUserMe) Color.White else Color.Black
-//    val alignment = if (isUserMe) Alignment.End else Alignment.Start
     val bubbleShape = if (isUserMe) {
         RoundedCornerShape(
             topStart = CornerSize(16.dp),

@@ -2,9 +2,6 @@ package com.example.jobtalent.presentation.community
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -19,14 +16,9 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Comment
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.Share
-import androidx.compose.material.icons.filled.ThumbUp
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -44,12 +36,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -58,6 +45,8 @@ import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.jobtalent.R
 import com.example.jobtalent.navigation.Screen
+import com.example.jobtalent.presentation.community.componentCommunity.ContentLazy
+import com.example.jobtalent.presentation.community.componentCommunity.posts
 import com.example.jobtalent.presentation.profile.model_view.SharedViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -70,6 +59,10 @@ fun CommunityScreen(
     val painter = rememberAsyncImagePainter(
         imageUri.ifEmpty { R.drawable.person_profile }
     )
+
+    var searchText by remember { mutableStateOf("") }
+
+    val filteredPosts = if (searchText.isEmpty()) posts else posts.filter { it.name.contains(searchText, ignoreCase = true) }
 
     Column (
         modifier = Modifier
@@ -95,7 +88,6 @@ fun CommunityScreen(
                     .size(43.dp)
             )
             Spacer(modifier = Modifier.width(8.dp))
-            var searchText by remember { mutableStateOf("") }
             TextField(
                 value = searchText,
                 onValueChange = { searchText = it },
@@ -140,391 +132,31 @@ fun CommunityScreen(
                     color = Color(0xFFF8F8F8)
                 ),
         ) {
-            item {
+            items(filteredPosts.size) { index ->
+                val post = filteredPosts[index]
                 Spacer(modifier = Modifier.height(8.dp))
                 ContentLazy(
-                    image = R.drawable.image_satu,
-                    name = "Saudara Bersama",
-                    time = "24 Menit",
-                    desc_content = "Wahhh baru kali ini dapat penjahit yang bertalenta, gesit, ramah, kreatif, ... pokoknya sangat recomended lah \uD83D\uDE2D\uD83D\uDE2D\uD83D\uDE23",
-                    image_content = R.drawable.image_empat,
-                    like = "500",
-                    comment = "50 komentar",
+                    image = post.image,
+                    name = post.name,
+                    time = post.time,
+                    desc_content = post.desc_content,
+                    image_content = post.image_content,
+                    like = post.like.toInt(),
+                    comment = post.comment,
                     onClick = { navController.navigate(Screen.Komentarsc.route) }
                 )
                 Spacer(modifier = Modifier.height(20.dp))
-                ContentLazy(
-                    image = R.drawable.image_dua,
-                    name = "Saudari Bersama",
-                    time = "42 Menit",
-                    desc_content = "Wahhh baru kali ini dapat penjahit yang bertalenta, gesit, ramah, kreatif, ... pokoknya sangat recomended lah \uD83D\uDE2D\uD83D\uDE2D\uD83D\uDE23",
-                    image_content = R.drawable.image_lima,
-                    like = "200",
-                    comment = "15 komentar",
-                    onClick = { navController.navigate(Screen.Komentarsc.route) }
-                )
-                Spacer(modifier = Modifier.height(20.dp))
-                ContentLazySec(
-                    image = R.drawable.image_tiga,
-                    name = "Saudaru Bersama",
-                    time = "55 menit",
-                    desc_content = "Wahhh baru kali ini dapat penjahit yang bertalenta, gesit, ramah, kreatif, ... pokoknya sangat recomended lah \uD83D\uDE2D\uD83D\uDE2D\uD83D\uDE23",
-                    like = "110",
-                    comment = "23 komentar",
-                    onClick = { navController.navigate(Screen.Komentarsc.route) }
-                )
-                Spacer(modifier = Modifier.height(20.dp))
-                ContentLazy(
-                    image = R.drawable.image_enam,
-                    name = "Sodiri Bersama",
-                    time = "1 jam",
-                    desc_content = "Wahhh baru kali ini dapat penjahit yang bertalenta, gesit, ramah, kreatif, ... pokoknya sangat recomended lah \uD83D\uDE2D\uD83D\uDE2D\uD83D\uDE23",
-                    image_content = R.drawable.image_empat,
-                    like = "430",
-                    comment = "160 komentar",
-                    onClick = { navController.navigate(Screen.Komentarsc.route) }
-                )
             }
         }
     }
 }
 
+
+@Preview(showBackground = true)
 @Composable
-fun ContentLazy(image: Int, name: String, time: String, desc_content: String, image_content: Int, like: String, comment: String, onClick: () -> Unit) {
-    var isClicked by remember { mutableStateOf(false) }
-    val iconColor = if (isClicked) Color(0xFF3F9AFA) else Color.Black
-
-    Card(
-        colors = CardDefaults.cardColors(
-            containerColor = Color.White
-        ),
-        elevation = CardDefaults.cardElevation(10.dp)
-    ) {
-            Box(
-                modifier = Modifier
-                    .padding(10.dp)
-                    .fillMaxWidth()
-                    .height(height = 360.dp)
-                    .background(
-                        color = Color.White
-                    )
-            ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                ) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Image(
-                            painter = painterResource(id = image),
-                            contentDescription = null,
-                            contentScale = ContentScale.Crop,
-                            modifier = Modifier
-                                .clip(CircleShape)
-                                .size(45.dp)
-                        )
-                        Column(
-                            modifier = Modifier.padding(start = 8.dp)
-                        ) {
-                            Text(
-                                text = name,
-                                style = TextStyle(
-                                    fontSize = 14.sp,
-                                    fontFamily = FontFamily(Font(R.font.roboto_black)),
-                                    fontWeight = FontWeight(500),
-                                    color = Color(0xFF000000)
-                                )
-                            )
-                            Spacer(modifier = Modifier.height(5.dp))
-                            Text(
-                                text = time,
-                                style = TextStyle(
-                                    fontSize = 12.sp,
-                                    fontFamily = FontFamily(Font(R.font.roboto_light)),
-                                    fontWeight = FontWeight(400),
-                                    color = Color(0xFF000000)
-                                )
-                            )
-                        }
-                    }
-                    Spacer(modifier = Modifier.height(12.dp))
-                    Text(
-                        text = desc_content,
-                        style = TextStyle(
-                            fontSize = 12.sp,
-                            lineHeight = 17.sp,
-                            fontFamily = FontFamily(Font(R.font.roboto_light)),
-                            fontWeight = FontWeight(700),
-                            color = Color(0xFF575757),
-                            textAlign = TextAlign.Justify,
-                        )
-                    )
-                    Spacer(modifier = Modifier.height(10.dp))
-                    Image(
-                        painter = painterResource(id = image_content),
-                        contentDescription = null,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(height = 180.dp)
-                    )
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier.padding(top = 8.dp)
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .size(23.dp)
-                                .background(
-                                    color = Color(0xFF34B4F0),
-                                    shape = CircleShape
-                                )
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.ThumbUp,
-                                contentDescription = "Thumb Up",
-                                tint = Color.White,
-                                modifier = Modifier
-                                    .size(13.dp)
-                                    .align(Alignment.Center)
-                            )
-                        }
-                        Spacer(modifier = Modifier.width(5.dp))
-                        Row(
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            Text(
-                                text = like,
-                                style = TextStyle(
-                                    fontSize = 12.sp,
-                                    fontFamily = FontFamily(Font(R.font.roboto_light)),
-                                    fontWeight = FontWeight(900),
-                                    color = Color.Black
-                                )
-                            )
-                            Text(
-                                text = comment,
-                                style = TextStyle(
-                                    fontSize = 12.sp,
-                                    fontFamily = FontFamily(Font(R.font.roboto_light)),
-                                    fontWeight = FontWeight(900),
-                                    color = Color.Black
-                                )
-                            )
-                        }
-                    }
-                    Box(
-                        Modifier
-                            .padding(6.dp)
-                            .fillMaxWidth()
-                            .height(2.dp)
-                            .background(color = Color(0xFFF4F4F4))
-                    )
-                    Row(
-                        modifier = Modifier
-                            .padding(top = 10.dp, start = 20.dp, end = 20.dp)
-                            .fillMaxSize(),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.ThumbUp,
-                            contentDescription = "Thumb Up",
-                            tint = iconColor,
-                            modifier = Modifier
-                                .size(22.dp)
-                                .clickable {
-                                    isClicked = !isClicked
-                                }
-                        )
-                        Icon(
-                            imageVector = Icons.Default.Comment,
-                            contentDescription = "Comment",
-                            tint = Color.Black,
-                            modifier = Modifier
-                                .size(22.dp)
-                                .clickable (onClick = onClick)
-                        )
-                        Icon(
-                            imageVector = Icons.Default.Share,
-                            contentDescription = "Share",
-                            tint = Color.Black,
-                            modifier = Modifier
-                                .size(22.dp)
-                        )
-                    }
-                }
-            }
-        }
-}
-
-@Composable
-fun ContentLazySec(image: Int, name: String, time: String, desc_content: String, like: String, comment: String, onClick: () -> Unit) {
-    var isClicked by remember { mutableStateOf(false) }
-    val iconColor = if (isClicked) Color(0xFF3F9AFA) else Color.Black
-
-    Card(
-        colors = CardDefaults.cardColors(
-            containerColor = Color.White
-        ),
-        elevation = CardDefaults.cardElevation(10.dp)
-    ) {
-            Box(
-                modifier = Modifier
-                    .padding(10.dp)
-                    .fillMaxWidth()
-                    .height(height = 180.dp)
-                    .background(
-                        color = Color.White
-                    )
-            ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                ) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Image(
-                            painter = painterResource(id = image),
-                            contentDescription = null,
-                            contentScale = ContentScale.Crop,
-                            modifier = Modifier
-                                .clip(CircleShape)
-                                .size(45.dp)
-                        )
-                        Column(
-                            modifier = Modifier.padding(start = 8.dp)
-                        ) {
-                            Text(
-                                text = name,
-                                style = TextStyle(
-                                    fontSize = 14.sp,
-                                    fontFamily = FontFamily(Font(R.font.roboto_black)),
-                                    fontWeight = FontWeight(500),
-                                    color = Color(0xFF000000)
-                                )
-                            )
-                            Spacer(modifier = Modifier.height(5.dp))
-                            Text(
-                                text = time,
-                                style = TextStyle(
-                                    fontSize = 12.sp,
-                                    fontFamily = FontFamily(Font(R.font.roboto_light)),
-                                    fontWeight = FontWeight(400),
-                                    color = Color(0xFF000000)
-                                )
-                            )
-                        }
-                    }
-                    Spacer(modifier = Modifier.height(12.dp))
-                    Text(
-                        text = desc_content,
-                        style = TextStyle(
-                            fontSize = 12.sp,
-                            lineHeight = 17.sp,
-                            fontFamily = FontFamily(Font(R.font.roboto_light)),
-                            fontWeight = FontWeight(700),
-                            color = Color(0xFF575757),
-                            textAlign = TextAlign.Justify,
-                        )
-                    )
-                    Spacer(modifier = Modifier.height(12.dp))
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier.padding(top = 8.dp)
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .size(23.dp)
-                                .background(
-                                    color = Color(0xFF34B4F0),
-                                    shape = CircleShape
-                                )
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.ThumbUp,
-                                contentDescription = "Thumb Up",
-                                tint = Color.White,
-                                modifier = Modifier
-                                    .size(13.dp)
-                                    .align(Alignment.Center)
-                            )
-                        }
-                        Spacer(modifier = Modifier.width(5.dp))
-                        Row(
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            Text(
-                                text = like,
-                                style = TextStyle(
-                                    fontSize = 12.sp,
-                                    fontFamily = FontFamily(Font(R.font.roboto_light)),
-                                    fontWeight = FontWeight(900),
-                                    color = Color.Black
-                                )
-                            )
-                            Text(
-                                text = comment,
-                                style = TextStyle(
-                                    fontSize = 12.sp,
-                                    fontFamily = FontFamily(Font(R.font.roboto_light)),
-                                    fontWeight = FontWeight(900),
-                                    color = Color.Black
-                                )
-                            )
-                        }
-                    }
-                    Box(
-                        Modifier
-                            .padding(6.dp)
-                            .fillMaxWidth()
-                            .height(2.dp)
-                            .background(color = Color(0xFFF4F4F4))
-                    )
-                    Row(
-                        modifier = Modifier
-                            .padding(top = 10.dp, start = 20.dp, end = 20.dp)
-                            .fillMaxSize(),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.ThumbUp,
-                            contentDescription = "Thumb Up",
-                            tint = iconColor,
-                            modifier = Modifier
-                                .size(22.dp)
-                                .clickable {
-                                    isClicked = !isClicked
-                                }
-                        )
-                        Icon(
-                            imageVector = Icons.Default.Comment,
-                            contentDescription = "Comment",
-                            tint = Color.Black,
-                            modifier = Modifier
-                                .size(22.dp)
-                                .clickable (onClick = onClick)
-                        )
-                        Icon(
-                            imageVector = Icons.Default.Share,
-                            contentDescription = "Share",
-                            tint = Color.Black,
-                            modifier = Modifier
-                                .size(22.dp)
-                        )
-                    }
-                }
-            }
-        }
-
-}
-
-@Preview
-@Composable
-private fun CommunityScreenPreview() {
-    CommunityScreen(navController = rememberNavController(), sharedViewModel = SharedViewModel())
+fun PreviewCommunityScreen() {
+    CommunityScreen(
+        navController = rememberNavController(),
+        sharedViewModel = SharedViewModel()
+    )
 }

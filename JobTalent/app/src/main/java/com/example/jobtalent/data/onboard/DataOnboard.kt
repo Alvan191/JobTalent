@@ -1,7 +1,7 @@
 package com.example.jobtalent.data.onboard
 
 import com.example.jobtalent.R
-import com.example.jobtalent.data.item.OnboardScreenItem
+import com.example.jobtalent.presentation.model.OnboardScreenItem
 
 object DataOnboard {
 

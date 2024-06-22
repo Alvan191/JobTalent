@@ -56,6 +56,9 @@ import androidx.navigation.compose.rememberNavController
 import com.example.jobtalent.R
 import com.example.jobtalent.data.item.KatPesananItem
 import com.example.jobtalent.navigation.Screen
+import com.example.jobtalent.presentation.home.pemesananJasa.component.PemangkasColumnItem
+import com.example.jobtalent.presentation.home.pemesananJasa.component.PenjahitColumnItem
+import com.example.jobtalent.presentation.home.pemesananJasa.component.ServisColumnItem
 import com.example.jobtalent.presentation.model.KategoriKerja
 import com.example.jobtalent.presentation.model.KategoriPemangkas
 import com.example.jobtalent.presentation.model.KategoriPenjahit
@@ -70,6 +73,7 @@ fun KategoriPesananScreen(
     kategoriServis: List<KategoriServis> = KatPesananItem.dataServis
 ) {
     var selectedCategory by remember { mutableStateOf("Semua") }
+    var searchText by remember { mutableStateOf("") }
     val categories = listOf("Semua", "Penjahit", "Pemangkas Rambut", "Servis Elektronik")
 
     Column(
@@ -78,12 +82,12 @@ fun KategoriPesananScreen(
             .padding(15.dp)
             .background(color = Color.White)
     ) {
-        Row (
+        Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
-        ){
+        ) {
             Box(
                 modifier = Modifier
                     .size(45.dp)
@@ -102,7 +106,6 @@ fun KategoriPesananScreen(
                 )
             }
             Spacer(modifier = Modifier.width(8.dp))
-            var searchText by remember { mutableStateOf("") }
             TextField(
                 value = searchText,
                 onValueChange = { searchText = it },
@@ -124,534 +127,32 @@ fun KategoriPesananScreen(
                     focusedIndicatorColor = Color.Transparent,
                     unfocusedIndicatorColor = Color.Transparent
                 )
-            ) 
+            )
         }
         Spacer(modifier = Modifier.height(10.dp))
-        
+
         TopNavigationBar(
             categories = categories,
             selectedCategory = selectedCategory,
             onCategorySelected = { selectedCategory = it }
         )
 
-        LazyColumn (
+        LazyColumn(
             modifier = Modifier.fillMaxSize()
-        ){
-            val itemsToShow = when (selectedCategory) {
-                "Penjahit" -> kategoriPenjahit
-                "Pemangkas Rambut" -> kategoriPemangkas
-                "Servis Elektronik" -> kategoriServis
-                else -> listOf<KategoriKerja>() + kategoriPenjahit + kategoriPemangkas + kategoriServis
+        ) {
+            val filteredItemsToShow = when (selectedCategory) {
+                "Penjahit" -> kategoriPenjahit.filter { it.name.contains(searchText, ignoreCase = true) }
+                "Pemangkas Rambut" -> kategoriPemangkas.filter { it.name.contains(searchText, ignoreCase = true) }
+                "Servis Elektronik" -> kategoriServis.filter { it.name.contains(searchText, ignoreCase = true) }
+                else -> (kategoriPenjahit.filter { it.name.contains(searchText, ignoreCase = true) } +
+                        kategoriPemangkas.filter { it.name.contains(searchText, ignoreCase = true) } +
+                        kategoriServis.filter { it.name.contains(searchText, ignoreCase = true) })
             }
-            items(itemsToShow) { item ->
+            items(filteredItemsToShow) { item ->
                 when (item) {
-                    is KategoriPenjahit -> ColumnItem(item, navController)
+                    is KategoriPenjahit -> PenjahitColumnItem(item, navController)
                     is KategoriPemangkas -> PemangkasColumnItem(item, navController)
                     is KategoriServis -> ServisColumnItem(item, navController)
-                }
-            }
-        }
-    }
-}
-
-@Composable
-fun <katJahit : KategoriPenjahit> ColumnItem(item: katJahit, navController: NavController) {
-    Card (
-        modifier = Modifier
-            .clickable { navController.navigate(Screen.DetJasa.route) }
-            .padding(3.dp)
-            .fillMaxWidth()
-            .wrapContentHeight(),
-        colors = CardDefaults.cardColors(
-            containerColor = Color.White
-        ),
-        elevation = CardDefaults.cardElevation(2.dp)
-    ){
-        Column(
-            modifier = Modifier
-                .padding(17.dp)
-                .fillMaxWidth()
-        ){
-            Row (
-                modifier = Modifier
-                    .fillMaxWidth()
-            ){
-                Image(
-                    painter = painterResource(id = item.photo),
-                    contentDescription = item.name,
-                    modifier = Modifier
-                        .clip(RoundedCornerShape(5.dp))
-                        .size(50.dp)
-                        .fillMaxSize(),
-                    contentScale = ContentScale.Crop
-                )
-                Spacer(modifier = Modifier.width(10.dp))
-                Row (
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                ) {
-                    Column {
-                        Text(
-                            text = item.name,
-                            style = TextStyle(
-                                fontSize = 14.sp,
-                                fontFamily = FontFamily(Font(R.font.roboto_bold)),
-                                fontWeight = FontWeight(400),
-                                color = Color(0xFF000000)
-                            )
-                        )
-                        Spacer(modifier = Modifier.height(10.dp))
-                        Text(
-                            text = item.talent,
-                            style = TextStyle(
-                                fontSize = 12.sp,
-                                fontFamily = FontFamily(Font(R.font.roboto_medium)),
-                                fontWeight = FontWeight(400),
-                                color = Color(0xFF818181),
-
-                                )
-                        )
-                    }
-                    Row (
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier
-                    ){
-                        Icon(
-                            imageVector = Icons.Default.Star,
-                            contentDescription = "Star",
-                            tint = Color(0xFFFFC107),
-                            modifier = Modifier
-                                .size(16.dp)
-                        )
-                        Spacer(modifier = Modifier.width(2.dp))
-                        Text(
-                            text = "5,0",
-                            style = TextStyle(
-                                fontSize = 12.sp,
-                                fontFamily = FontFamily(Font(R.font.roboto_medium)),
-                                fontWeight = FontWeight(750),
-                                color = Color(0xFF000000),
-                            )
-                        )
-                    }
-                }
-            }
-            Spacer(modifier = Modifier.height(10.dp))
-            Text(
-                text = "Rp. 100.000 - 2.000.000",
-                style = TextStyle(
-                    fontSize = 12.sp,
-                    fontFamily = FontFamily(Font(R.font.roboto_medium)),
-                    fontWeight = FontWeight(300),
-                    color = Color(0xFF000000)
-                )
-            )
-            Spacer(modifier = Modifier.height(10.dp))
-            Row {
-                Box(
-                    modifier = Modifier
-                        .width(65.dp)
-                        .height(24.dp)
-                        .background(
-                            color = Color(0xFFD8EDFF),
-                            shape = RoundedCornerShape(4.dp)
-                        ),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = "Permak",
-                        textAlign = TextAlign.Center,
-                        style = TextStyle(
-                            fontSize = 12.sp,
-                            lineHeight = 14.4.sp,
-                            fontFamily = FontFamily(Font(R.font.roboto_medium)),
-                            fontWeight = FontWeight(400),
-                            color = Color(0xFF276093)
-                        )
-                    )
-                }
-                Spacer(modifier = Modifier.width(5.dp))
-                Box(
-                    modifier = Modifier
-                        .width(65.dp)
-                        .height(24.dp)
-                        .background(
-                            color = Color(0xFFD8EDFF),
-                            shape = RoundedCornerShape(4.dp)
-                        ),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = "Desain",
-                        textAlign = TextAlign.Center,
-                        style = TextStyle(
-                            fontSize = 12.sp,
-                            lineHeight = 14.4.sp,
-                            fontFamily = FontFamily(Font(R.font.roboto_medium)),
-                            fontWeight = FontWeight(400),
-                            color = Color(0xFF276093)
-                        )
-                    )
-                }
-                Spacer(modifier = Modifier.width(5.dp))
-                Box(
-                    modifier = Modifier
-                        .width(65.dp)
-                        .height(24.dp)
-                        .background(
-                            color = Color(0xFFD8EDFF),
-                            shape = RoundedCornerShape(4.dp)
-                        ),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = "Kebaya",
-                        textAlign = TextAlign.Center,
-                        style = TextStyle(
-                            fontSize = 12.sp,
-                            lineHeight = 14.4.sp,
-                            fontFamily = FontFamily(Font(R.font.roboto_medium)),
-                            fontWeight = FontWeight(400),
-                            color = Color(0xFF276093)
-                        )
-                    )
-                }
-            }
-        }
-    }
-}
-
-@Composable
-fun <katPangkas : KategoriPemangkas> PemangkasColumnItem(item: katPangkas, navController: NavController) {
-    Card (
-        modifier = Modifier
-            .clickable { navController.navigate(Screen.DetJasa.route) }
-            .padding(3.dp)
-            .fillMaxWidth()
-            .wrapContentHeight(),
-        colors = CardDefaults.cardColors(
-            containerColor = Color.White
-        ),
-        elevation = CardDefaults.cardElevation(2.dp)
-    ){
-        Column(
-            modifier = Modifier
-                .padding(17.dp)
-                .fillMaxWidth()
-        ){
-            Row (
-                modifier = Modifier
-                    .fillMaxWidth()
-            ){
-                Image(
-                    painter = painterResource(id = item.photo),
-                    contentDescription = item.name,
-                    modifier = Modifier
-                        .clip(RoundedCornerShape(5.dp))
-                        .size(50.dp)
-                        .fillMaxSize(),
-                    contentScale = ContentScale.Crop
-                )
-                Spacer(modifier = Modifier.width(10.dp))
-                Row (
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                ) {
-                    Column {
-                        Text(
-                            text = item.name,
-                            style = TextStyle(
-                                fontSize = 14.sp,
-                                fontFamily = FontFamily(Font(R.font.roboto_bold)),
-                                fontWeight = FontWeight(400),
-                                color = Color(0xFF000000)
-                            )
-                        )
-                        Spacer(modifier = Modifier.height(10.dp))
-                        Text(
-                            text = item.talent,
-                            style = TextStyle(
-                                fontSize = 12.sp,
-                                fontFamily = FontFamily(Font(R.font.roboto_medium)),
-                                fontWeight = FontWeight(400),
-                                color = Color(0xFF818181),
-
-                                )
-                        )
-                    }
-                    Row (
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier
-                    ){
-                        Icon(
-                            imageVector = Icons.Default.Star,
-                            contentDescription = "Star",
-                            tint = Color(0xFFFFC107),
-                            modifier = Modifier
-                                .size(16.dp)
-                        )
-                        Spacer(modifier = Modifier.width(2.dp))
-                        Text(
-                            text = "5,0",
-                            style = TextStyle(
-                                fontSize = 12.sp,
-                                fontFamily = FontFamily(Font(R.font.roboto_medium)),
-                                fontWeight = FontWeight(750),
-                                color = Color(0xFF000000),
-                            )
-                        )
-                    }
-                }
-            }
-            Spacer(modifier = Modifier.height(10.dp))
-            Text(
-                text = "Rp. 20.000 - 70.000",
-                style = TextStyle(
-                    fontSize = 12.sp,
-                    fontFamily = FontFamily(Font(R.font.roboto_medium)),
-                    fontWeight = FontWeight(300),
-                    color = Color(0xFF000000)
-                )
-            )
-            Spacer(modifier = Modifier.height(10.dp))
-            Row {
-                Box(
-                    modifier = Modifier
-                        .width(65.dp)
-                        .height(24.dp)
-                        .background(
-                            color = Color(0xFFD8EDFF),
-                            shape = RoundedCornerShape(4.dp)
-                        ),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = "Mulet",
-                        textAlign = TextAlign.Center,
-                        style = TextStyle(
-                            fontSize = 12.sp,
-                            lineHeight = 14.4.sp,
-                            fontFamily = FontFamily(Font(R.font.roboto_medium)),
-                            fontWeight = FontWeight(400),
-                            color = Color(0xFF276093)
-                        )
-                    )
-                }
-                Spacer(modifier = Modifier.width(5.dp))
-                Box(
-                    modifier = Modifier
-                        .width(65.dp)
-                        .height(24.dp)
-                        .background(
-                            color = Color(0xFFD8EDFF),
-                            shape = RoundedCornerShape(4.dp)
-                        ),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = "Mohawk",
-                        textAlign = TextAlign.Center,
-                        style = TextStyle(
-                            fontSize = 12.sp,
-                            lineHeight = 14.4.sp,
-                            fontFamily = FontFamily(Font(R.font.roboto_medium)),
-                            fontWeight = FontWeight(400),
-                            color = Color(0xFF276093)
-                        )
-                    )
-                }
-                Spacer(modifier = Modifier.width(5.dp))
-                Box(
-                    modifier = Modifier
-                        .width(65.dp)
-                        .height(24.dp)
-                        .background(
-                            color = Color(0xFFD8EDFF),
-                            shape = RoundedCornerShape(4.dp)
-                        ),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = "Two Block",
-                        textAlign = TextAlign.Center,
-                        style = TextStyle(
-                            fontSize = 12.sp,
-                            lineHeight = 14.4.sp,
-                            fontFamily = FontFamily(Font(R.font.roboto_medium)),
-                            fontWeight = FontWeight(400),
-                            color = Color(0xFF276093)
-                        )
-                    )
-                }
-            }
-        }
-    }
-}
-
-@Composable
-fun <katServis : KategoriServis> ServisColumnItem(item: katServis, navController: NavController) {
-    Card (
-        modifier = Modifier
-            .clickable { navController.navigate(Screen.DetJasa.route) }
-            .padding(3.dp)
-            .fillMaxWidth()
-            .wrapContentHeight(),
-        colors = CardDefaults.cardColors(
-            containerColor = Color.White
-        ),
-        elevation = CardDefaults.cardElevation(2.dp)
-    ){
-        Column(
-            modifier = Modifier
-                .padding(17.dp)
-                .fillMaxWidth()
-        ){
-            Row (
-                modifier = Modifier
-                    .fillMaxWidth()
-            ){
-                Image(
-                    painter = painterResource(id = item.photo),
-                    contentDescription = item.name,
-                    modifier = Modifier
-                        .clip(RoundedCornerShape(5.dp))
-                        .size(50.dp)
-                        .fillMaxSize(),
-                    contentScale = ContentScale.Crop
-                )
-                Spacer(modifier = Modifier.width(10.dp))
-                Row (
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                ) {
-                    Column {
-                        Text(
-                            text = item.name,
-                            style = TextStyle(
-                                fontSize = 14.sp,
-                                fontFamily = FontFamily(Font(R.font.roboto_bold)),
-                                fontWeight = FontWeight(400),
-                                color = Color(0xFF000000)
-                            )
-                        )
-                        Spacer(modifier = Modifier.height(10.dp))
-                        Text(
-                            text = item.talent,
-                            style = TextStyle(
-                                fontSize = 12.sp,
-                                fontFamily = FontFamily(Font(R.font.roboto_medium)),
-                                fontWeight = FontWeight(400),
-                                color = Color(0xFF818181),
-
-                                )
-                        )
-                    }
-                    Row (
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier
-                    ){
-                        Icon(
-                            imageVector = Icons.Default.Star,
-                            contentDescription = "Star",
-                            tint = Color(0xFFFFC107),
-                            modifier = Modifier
-                                .size(16.dp)
-                        )
-                        Spacer(modifier = Modifier.width(2.dp))
-                        Text(
-                            text = "5,0",
-                            style = TextStyle(
-                                fontSize = 12.sp,
-                                fontFamily = FontFamily(Font(R.font.roboto_medium)),
-                                fontWeight = FontWeight(750),
-                                color = Color(0xFF000000),
-                            )
-                        )
-                    }
-                }
-            }
-            Spacer(modifier = Modifier.height(10.dp))
-            Text(
-                text = "Rp. 20.000 - 70.000",
-                style = TextStyle(
-                    fontSize = 12.sp,
-                    fontFamily = FontFamily(Font(R.font.roboto_medium)),
-                    fontWeight = FontWeight(300),
-                    color = Color(0xFF000000)
-                )
-            )
-            Spacer(modifier = Modifier.height(10.dp))
-            Row {
-                Box(
-                    modifier = Modifier
-                        .width(65.dp)
-                        .height(24.dp)
-                        .background(
-                            color = Color(0xFFD8EDFF),
-                            shape = RoundedCornerShape(4.dp)
-                        ),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = "Kulkas",
-                        textAlign = TextAlign.Center,
-                        style = TextStyle(
-                            fontSize = 12.sp,
-                            lineHeight = 14.4.sp,
-                            fontFamily = FontFamily(Font(R.font.roboto_medium)),
-                            fontWeight = FontWeight(400),
-                            color = Color(0xFF276093)
-                        )
-                    )
-                }
-                Spacer(modifier = Modifier.width(5.dp))
-                Box(
-                    modifier = Modifier
-                        .width(65.dp)
-                        .height(24.dp)
-                        .background(
-                            color = Color(0xFFD8EDFF),
-                            shape = RoundedCornerShape(4.dp)
-                        ),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = "AC",
-                        textAlign = TextAlign.Center,
-                        style = TextStyle(
-                            fontSize = 12.sp,
-                            lineHeight = 14.4.sp,
-                            fontFamily = FontFamily(Font(R.font.roboto_medium)),
-                            fontWeight = FontWeight(400),
-                            color = Color(0xFF276093)
-                        )
-                    )
-                }
-                Spacer(modifier = Modifier.width(5.dp))
-                Box(
-                    modifier = Modifier
-                        .width(65.dp)
-                        .height(24.dp)
-                        .background(
-                            color = Color(0xFFD8EDFF),
-                            shape = RoundedCornerShape(4.dp)
-                        ),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = "TV",
-                        textAlign = TextAlign.Center,
-                        style = TextStyle(
-                            fontSize = 12.sp,
-                            lineHeight = 14.4.sp,
-                            fontFamily = FontFamily(Font(R.font.roboto_medium)),
-                            fontWeight = FontWeight(400),
-                            color = Color(0xFF276093)
-                        )
-                    )
                 }
             }
         }

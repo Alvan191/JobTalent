@@ -38,7 +38,7 @@ import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
-import com.example.jobtalent.data.item.OnboardScreenItem
+import com.example.jobtalent.presentation.model.OnboardScreenItem
 import com.example.jobtalent.data.onboard.DataOnboard
 import com.example.jobtalent.navigation.Screen
 import kotlinx.coroutines.launch

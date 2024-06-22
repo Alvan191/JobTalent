@@ -1,4 +1,4 @@
-package com.example.jobtalent.data.item
+package com.example.jobtalent.presentation.model
 
 import androidx.annotation.RawRes
 
