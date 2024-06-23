@@ -55,7 +55,10 @@ import com.example.jobtalent.presentation.profile.modeJasa.NamaTampilanScreen
 import com.example.jobtalent.presentation.profile.modeJasa.PengalamanScreen
 import com.example.jobtalent.presentation.profile.modeJasa.PortofolioScreen
 import com.example.jobtalent.presentation.home.pemesananJasa.DetailJasaScreen
-import com.example.jobtalent.presentation.home.pemesananJasa.KategoriPesananScreen
+import com.example.jobtalent.presentation.home.pemesananJasa.KategoriPesananDesainScreen
+import com.example.jobtalent.presentation.home.pemesananJasa.KategoriPesananEventScreen
+import com.example.jobtalent.presentation.home.pemesananJasa.KategoriPesananMusisiScreen
+import com.example.jobtalent.presentation.home.pemesananJasa.KategoriPesananUMKMScreen
 import com.example.jobtalent.presentation.home.pemesananJasa.PaymentSummaryScreen
 import com.example.jobtalent.presentation.home.pemesananJasa.ReviewsScreen
 import com.example.jobtalent.presentation.login.OnboardingScreen
@@ -120,8 +123,17 @@ fun JobTalentApp(
             composable(Screen.Tipss.route){
                 TipsScreen(navController = navController)
             }
-            composable(Screen.KategoriPesanan.route){
-                KategoriPesananScreen(navController = navController)
+            composable(Screen.KategoriPesananUMKM.route){
+                KategoriPesananUMKMScreen(navController = navController)
+            }
+            composable(Screen.KategoriPesananMusisi.route){
+                KategoriPesananMusisiScreen(navController = navController)
+            }
+            composable(Screen.KategoriPesananEvent.route){
+                KategoriPesananEventScreen(navController = navController)
+            }
+            composable(Screen.KategoriPesananDesign.route){
+                KategoriPesananDesainScreen(navController = navController)
             }
             composable(Screen.KategoriJasa.route){
                 KategoriJasaScreen(modifier = Modifier, navController = navController)

@@ -39,9 +39,9 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.jobtalent.R
 import com.example.jobtalent.navigation.Screen
-import com.example.jobtalent.presentation.model.KategoriPemangkas
-import com.example.jobtalent.presentation.model.KategoriPenjahit
-import com.example.jobtalent.presentation.model.KategoriServis
+import com.example.jobtalent.presentation.model.kategoripenyedia.KategoriPemangkas
+import com.example.jobtalent.presentation.model.kategoripenyedia.KategoriPenjahit
+import com.example.jobtalent.presentation.model.kategoripenyedia.KategoriServis
 
 @Composable
 fun <katJahit : KategoriPenjahit> PenjahitColumnItem(item: katJahit, navController: NavController) {

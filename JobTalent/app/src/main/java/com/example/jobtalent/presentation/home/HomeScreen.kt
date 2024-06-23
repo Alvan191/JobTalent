@@ -279,14 +279,14 @@ fun HomeScreen(
                         img_hm = R.drawable.umkm,
                         label = "UMKM",
                         description = "Tersedia 50 Jasa",
-                        onClick = {navController.navigate(Screen.KategoriPesanan.route)}
+                        onClick = {navController.navigate(Screen.KategoriPesananUMKM.route)}
                     )
                     Spacer(modifier = Modifier.width(15.dp))
                     CardItemHm(
                         img_hm = R.drawable.musisi,
                         label = "Musisi",
                         description = "Tersedia 30 Jasa",
-                        onClick = {navController.navigate(Screen.KategoriPesanan.route)}
+                        onClick = {navController.navigate(Screen.KategoriPesananMusisi.route)}
                     )
                 }
                 Row(
@@ -299,14 +299,14 @@ fun HomeScreen(
                         img_hm = R.drawable.event,
                         label = "Event",
                         description = "Tersedia 15 Jasa",
-                        onClick = {navController.navigate(Screen.KategoriPesanan.route)}
+                        onClick = {navController.navigate(Screen.KategoriPesananEvent.route)}
                     )
                     Spacer(modifier = Modifier.width(15.dp))
                     CardItemHm(
                         img_hm = R.drawable.desain,
                         label = "Desain",
                         description = "Tersedia 25 Jasa",
-                        onClick = {navController.navigate(Screen.KategoriPesanan.route)}
+                        onClick = {navController.navigate(Screen.KategoriPesananDesign.route)}
                     )
                 }
 

@@ -1,4 +1,4 @@
-package com.example.jobtalent.presentation.model
+package com.example.jobtalent.presentation.model.kategoripenyedia
 
 class KategoriPemangkas (
     val id: Int,

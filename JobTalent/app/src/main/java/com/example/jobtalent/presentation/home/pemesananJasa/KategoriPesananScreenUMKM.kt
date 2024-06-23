@@ -1,6 +1,5 @@
 package com.example.jobtalent.presentation.home.pemesananJasa
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -23,9 +22,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.Star
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -41,11 +37,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -53,24 +45,21 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.example.jobtalent.R
-import com.example.jobtalent.data.item.KatPesananItem
-import com.example.jobtalent.navigation.Screen
+import com.example.jobtalent.data.item.KatPesananItemUMKM
 import com.example.jobtalent.presentation.home.pemesananJasa.component.PemangkasColumnItem
 import com.example.jobtalent.presentation.home.pemesananJasa.component.PenjahitColumnItem
 import com.example.jobtalent.presentation.home.pemesananJasa.component.ServisColumnItem
-import com.example.jobtalent.presentation.model.KategoriKerja
-import com.example.jobtalent.presentation.model.KategoriPemangkas
-import com.example.jobtalent.presentation.model.KategoriPenjahit
-import com.example.jobtalent.presentation.model.KategoriServis
+import com.example.jobtalent.presentation.model.kategoripenyedia.KategoriPemangkas
+import com.example.jobtalent.presentation.model.kategoripenyedia.KategoriPenjahit
+import com.example.jobtalent.presentation.model.kategoripenyedia.KategoriServis
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun KategoriPesananScreen(
+fun KategoriPesananUMKMScreen(
     navController: NavController,
-    kategoriPenjahit: List<KategoriPenjahit> = KatPesananItem.dataPenjahit,
-    kategoriPemangkas: List<KategoriPemangkas> = KatPesananItem.dataPemangkas,
-    kategoriServis: List<KategoriServis> = KatPesananItem.dataServis
+    kategoriPenjahit: List<KategoriPenjahit> = KatPesananItemUMKM.dataPenjahit,
+    kategoriPemangkas: List<KategoriPemangkas> = KatPesananItemUMKM.dataPemangkas,
+    kategoriServis: List<KategoriServis> = KatPesananItemUMKM.dataServis
 ) {
     var selectedCategory by remember { mutableStateOf("Semua") }
     var searchText by remember { mutableStateOf("") }
@@ -131,7 +120,7 @@ fun KategoriPesananScreen(
         }
         Spacer(modifier = Modifier.height(10.dp))
 
-        TopNavigationBar(
+        TopNavigationBarUMKM(
             categories = categories,
             selectedCategory = selectedCategory,
             onCategorySelected = { selectedCategory = it }
@@ -160,7 +149,7 @@ fun KategoriPesananScreen(
 }
 
 @Composable
-fun TopNavigationBar(
+fun TopNavigationBarUMKM(
     categories: List<String>,
     selectedCategory: String,
     onCategorySelected: (String) -> Unit
@@ -198,5 +187,5 @@ fun TopNavigationBar(
 @Preview
 @Composable
 private fun KategoriPesananScreenPrev() {
-    KategoriPesananScreen(navController = rememberNavController())
+    KategoriPesananUMKMScreen(navController = rememberNavController())
 }
