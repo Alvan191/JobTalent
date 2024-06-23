@@ -23,7 +23,6 @@ sealed class Screen (val route: String){
     data object DataPelengkap: Screen ("data_pelengkap")
     data object Portofolios: Screen ("portofolio")
     data object DetailChatsss: Screen ("detail_chat")
-    data object JobScreen: Screen ("jobtalent")
     data object Settingss: Screen ("setting")
     data object Bahasasc: Screen ("bahasa_screen")
     data object Accountsc: Screen ("akun_screen")

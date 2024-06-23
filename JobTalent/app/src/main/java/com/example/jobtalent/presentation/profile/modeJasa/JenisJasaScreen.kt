@@ -37,19 +37,24 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.example.jobtalent.R
+import com.example.jobtalent.data.item.KategoriJasaItem
 import com.example.jobtalent.navigation.Screen
+import com.example.jobtalent.presentation.model.KategoriJasa
 
 @Composable
 fun JenisJasaScreen(
-    modifier: Modifier,
-    navController: NavController
+    modifier: Modifier = Modifier,
+    navController: NavController,
+    tampilkategoriJasaId: Int?
 ) {
+    val newJasaList = KategoriJasaItem.dataKategoriJasa.filter { kategorijasadaftar ->
+        kategorijasadaftar.id == tampilkategoriJasaId
+    }
+
     Column (
         modifier = Modifier
             .fillMaxSize()
@@ -57,251 +62,252 @@ fun JenisJasaScreen(
                 color = Color.White
             )
     ){
-        Column(
-            modifier = Modifier
-                .padding(15.dp)
-                .fillMaxSize()
-                .background(
-                    color = Color.White
-                )
-        ) {
-            Box(
-                modifier = Modifier
-                    .size(44.dp)
-                    .shadow(8.dp, CircleShape)
-                    .clip(CircleShape)
-                    .background(Color.White)
-                    .clickable(onClick = { navController.popBackStack() })
-            ) {
-                Icon(
-                    imageVector = Icons.Default.ArrowBack,
-                    contentDescription = "Back",
-                    tint = Color.Black,
-                    modifier = Modifier
-                        .size(24.dp)
-                        .align(Alignment.Center)
-                )
-            }
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text(
-                    text = "Daftar Penyedia Jasa",
-                    style = TextStyle(
-                        fontSize = 16.sp,
-                        fontFamily = FontFamily(Font(R.font.roboto_black)),
-                        fontWeight = FontWeight(500),
-                        color = Color(0xFF000000)
-                    )
-                )
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(
-                    text = "Pilih jenis jasa yang ingin Anda tawarkan",
-                    style = TextStyle(
-                        fontSize = 12.sp,
-                        fontFamily = FontFamily(Font(R.font.roboto_medium)),
-                        fontWeight = FontWeight(400),
-                        color = Color(0xFF717171),
-                    )
-                )
-            }
-            Spacer(modifier = Modifier.height(50.dp))
-            Box(
-                modifier = Modifier
-                    .width(100.dp)
-                    .height(40.dp)
-                    .padding(8.dp)
-                    .border(1.dp, Color(0xFF005695), RoundedCornerShape(10.dp))
-            ) {
-                Box(
-                    modifier = Modifier
-                        .size(width = 90.dp, height = 39.dp)
-                        .background(Color.White, RoundedCornerShape(10.dp)),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = "UMKM",
-                        fontFamily = FontFamily(Font(R.font.roboto_bold)),
-                        color = Color.Black,
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier.align(Alignment.Center)
-                    )
-                }
-            }
-            Spacer(modifier = Modifier.height(25.dp))
+        JenisJasaList(newJasaList, navController)
 
-
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 10.dp)
-                    .clickable(onClick = { navController.navigate(Screen.NamaTampilan.route) })
-            ) {
-                Card(
-                    modifier = Modifier
-                        .wrapContentSize(),
-                    colors = CardDefaults.cardColors(
-                        containerColor = Color(0xFFD9E7F2)
-                    ),
-                    elevation = CardDefaults.cardElevation(2.dp)
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .size(50.dp)
-                            .background(Color(0xFFD9E7F2))
-                            .clip(RoundedCornerShape(20.dp)),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Image(
-                            painter = painterResource(id = R.drawable.gambar_jahit),
-                            contentDescription = "penjahit",
-                            modifier = Modifier.size(39.dp),
-                            contentScale = ContentScale.Crop
-                        )
-                    }
-                }
-                Row(
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = 27.dp)
-                ) {
-                    Text(
-                        text = "Penjahit",
-                        style = TextStyle(
-                            fontSize = 18.sp,
-                            fontFamily = FontFamily(Font(R.font.roboto_medium)),
-                            fontWeight = FontWeight(500),
-                            color = Color(0xFF2F2F31)
-                        ),
-                    )
-                    Icon(
-                        imageVector = Icons.Default.ArrowForwardIos,
-                        contentDescription = "arrow next",
-                        tint = Color(0xFF005695)
-                    )
-                }
-            }
-            Spacer(modifier = Modifier.height(18.dp))
-
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 10.dp)
-                    .clickable() {}
-            ) {
-                Card(
-                    modifier = Modifier
-                        .wrapContentSize(),
-                    colors = CardDefaults.cardColors(
-                        containerColor = Color(0xFFD9E7F2)
-                    ),
-                    elevation = CardDefaults.cardElevation(2.dp)
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .size(50.dp)
-                            .background(Color(0xFFD9E7F2))
-                            .clip(RoundedCornerShape(20.dp)),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Image(
-                            painter = painterResource(id = R.drawable.gambar_pangkas),
-                            contentDescription = "pemangkas",
-                            modifier = Modifier.size(39.dp),
-                            contentScale = ContentScale.Crop
-                        )
-                    }
-                }
-                Row(
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = 27.dp)
-                ) {
-                    Text(
-                        text = "Pemangkas Rambut",
-                        style = TextStyle(
-                            fontSize = 18.sp,
-                            fontFamily = FontFamily(Font(R.font.roboto_medium)),
-                            fontWeight = FontWeight(500),
-                            color = Color(0xFF2F2F31)
-                        ),
-                    )
-                    Icon(
-                        imageVector = Icons.Default.ArrowForwardIos,
-                        contentDescription = "arrow next",
-                        tint = Color(0xFF005695)
-                    )
-                }
-            }
-            Spacer(modifier = Modifier.height(18.dp))
-
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 10.dp)
-                    .clickable() {}
-            ) {
-                Card(
-                    modifier = Modifier
-                        .wrapContentSize(),
-                    colors = CardDefaults.cardColors(
-                        containerColor = Color(0xFFD9E7F2)
-                    ),
-                    elevation = CardDefaults.cardElevation(2.dp)
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .size(50.dp)
-                            .background(Color(0xFFD9E7F2))
-                            .clip(RoundedCornerShape(20.dp)),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Image(
-                            painter = painterResource(id = R.drawable.gambar_electronik),
-                            contentDescription = "teknisi",
-                            modifier = Modifier.size(39.dp),
-                            contentScale = ContentScale.Crop
-                        )
-                    }
-                }
-                Row(
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = 27.dp)
-                ) {
-                    Text(
-                        text = "Service Alat Elektronik",
-                        style = TextStyle(
-                            fontSize = 18.sp,
-                            fontFamily = FontFamily(Font(R.font.roboto_medium)),
-                            fontWeight = FontWeight(500),
-                            color = Color(0xFF2F2F31)
-                        ),
-                    )
-                    Icon(
-                        imageVector = Icons.Default.ArrowForwardIos,
-                        contentDescription = "arrow next",
-                        tint = Color(0xFF005695)
-                    )
-                }
-            }
-        }
     }
 }
 
-@Preview
 @Composable
-private fun JenisJasaScreenPrev() {
-    JenisJasaScreen(modifier = Modifier, navController = rememberNavController())
+fun JenisJasaList(
+    newJasaList: List<KategoriJasa>,
+    navController: NavController
+) {
+    Column(
+        modifier = Modifier
+            .padding(15.dp)
+            .fillMaxSize()
+            .background(
+                color = Color.White
+            )
+    ) {
+        Box(
+            modifier = Modifier
+                .size(44.dp)
+                .shadow(8.dp, CircleShape)
+                .clip(CircleShape)
+                .background(Color.White)
+                .clickable(onClick = { navController.popBackStack() })
+        ) {
+            Icon(
+                imageVector = Icons.Default.ArrowBack,
+                contentDescription = "Back",
+                tint = Color.Black,
+                modifier = Modifier
+                    .size(24.dp)
+                    .align(Alignment.Center)
+            )
+        }
+        Column(
+            modifier = Modifier
+                .fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = "Daftar Penyedia Jasa",
+                style = TextStyle(
+                    fontSize = 16.sp,
+                    fontFamily = FontFamily(Font(R.font.roboto_black)),
+                    fontWeight = FontWeight(500),
+                    color = Color(0xFF000000)
+                )
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = "Pilih jenis jasa yang ingin Anda tawarkan",
+                style = TextStyle(
+                    fontSize = 12.sp,
+                    fontFamily = FontFamily(Font(R.font.roboto_medium)),
+                    fontWeight = FontWeight(400),
+                    color = Color(0xFF717171),
+                )
+            )
+        }
+        Spacer(modifier = Modifier.height(50.dp))
+        Box(
+            modifier = Modifier
+                .width(100.dp)
+                .height(40.dp)
+                .padding(8.dp)
+                .border(1.dp, Color(0xFF005695), RoundedCornerShape(10.dp))
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(width = 90.dp, height = 39.dp)
+                    .background(Color.White, RoundedCornerShape(10.dp)),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = newJasaList[0].name,
+                    fontFamily = FontFamily(Font(R.font.roboto_bold)),
+                    color = Color.Black,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.align(Alignment.Center)
+                )
+            }
+        }
+        Spacer(modifier = Modifier.height(25.dp))
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 10.dp)
+                .clickable(onClick = { navController.navigate(Screen.NamaTampilan.route) })
+        ) {
+            Card(
+                modifier = Modifier
+                    .wrapContentSize(),
+                colors = CardDefaults.cardColors(
+                    containerColor = Color(0xFFD9E7F2)
+                ),
+                elevation = CardDefaults.cardElevation(2.dp)
+            ) {
+                Box(
+                    modifier = Modifier
+                        .size(50.dp)
+                        .background(Color(0xFFD9E7F2))
+                        .clip(RoundedCornerShape(20.dp)),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Image(
+                        painter = painterResource(id = newJasaList[0].jasa_satu),
+                        contentDescription = null,
+                        modifier = Modifier.size(39.dp),
+                        contentScale = ContentScale.Crop
+                    )
+                }
+            }
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 27.dp)
+            ) {
+                Text(
+                    text = "${newJasaList[0].text_jasa_satu}",
+                    style = TextStyle(
+                        fontSize = 18.sp,
+                        fontFamily = FontFamily(Font(R.font.roboto_medium)),
+                        fontWeight = FontWeight(500),
+                        color = Color(0xFF2F2F31)
+                    ),
+                )
+                Icon(
+                    imageVector = Icons.Default.ArrowForwardIos,
+                    contentDescription = "arrow next",
+                    tint = Color(0xFF005695)
+                )
+            }
+        }
+
+        Spacer(modifier = Modifier.height(18.dp))
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 10.dp)
+                .clickable(onClick = { navController.navigate(Screen.NamaTampilan.route) })
+        ) {
+            Card(
+                modifier = Modifier
+                    .wrapContentSize(),
+                colors = CardDefaults.cardColors(
+                    containerColor = Color(0xFFD9E7F2)
+                ),
+                elevation = CardDefaults.cardElevation(2.dp)
+            ) {
+                Box(
+                    modifier = Modifier
+                        .size(50.dp)
+                        .background(Color(0xFFD9E7F2))
+                        .clip(RoundedCornerShape(20.dp)),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Image(
+                        painter = painterResource(id = newJasaList[0].jasa_dua),
+                        contentDescription = null,
+                        modifier = Modifier.size(39.dp),
+                        contentScale = ContentScale.Crop
+                    )
+                }
+            }
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 27.dp)
+            ) {
+                Text(
+                    text = "${newJasaList[0].text_jasa_dua}",
+                    style = TextStyle(
+                        fontSize = 18.sp,
+                        fontFamily = FontFamily(Font(R.font.roboto_medium)),
+                        fontWeight = FontWeight(500),
+                        color = Color(0xFF2F2F31)
+                    ),
+                )
+                Icon(
+                    imageVector = Icons.Default.ArrowForwardIos,
+                    contentDescription = "arrow next",
+                    tint = Color(0xFF005695)
+                )
+            }
+        }
+        Spacer(modifier = Modifier.height(18.dp))
+
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 10.dp)
+                .clickable(onClick = { navController.navigate(Screen.NamaTampilan.route) })
+        ) {
+            Card(
+                modifier = Modifier
+                    .wrapContentSize(),
+                colors = CardDefaults.cardColors(
+                    containerColor = Color(0xFFD9E7F2)
+                ),
+                elevation = CardDefaults.cardElevation(2.dp)
+            ) {
+                Box(
+                    modifier = Modifier
+                        .size(50.dp)
+                        .background(Color(0xFFD9E7F2))
+                        .clip(RoundedCornerShape(20.dp)),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Image(
+                        painter = painterResource(id = newJasaList[0].jasa_tiga),
+                        contentDescription = null,
+                        modifier = Modifier.size(39.dp),
+                        contentScale = ContentScale.Crop
+                    )
+                }
+            }
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 27.dp)
+            ) {
+                Text(
+                    text = "${newJasaList[0].text_jasa_tiga}",
+                    style = TextStyle(
+                        fontSize = 18.sp,
+                        fontFamily = FontFamily(Font(R.font.roboto_medium)),
+                        fontWeight = FontWeight(500),
+                        color = Color(0xFF2F2F31)
+                    ),
+                )
+                Icon(
+                    imageVector = Icons.Default.ArrowForwardIos,
+                    contentDescription = "arrow next",
+                    tint = Color(0xFF005695)
+                )
+            }
+        }
+    }
 }

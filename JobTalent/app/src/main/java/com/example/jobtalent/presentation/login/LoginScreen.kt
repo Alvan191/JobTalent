@@ -61,145 +61,48 @@ fun LoginScreen(
     var password by remember { mutableStateOf("") }
     var katasandiVisible by remember { mutableStateOf(false) }
 
-    Column(
+    Column (
         modifier = Modifier
             .fillMaxSize()
-            .padding(20.dp),
-        verticalArrangement = Arrangement.Center,
-    ) {
-        Row(
-            horizontalArrangement = Arrangement.Center,
-            modifier = Modifier
-                .fillMaxWidth()
-        ) {
-            Image(
-                painter = painterResource(id = R.drawable.logo),
-                contentDescription = "Logo Image",
-                modifier = Modifier
-                    .size(130.dp)
-            )
-        }
-
-        Spacer(modifier = Modifier.height(50.dp))
-        Text(
-            text = "Masuk",
-            style = TextStyle(
-                fontSize = 24.sp,
-                fontFamily = FontFamily(Font(R.font.roboto_black)),
-                fontWeight = FontWeight(700),
-                color = Color(0xFF000000)
-            )
-        )
-
-        Spacer(modifier = Modifier.height(4.dp))
-        Text(
-            text = "Masukkan email dan kata sandi dengan benar",
-            style = TextStyle(
-                fontSize = 12.sp,
-                fontFamily = FontFamily(Font(R.font.roboto_light)),
-                fontWeight = FontWeight(700),
-                color = Color(0xFF000000),
-            )
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-        ContentForm(
-            value = email,
-            onValueChange = { email = it },
-            labelText = "E-mail",
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-        ContentForm(
-            value = password,
-            onValueChange = { password = it },
-            labelText = "Kata Sandi",
-            modifier = Modifier.fillMaxWidth(),
-            isPassword = true,
-            katasandiVisible = remember { mutableStateOf(katasandiVisible) }
-        )
-
-        Spacer(modifier = Modifier.height(10.dp))
-
-        Row(modifier = Modifier.fillMaxWidth()) {
-            Spacer(modifier = Modifier.weight(1f))
-            Text(
-                text = "Lupa Kata Sandi?",
-                modifier = Modifier.clickable { },
-                style = TextStyle(
-                    fontSize = 12.sp,
-                    fontFamily = FontFamily(Font(R.font.roboto_light)),
-                    fontWeight = FontWeight(700),
-                    color = Color(0xFF000000),
-                )
-            )
-        }
-
-        Spacer(modifier = Modifier.height(70.dp))
-
-        Button(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(55.dp)
-                .background(color = Color(0xFF005695), shape = RoundedCornerShape(size = 5.dp))
-                .padding(start = 15.dp, top = 10.dp, end = 15.dp, bottom = 10.dp),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color(0xFF005695)
+            .background(
+                color = Color(0xFFFFFFFF)
             ),
-            onClick = {
-                coroutineScope.launch {
-                    if (email.isBlank() || password.isBlank()) {
-                        Toast.makeText(
-                            context,
-                            "Email dan Password Wajib Diisi",
-                            Toast.LENGTH_SHORT
-                        )
-                            .show()
-                    } else {
-                        val request = LoginRequest(
-                            email = email,
-                            password = password
-                        )
-                        sharedPreferencesManager.email = email
-                        viewModel.loginUser(request, {
-                            coroutineScope.launch {
-                                dataStore.saveStatus(true)
-                            }
-                            navController.navigate(Screen.Home.route) {
-                                popUpTo(Screen.Login.route) {
-                                    inclusive = true
-                                }
-                            }
-                            Toast.makeText(context, "Login Successful", Toast.LENGTH_SHORT)
-                                .show()
-                        }, {
-                            Toast.makeText(context, "Login Failed", Toast.LENGTH_SHORT).show()
-                        })
-                    }
-                }
-            },
+    ){
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(20.dp).background(
+                    color = Color(0xFFFFFFFF)
+                ),
+            verticalArrangement = Arrangement.Center,
         ) {
+            Row(
+                horizontalArrangement = Arrangement.Center,
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.logo_login),
+                    contentDescription = "Logo Image",
+                    modifier = Modifier
+                        .size(130.dp)
+                )
+            }
+
+            Spacer(modifier = Modifier.height(50.dp))
             Text(
                 text = "Masuk",
                 style = TextStyle(
-                    fontSize = 16.sp,
-                    fontFamily = FontFamily(Font(R.font.roboto_medium)),
+                    fontSize = 24.sp,
+                    fontFamily = FontFamily(Font(R.font.roboto_black)),
                     fontWeight = FontWeight(700),
-                    color = Color(0xFFFFFFFF),
+                    color = Color(0xFF000000)
                 )
             )
-        }
 
-        Spacer(modifier = Modifier.height(10.dp))
-        Row(
-            horizontalArrangement = Arrangement.Center,
-            modifier = Modifier
-                .fillMaxWidth()
-        ) {
             Spacer(modifier = Modifier.height(4.dp))
             Text(
-                text = "Tidak punya akun? ",
+                text = "Masukkan email dan kata sandi dengan benar",
                 style = TextStyle(
                     fontSize = 12.sp,
                     fontFamily = FontFamily(Font(R.font.roboto_light)),
@@ -207,17 +110,124 @@ fun LoginScreen(
                     color = Color(0xFF000000),
                 )
             )
-            Spacer(modifier = Modifier.width(2.dp))
-            Text(
-                text = "Daftar",
-                modifier = Modifier.clickable { navController.navigate(Screen.Register.route) },
-                style = TextStyle(
-                    fontSize = 12.sp,
-                    fontFamily = FontFamily(Font(R.font.roboto_bold)),
-                    fontWeight = FontWeight(600),
-                    color = Color(0xFF0097B2),
-                )
+
+            Spacer(modifier = Modifier.height(16.dp))
+            ContentForm(
+                value = email,
+                onValueChange = { email = it },
+                labelText = "E-mail",
+                modifier = Modifier.fillMaxWidth()
             )
+
+            Spacer(modifier = Modifier.height(16.dp))
+            ContentForm(
+                value = password,
+                onValueChange = { password = it },
+                labelText = "Kata Sandi",
+                modifier = Modifier.fillMaxWidth(),
+                isPassword = true,
+                katasandiVisible = remember { mutableStateOf(katasandiVisible) }
+            )
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            Row(modifier = Modifier.fillMaxWidth()) {
+                Spacer(modifier = Modifier.weight(1f))
+                Text(
+                    text = "Lupa Kata Sandi?",
+                    modifier = Modifier.clickable { },
+                    style = TextStyle(
+                        fontSize = 12.sp,
+                        fontFamily = FontFamily(Font(R.font.roboto_light)),
+                        fontWeight = FontWeight(700),
+                        color = Color(0xFF000000),
+                    )
+                )
+            }
+
+            Spacer(modifier = Modifier.height(70.dp))
+
+            Button(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(55.dp)
+                    .background(color = Color(0xFF005695), shape = RoundedCornerShape(size = 5.dp))
+                    .padding(start = 15.dp, top = 10.dp, end = 15.dp, bottom = 10.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFF005695)
+                ),
+                onClick = {
+                    coroutineScope.launch {
+                        if (email.isBlank() || password.isBlank()) {
+                            Toast.makeText(
+                                context,
+                                "Email dan Password Wajib Diisi",
+                                Toast.LENGTH_SHORT
+                            )
+                                .show()
+                        } else {
+                            val request = LoginRequest(
+                                email = email,
+                                password = password
+                            )
+                            sharedPreferencesManager.email = email
+                            viewModel.loginUser(request, {
+                                coroutineScope.launch {
+                                    dataStore.saveStatus(true)
+                                }
+                                navController.navigate(Screen.Home.route) {
+                                    popUpTo(Screen.Login.route) {
+                                        inclusive = true
+                                    }
+                                }
+                                Toast.makeText(context, "Login Successful", Toast.LENGTH_SHORT)
+                                    .show()
+                            }, {
+                                Toast.makeText(context, "Login Failed", Toast.LENGTH_SHORT).show()
+                            })
+                        }
+                    }
+                },
+            ) {
+                Text(
+                    text = "Masuk",
+                    style = TextStyle(
+                        fontSize = 16.sp,
+                        fontFamily = FontFamily(Font(R.font.roboto_medium)),
+                        fontWeight = FontWeight(700),
+                        color = Color(0xFFFFFFFF),
+                    )
+                )
+            }
+
+            Spacer(modifier = Modifier.height(10.dp))
+            Row(
+                horizontalArrangement = Arrangement.Center,
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(
+                    text = "Tidak punya akun? ",
+                    style = TextStyle(
+                        fontSize = 12.sp,
+                        fontFamily = FontFamily(Font(R.font.roboto_light)),
+                        fontWeight = FontWeight(700),
+                        color = Color(0xFF000000),
+                    )
+                )
+                Spacer(modifier = Modifier.width(2.dp))
+                Text(
+                    text = "Daftar",
+                    modifier = Modifier.clickable { navController.navigate(Screen.Register.route) },
+                    style = TextStyle(
+                        fontSize = 12.sp,
+                        fontFamily = FontFamily(Font(R.font.roboto_bold)),
+                        fontWeight = FontWeight(600),
+                        color = Color(0xFF0097B2),
+                    )
+                )
+            }
         }
     }
 }

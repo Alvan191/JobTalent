@@ -279,7 +279,7 @@ fun MessageInputt(onMessageSent: (String) -> Unit, modifier: Modifier = Modifier
         TextField(
             value = textState,
             onValueChange = { textState = it },
-            placeholder = { Text(text = "Ketik Pesan") },
+            placeholder = { Text(text = "Ketik Pesan", color = Color(0xFF000000),) },
             modifier = Modifier.weight(1f),
             colors = TextFieldDefaults.textFieldColors(
                 containerColor = Color(0xE8F3F3F3),

@@ -1,5 +1,8 @@
 package com.example.jobtalent.presentation.profile.modeJasa
 
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -29,6 +32,8 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -44,14 +49,44 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import coil.compose.rememberAsyncImagePainter
 import com.example.jobtalent.R
 import com.example.jobtalent.navigation.Screen
+import com.example.jobtalent.presentation.profile.model_view.SharedViewModel
 
 @Composable
 fun IdentitasScreen(
     modifier: Modifier,
+    sharedViewModel: SharedViewModel,
     navController: NavController
 ) {
+    val imageUriIdentity = rememberSaveable { mutableStateOf("") }
+    val imageUriKTP = rememberSaveable { mutableStateOf("") }
+
+    val painterIdentity = rememberAsyncImagePainter(
+        imageUriIdentity.value.ifEmpty { R.drawable.gambar_fotoktp }
+    )
+    val painterKTP = rememberAsyncImagePainter(
+        imageUriKTP.value.ifEmpty { R.drawable.gambar_ktp }
+    )
+
+    val launcherIdentity = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        uri?.let {
+            imageUriIdentity.value = it.toString()
+            sharedViewModel.updateImageUri(it.toString())
+        }
+    }
+    val launcherKTP = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        uri?.let {
+            imageUriKTP.value = it.toString()
+            sharedViewModel.updateImageUri(it.toString())
+        }
+    }
+
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -158,7 +193,7 @@ fun IdentitasScreen(
                                         .fillMaxWidth()
                                 ) {
                                     Image(
-                                        painter = painterResource(id = R.drawable.gambar_fotoktp),
+                                        painter = painterIdentity,
                                         contentDescription = "foto ktp",
                                         modifier = Modifier
                                             .height(180.dp)
@@ -167,7 +202,7 @@ fun IdentitasScreen(
                                     )
 
                                     Button(
-                                        onClick = { },
+                                        onClick = { launcherIdentity.launch("image/*") },
                                         modifier = Modifier
                                             .fillMaxWidth()
                                             .padding(horizontal = 20.dp)
@@ -246,7 +281,7 @@ fun IdentitasScreen(
                                         .fillMaxWidth()
                                 ) {
                                     Image(
-                                        painter = painterResource(id = R.drawable.gambar_ktp),
+                                        painter = painterKTP,
                                         contentDescription = "gambar ktp",
                                         modifier = Modifier
                                             .height(180.dp)
@@ -255,7 +290,7 @@ fun IdentitasScreen(
                                     )
 
                                     Button(
-                                        onClick = { },
+                                        onClick = { launcherKTP.launch("image/*") },
                                         modifier = Modifier
                                             .fillMaxWidth()
                                             .padding(horizontal = 20.dp)
@@ -318,5 +353,5 @@ fun IdentitasScreen(
 @Preview
 @Composable
 private fun IdentitasScreenPreview() {
-    IdentitasScreen(modifier = Modifier, navController = rememberNavController())
+    IdentitasScreen(modifier = Modifier, sharedViewModel = SharedViewModel(), navController = rememberNavController())
 }

@@ -372,6 +372,7 @@ fun CardItemHm(img_hm: Int, label: String, description: String, onClick: () -> U
                     fontFamily = FontFamily(Font(R.font.roboto_bold)),
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
+                    color = Color(0xFF000000),
                     modifier = Modifier
                         .fillMaxWidth()
                 )
@@ -456,6 +457,7 @@ fun TrackingItem(img_tr: Int, name: String, skill: String, progres: String, onCl
                         Icon(
                             imageVector = Icons.Default.NavigateNext,
                             contentDescription = "next",
+                            tint = Color(0xFF000000),
                             modifier = Modifier
                                 .size(35.dp)
                         )

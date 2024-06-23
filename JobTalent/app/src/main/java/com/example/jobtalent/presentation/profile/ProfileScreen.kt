@@ -166,7 +166,9 @@ fun ProfileScreen(
                 .shadow(8.dp, RoundedCornerShape(16.dp))
                 .zIndex(1f),
             shape = RoundedCornerShape(16.dp),
-            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
+            colors = CardDefaults.cardColors(
+                containerColor = Color.White
+            ),
         ) {
             Column(
                 modifier = Modifier

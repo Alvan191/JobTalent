@@ -120,7 +120,7 @@ fun KategoriJasaScreen(
                 items(kategorijasa, key = { it.id }) { kategorijasadaftar ->
                     GridScItem(
                         kategorijasadaftar = kategorijasadaftar,
-                        onClick = { navController.navigate(route = Screen.JenisJasa.route) }
+                        onClick = { navController.navigate(route = Screen.JenisJasa.route + "/${kategorijasadaftar.id}") }
                     )
                 }
             }

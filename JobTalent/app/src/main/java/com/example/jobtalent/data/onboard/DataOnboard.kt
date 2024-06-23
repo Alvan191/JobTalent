@@ -9,7 +9,7 @@ object DataOnboard {
         OnboardScreenItem(
             resId = R.raw.welcome,
             title = "Selamat Datang di Job Talent!",
-            description = "Ingin mencari pekerjaan tetapi tidak sesuai minat kamu?         Ayo cari pekerjaanmu di sini!"
+            description = "Ingin mencari pekerjaan tetapi tidak sesuai minat kamu? Ayo cari pekerjaanmu di sini!"
         ),
         OnboardScreenItem(
             resId = R.raw.work,

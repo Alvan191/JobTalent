@@ -1,6 +1,5 @@
 package com.example.jobtalent.presentation.home.pemesananJasa.component
 
-import com.example.jobtalent.presentation.model.kategoripenyedia.KategoriMC
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -41,10 +40,8 @@ import androidx.navigation.NavController
 import com.example.jobtalent.R
 import com.example.jobtalent.navigation.Screen
 import com.example.jobtalent.presentation.model.kategoripenyedia.KategoriBrandIdentity
-import com.example.jobtalent.presentation.model.kategoripenyedia.KategoriDecorator
 import com.example.jobtalent.presentation.model.kategoripenyedia.KategoriGraphicDesigner
 import com.example.jobtalent.presentation.model.kategoripenyedia.KategoriIllustrator
-import com.example.jobtalent.presentation.model.kategoripenyedia.KategoriStageManager
 
 @Composable
 fun <katGraphicDesigner : KategoriGraphicDesigner> GraphicDesignerColumnItem(item: katGraphicDesigner, navController: NavController) {

@@ -38,82 +38,93 @@ import com.example.jobtalent.navigation.Screen
 fun PaymentSuccessScreen(
     navController: NavController
 ) {
-    Column(
+    Column (
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Text(
-            text = "Pembayaran Sukses",
-            style = TextStyle(
-                fontSize = 20.sp,
-                fontFamily = FontFamily(Font(R.font.roboto_black)),
-                fontWeight = FontWeight(700),
-                color = Color(0xFF000000)
-            )
-        )
-        Spacer(modifier = Modifier.height(32.dp))
-        Image(
-            painter = painterResource(id = R.drawable.success), // Replace with your illustration drawable resource
-            contentDescription = "Success Illustration",
-            modifier = Modifier.size(200.dp)
-        )
-        Spacer(modifier = Modifier.height(32.dp))
-        Text(
-            text = "Transaksi Anda telah berhasil \ndiselesaikan!",
-            style = TextStyle(
-                fontSize = 16.sp,
-                fontFamily = FontFamily(Font(R.font.roboto_medium)),
-                fontWeight = FontWeight(400),
-                color = Color(0xFF000000),
-                textAlign = TextAlign.Center,
-            )
-        )
-        Spacer(modifier = Modifier.height(32.dp))
-        Button(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(55.dp)
-                .background(color = Color(0xFF005695), shape = RoundedCornerShape(size = 5.dp))
-                .padding(start = 15.dp, top = 10.dp, end = 15.dp, bottom = 10.dp),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color(0xFF005695)
+            .background(
+                color = Color(0xFFF8F8F8)
             ),
-            onClick = { navController.navigate(Screen.Chat.route)}
+    ){
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp)
+                .background(
+                    color = Color(0xFFF8F8F8)
+                ),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
         ) {
             Text(
-                text = "Kembali ke Chat",
+                text = "Pembayaran Sukses",
                 style = TextStyle(
-                    fontSize = 16.sp,
-                    fontFamily = FontFamily(Font(R.font.roboto_bold)),
-                    fontWeight = FontWeight(400),
-                    color = Color(0xFFFFFFFF),
-
-                    textAlign = TextAlign.Center,
+                    fontSize = 20.sp,
+                    fontFamily = FontFamily(Font(R.font.roboto_black)),
+                    fontWeight = FontWeight(700),
+                    color = Color(0xFF000000)
                 )
             )
-        }
-        Spacer(modifier = Modifier.height(16.dp))
-        OutlinedButton(
-            onClick = { navController.navigate(Screen.Home.route) },
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(50.dp),
-            shape = RoundedCornerShape(8.dp),
-            border = BorderStroke(1.dp, Color(0xFF007BFF))
-        ) {
+            Spacer(modifier = Modifier.height(32.dp))
+            Image(
+                painter = painterResource(id = R.drawable.success), // Replace with your illustration drawable resource
+                contentDescription = "Success Illustration",
+                modifier = Modifier.size(200.dp)
+            )
+            Spacer(modifier = Modifier.height(32.dp))
             Text(
-                text = "Kembali ke Home",
+                text = "Transaksi Anda telah berhasil \ndiselesaikan!",
                 style = TextStyle(
                     fontSize = 16.sp,
-                    fontFamily = FontFamily(Font(R.font.roboto_bold)),
-                    fontWeight = FontWeight(500),
+                    fontFamily = FontFamily(Font(R.font.roboto_medium)),
+                    fontWeight = FontWeight(400),
                     color = Color(0xFF000000),
                     textAlign = TextAlign.Center,
                 )
             )
+            Spacer(modifier = Modifier.height(32.dp))
+            Button(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(55.dp)
+                    .background(color = Color(0xFF005695), shape = RoundedCornerShape(size = 5.dp))
+                    .padding(start = 15.dp, top = 10.dp, end = 15.dp, bottom = 10.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFF005695)
+                ),
+                onClick = { navController.navigate(Screen.Chat.route) }
+            ) {
+                Text(
+                    text = "Kembali ke Chat",
+                    style = TextStyle(
+                        fontSize = 16.sp,
+                        fontFamily = FontFamily(Font(R.font.roboto_bold)),
+                        fontWeight = FontWeight(400),
+                        color = Color(0xFFFFFFFF),
+
+                        textAlign = TextAlign.Center,
+                    )
+                )
+            }
+            Spacer(modifier = Modifier.height(16.dp))
+            OutlinedButton(
+                onClick = { navController.navigate(Screen.Home.route) },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(50.dp),
+                shape = RoundedCornerShape(8.dp),
+                border = BorderStroke(1.dp, Color(0xFF007BFF))
+            ) {
+                Text(
+                    text = "Kembali ke Home",
+                    style = TextStyle(
+                        fontSize = 16.sp,
+                        fontFamily = FontFamily(Font(R.font.roboto_bold)),
+                        fontWeight = FontWeight(500),
+                        color = Color(0xFF000000),
+                        textAlign = TextAlign.Center,
+                    )
+                )
+            }
         }
     }
 }

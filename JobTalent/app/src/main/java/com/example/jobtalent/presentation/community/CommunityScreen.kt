@@ -67,85 +67,95 @@ fun CommunityScreen(
     Column (
         modifier = Modifier
             .fillMaxSize()
-            .padding(start = 20.dp, end = 20.dp, top = 20.dp)
             .background(
                 color = Color(0xFFF8F8F8)
             ),
     ){
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 15.dp)
-                .wrapContentHeight(),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Image(
-                painter = painter,
-                contentDescription = "Anto Ramadhan",
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .clip(CircleShape)
-                    .size(43.dp)
-            )
-            Spacer(modifier = Modifier.width(8.dp))
-            TextField(
-                value = searchText,
-                onValueChange = { searchText = it },
-                leadingIcon = {
-                    Icon(
-                        imageVector = Icons.Default.Search,
-                        contentDescription = "Search Icon",
-                        tint = Color(0xFF848484),) },
-                placeholder = { Text(text = "Cari", color = Color(0xFF848484)) },
-                modifier = Modifier
-                    .weight(1f)
-                    .height(50.dp)
-                    .shadow(5.dp, RoundedCornerShape(8.dp))
-                    .clip(RoundedCornerShape(8.dp)),
-                colors = TextFieldDefaults.textFieldColors(
-                    containerColor = Color.White,
-                    focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent
-                )
-            )
-            Spacer(modifier = Modifier.width(8.dp))
-            Button(
-                onClick = { navController.navigate(Screen.Postingdet.route) },
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF005695)),
-                shape = RoundedCornerShape(8.dp),
-                modifier = Modifier.height(50.dp)
-            ) {
-                Text(
-                    text = "Post",
-                    color = Color.White,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 16.sp
-                )
-            }
-        }
-
-        LazyColumn(
+        Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(bottom = 5.dp)
+                .padding(start = 20.dp, end = 20.dp, top = 20.dp)
                 .background(
                     color = Color(0xFFF8F8F8)
                 ),
         ) {
-            items(filteredPosts.size) { index ->
-                val post = filteredPosts[index]
-                Spacer(modifier = Modifier.height(8.dp))
-                ContentLazy(
-                    image = post.image,
-                    name = post.name,
-                    time = post.time,
-                    desc_content = post.desc_content,
-                    image_content = post.image_content,
-                    like = post.like.toInt(),
-                    comment = post.comment,
-                    onClick = { navController.navigate(Screen.Komentarsc.route) }
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 15.dp)
+                    .wrapContentHeight(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Image(
+                    painter = painter,
+                    contentDescription = "Anto Ramadhan",
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .clip(CircleShape)
+                        .size(43.dp)
                 )
-                Spacer(modifier = Modifier.height(20.dp))
+                Spacer(modifier = Modifier.width(8.dp))
+                TextField(
+                    value = searchText,
+                    onValueChange = { searchText = it },
+                    leadingIcon = {
+                        Icon(
+                            imageVector = Icons.Default.Search,
+                            contentDescription = "Search Icon",
+                            tint = Color(0xFF848484),
+                        )
+                    },
+                    placeholder = { Text(text = "Cari", color = Color(0xFF848484)) },
+                    modifier = Modifier
+                        .weight(1f)
+                        .height(50.dp)
+                        .shadow(5.dp, RoundedCornerShape(8.dp))
+                        .clip(RoundedCornerShape(8.dp)),
+                    colors = TextFieldDefaults.textFieldColors(
+                        containerColor = Color.White,
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent
+                    )
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Button(
+                    onClick = { navController.navigate(Screen.Postingdet.route) },
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF005695)),
+                    shape = RoundedCornerShape(8.dp),
+                    modifier = Modifier.height(50.dp)
+                ) {
+                    Text(
+                        text = "Post",
+                        color = Color.White,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 16.sp
+                    )
+                }
+            }
+
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(bottom = 5.dp)
+                    .background(
+                        color = Color(0xFFF8F8F8)
+                    ),
+            ) {
+                items(filteredPosts.size) { index ->
+                    val post = filteredPosts[index]
+                    Spacer(modifier = Modifier.height(8.dp))
+                    ContentLazy(
+                        image = post.image,
+                        name = post.name,
+                        time = post.time,
+                        desc_content = post.desc_content,
+                        image_content = post.image_content,
+                        like = post.like.toInt(),
+                        comment = post.comment,
+                        onClick = { navController.navigate(Screen.Komentarsc.route) }
+                    )
+                    Spacer(modifier = Modifier.height(20.dp))
+                }
             }
         }
     }

@@ -75,80 +75,119 @@ fun KategoriPesananDesainScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(15.dp)
             .background(color = Color.White)
     ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
+        Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight()
+                .fillMaxSize()
+                .padding(15.dp)
+                .background(color = Color.White)
         ) {
-            Box(
-                modifier = Modifier
-                    .size(45.dp)
-                    .shadow(8.dp, CircleShape)
-                    .clip(CircleShape)
-                    .background(Color.White)
-                    .clickable(onClick = { navController.popBackStack() })
-            ) {
-                Icon(
-                    imageVector = Icons.Default.ArrowBack,
-                    contentDescription = "Back",
-                    tint = Color.Black,
-                    modifier = Modifier
-                        .size(24.dp)
-                        .align(Alignment.Center)
-                )
-            }
-            Spacer(modifier = Modifier.width(8.dp))
-            TextField(
-                value = searchText,
-                onValueChange = { searchText = it },
-                leadingIcon = {
-                    Icon(
-                        imageVector = Icons.Default.Search,
-                        contentDescription = "Search Icon",
-                        tint = Color(0xFF848484),
-                    )
-                },
-                placeholder = { Text(text = "Cari", color = Color(0xFF848484)) },
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(50.dp)
-                    .shadow(8.dp, RoundedCornerShape(8.dp))
-                    .clip(RoundedCornerShape(8.dp)),
-                colors = TextFieldDefaults.textFieldColors(
-                    containerColor = Color.White,
-                    focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent
+                    .wrapContentHeight()
+            ) {
+                Box(
+                    modifier = Modifier
+                        .size(45.dp)
+                        .shadow(8.dp, CircleShape)
+                        .clip(CircleShape)
+                        .background(Color.White)
+                        .clickable(onClick = { navController.popBackStack() })
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.ArrowBack,
+                        contentDescription = "Back",
+                        tint = Color.Black,
+                        modifier = Modifier
+                            .size(24.dp)
+                            .align(Alignment.Center)
+                    )
+                }
+                Spacer(modifier = Modifier.width(8.dp))
+                TextField(
+                    value = searchText,
+                    onValueChange = { searchText = it },
+                    leadingIcon = {
+                        Icon(
+                            imageVector = Icons.Default.Search,
+                            contentDescription = "Search Icon",
+                            tint = Color(0xFF848484),
+                        )
+                    },
+                    placeholder = { Text(text = "Cari", color = Color(0xFF848484)) },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(50.dp)
+                        .shadow(8.dp, RoundedCornerShape(8.dp))
+                        .clip(RoundedCornerShape(8.dp)),
+                    colors = TextFieldDefaults.textFieldColors(
+                        containerColor = Color.White,
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent
+                    )
                 )
-            )
-        }
-        Spacer(modifier = Modifier.height(10.dp))
-
-        TopNavigationBarDesain(
-            categories = categories,
-            selectedCategory = selectedCategory,
-            onCategorySelected = { selectedCategory = it }
-        )
-
-        LazyColumn(
-            modifier = Modifier.fillMaxSize()
-        ) {
-            val filteredItemsToShow = when (selectedCategory) {
-                "Graphic Design" -> kategoriGraphicDesigner.filter { it.name.contains(searchText, ignoreCase = true) }
-                "Illustrator" -> kategoriIllustrator.filter { it.name.contains(searchText, ignoreCase = true) }
-                "Brand Identity" -> kategoriBrandIdentity.filter { it.name.contains(searchText, ignoreCase = true) }
-                else -> (kategoriGraphicDesigner.filter { it.name.contains(searchText, ignoreCase = true) } +
-                        kategoriIllustrator.filter { it.name.contains(searchText, ignoreCase = true) } +
-                        kategoriBrandIdentity.filter { it.name.contains(searchText, ignoreCase = true) })
             }
-            items(filteredItemsToShow) { item ->
-                when (item) {
-                    is KategoriGraphicDesigner -> GraphicDesignerColumnItem(item, navController)
-                    is KategoriIllustrator -> IllustratorColumnItem(item, navController)
-                    is KategoriBrandIdentity -> BrandIdentityColumnItem(item, navController)
+            Spacer(modifier = Modifier.height(10.dp))
+
+            TopNavigationBarDesain(
+                categories = categories,
+                selectedCategory = selectedCategory,
+                onCategorySelected = { selectedCategory = it }
+            )
+
+            LazyColumn(
+                modifier = Modifier.fillMaxSize()
+            ) {
+                val filteredItemsToShow = when (selectedCategory) {
+                    "Graphic Design" -> kategoriGraphicDesigner.filter {
+                        it.name.contains(
+                            searchText,
+                            ignoreCase = true
+                        )
+                    }
+
+                    "Illustrator" -> kategoriIllustrator.filter {
+                        it.name.contains(
+                            searchText,
+                            ignoreCase = true
+                        )
+                    }
+
+                    "Brand Identity" -> kategoriBrandIdentity.filter {
+                        it.name.contains(
+                            searchText,
+                            ignoreCase = true
+                        )
+                    }
+
+                    else -> (kategoriGraphicDesigner.filter {
+                        it.name.contains(
+                            searchText,
+                            ignoreCase = true
+                        )
+                    } +
+                            kategoriIllustrator.filter {
+                                it.name.contains(
+                                    searchText,
+                                    ignoreCase = true
+                                )
+                            } +
+                            kategoriBrandIdentity.filter {
+                                it.name.contains(
+                                    searchText,
+                                    ignoreCase = true
+                                )
+                            })
+                }
+                items(filteredItemsToShow) { item ->
+                    when (item) {
+                        is KategoriGraphicDesigner -> GraphicDesignerColumnItem(item, navController)
+                        is KategoriIllustrator -> IllustratorColumnItem(item, navController)
+                        is KategoriBrandIdentity -> BrandIdentityColumnItem(item, navController)
+                    }
                 }
             }
         }

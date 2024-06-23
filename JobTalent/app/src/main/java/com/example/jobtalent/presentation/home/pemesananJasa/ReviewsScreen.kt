@@ -49,58 +49,65 @@ import com.example.jobtalent.R
 fun ReviewsScreen(navController: NavController) {
     val selectedFilter = remember { mutableStateOf("Semua") }
     var filteredReviews = remember { mutableStateOf(reviews) }
-    Column(
+    Column (
         modifier = Modifier
             .fillMaxSize()
-            .padding(20.dp)
-    ) {
-        Row (
-            horizontalArrangement = Arrangement.Start,
-            verticalAlignment = Alignment.CenterVertically,
+            .background(color = Color.White)
+    ){
+        Column(
             modifier = Modifier
-                .fillMaxWidth()
-        ){
-            Box(
+                .fillMaxSize()
+                .padding(20.dp)
+                .background(color = Color.White)
+        ) {
+            Row(
+                horizontalArrangement = Arrangement.Start,
+                verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
-                    .size(38.dp)
-                    .clip(CircleShape)
-                    .background(Color.White)
-                    .clickable(onClick = { navController.popBackStack() })
+                    .fillMaxWidth()
             ) {
-                Icon(
-                    imageVector = Icons.Default.ArrowBack,
-                    contentDescription = "Back",
-                    tint = Color.Black,
+                Box(
                     modifier = Modifier
-                        .size(20.dp)
-                        .align(Alignment.Center)
+                        .size(38.dp)
+                        .clip(CircleShape)
+                        .background(Color.White)
+                        .clickable(onClick = { navController.popBackStack() })
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.ArrowBack,
+                        contentDescription = "Back",
+                        tint = Color.Black,
+                        modifier = Modifier
+                            .size(20.dp)
+                            .align(Alignment.Center)
+                    )
+                }
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(
+                    text = "${selectedFilter.value} (${filteredReviews.value.size} ulasan)",
+                    style = TextStyle(
+                        fontSize = 16.sp,
+                        lineHeight = 20.sp,
+                        fontFamily = FontFamily(Font(R.font.roboto_bold)),
+                        fontWeight = FontWeight(500),
+                        color = Color(0xFF000000)
+                    )
                 )
             }
-            Spacer(modifier = Modifier.width(8.dp))
-            Text(
-                text = "${selectedFilter.value} (${filteredReviews.value.size} ulasan)",
-                style = TextStyle(
-                    fontSize = 16.sp,
-                    lineHeight = 20.sp,
-                    fontFamily = FontFamily(Font(R.font.roboto_bold)),
-                    fontWeight = FontWeight(500),
-                    color = Color(0xFF000000)
-                )
+            Spacer(modifier = Modifier.height(15.dp))
+            RatingFilterRow(
+                selectedFilter = selectedFilter,
+                onFilterChange = {
+                    filterReviews(it, filteredReviews)
+                    selectedFilter.value = it
+                }
             )
-        }
-        Spacer(modifier = Modifier.height(15.dp))
-        RatingFilterRow(
-            selectedFilter = selectedFilter,
-            onFilterChange = {
-                filterReviews(it, filteredReviews)
-                selectedFilter.value = it
-            }
-        )
-        Spacer(modifier = Modifier.height(15.dp))
-        LazyColumn {
-            items(filteredReviews.value.size) { index ->
-                ReviewItem(filteredReviews.value[index])
-                Spacer(modifier = Modifier.height(15.dp))
+            Spacer(modifier = Modifier.height(15.dp))
+            LazyColumn {
+                items(filteredReviews.value.size) { index ->
+                    ReviewItem(filteredReviews.value[index])
+                    Spacer(modifier = Modifier.height(15.dp))
+                }
             }
         }
     }

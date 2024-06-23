@@ -138,8 +138,16 @@ fun JobTalentApp(
             composable(Screen.KategoriJasa.route){
                 KategoriJasaScreen(modifier = Modifier, navController = navController)
             }
-            composable(Screen.JenisJasa.route){
-                JenisJasaScreen(modifier = Modifier, navController)
+            composable(
+                Screen.JenisJasa.route + "/{tampilkategoriJasaId}",
+                arguments = listOf(navArgument("tampilkategoriJasaId") { type = NavType.IntType })
+
+            ){ navBackStackEntry ->
+                JenisJasaScreen(
+                    modifier = Modifier,
+                    navController = navController,
+                    tampilkategoriJasaId = navBackStackEntry.arguments?.getInt("tampilkategoriJasaId")
+                )
             }
             composable(Screen.NamaTampilan.route){
                 NamaTampilanScreen(modifier = Modifier, navController)
@@ -148,7 +156,7 @@ fun JobTalentApp(
                 PengalamanScreen(modifier = Modifier, navController)
             }
             composable(Screen.Identitas.route){
-                IdentitasScreen(modifier = Modifier, navController)
+                IdentitasScreen(modifier = Modifier, sharedViewModel, navController)
             }
             composable(Screen.DataPelengkap.route){
                 DataPelengkapScreen(modifier = Modifier, navController)

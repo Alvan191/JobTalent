@@ -125,11 +125,16 @@ fun MetodePembayaranScreen(
 
             )
             Text(
-
                 text = "Bank/ Virtual Account",
+                style = TextStyle(
+                    fontSize = 12.sp,
+                    fontFamily = FontFamily(Font(R.font.roboto_light)),
+                    fontWeight = FontWeight(600),
+                    color = Color(0xFF000000)
+                ),
                 modifier = Modifier
                     .align(alignment = Alignment.CenterStart)
-                    .offset(x = 50.dp, y = 0.dp)
+                    .offset(x = 50.dp, y = 0.dp),
             )
         }
         Spacer(modifier = Modifier.height(20.dp))
@@ -174,6 +179,12 @@ fun MetodePembayaranScreen(
                     .background(Color(0xffd9e7f2), CircleShape))
             Text(
                 text = "Dana",
+                style = TextStyle(
+                    fontSize = 12.sp,
+                    fontFamily = FontFamily(Font(R.font.roboto_light)),
+                    fontWeight = FontWeight(600),
+                    color = Color(0xFF000000)
+                ),
                 modifier = Modifier
                     .align(alignment = Alignment.CenterStart)
                     .offset(x = 50.dp, y = 0.dp)
@@ -212,6 +223,12 @@ fun MetodePembayaranScreen(
             )
             Text(
                 text = "Gopay",
+                style = TextStyle(
+                    fontSize = 12.sp,
+                    fontFamily = FontFamily(Font(R.font.roboto_light)),
+                    fontWeight = FontWeight(600),
+                    color = Color(0xFF000000)
+                ),
                 modifier = Modifier
                     .align(alignment = Alignment.CenterStart)
                     .offset(x = 50.dp, y = 0.dp)
@@ -250,6 +267,12 @@ fun MetodePembayaranScreen(
             )
             Text(
                 text = "Ovo",
+                style = TextStyle(
+                    fontSize = 12.sp,
+                    fontFamily = FontFamily(Font(R.font.roboto_light)),
+                    fontWeight = FontWeight(600),
+                    color = Color(0xFF000000)
+                ),
                 modifier = Modifier
                     .align(alignment = Alignment.CenterStart)
                     .offset(x = 50.dp, y = 0.dp)

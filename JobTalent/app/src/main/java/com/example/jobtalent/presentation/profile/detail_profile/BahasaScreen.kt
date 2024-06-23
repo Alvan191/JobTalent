@@ -18,6 +18,7 @@ import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -46,13 +47,16 @@ fun LanguageSettingsScreen(
 ) {
     Column (
         modifier = Modifier
-            .background(Color(0xfff8f8f8))
+            .background(Color(0xFFFFFFFF))
             .fillMaxSize()
             .padding(15.dp)
     ){
         Scaffold(
             topBar = {
                 TopAppBar(
+                    colors = TopAppBarDefaults.topAppBarColors(
+                        Color(0xFFFFFFFF)
+                    ),
                     title = {
                         Text(
                             text = "Bahasa",
@@ -89,6 +93,7 @@ fun LanguageSettingsScreen(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
+                    .background(Color(0xFFFFFFFF))
                     .padding(it)
             ) {
                 var selectedLanguage by remember { mutableStateOf("Indonesia (ID)") }

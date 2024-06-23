@@ -26,6 +26,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -62,9 +63,6 @@ fun ChatScreen(
             )
     ){
         TopAppBar(
-            modifier = Modifier
-                .background(
-                    color = Color.White),
             title = {
                 Text(
                     text = "Pesan",
@@ -84,7 +82,10 @@ fun ChatScreen(
                         tint = Color.Black
                     )
                 }
-            }
+            },
+            colors = TopAppBarDefaults.topAppBarColors(
+                Color(0xFFFFFFFF)
+            )
         )
         LazyColumn(
             modifier = Modifier
@@ -147,6 +148,7 @@ fun ItemChat(
                             text = tampilchat.name,
                             fontFamily = FontFamily(Font(R.font.roboto_medium)),
                             fontSize = 16.sp,
+                            color = Color(0xFF000000),
                             fontWeight = FontWeight.Bold,
                         )
                         Text(

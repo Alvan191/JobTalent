@@ -15,17 +15,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Visibility
-import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
@@ -39,8 +31,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -53,8 +43,6 @@ import com.example.jobtalent.navigation.Screen
 import com.example.jobtalent.presentation.login.componentLogin.ContentForm
 import kotlinx.coroutines.launch
 
-
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RegistrasiScreen(
     navController: NavController,
@@ -72,152 +60,51 @@ fun RegistrasiScreen(
     var katasandiVisible by remember { mutableStateOf(false) }
     var konfirmasiKataSandiVisible by remember { mutableStateOf(false) }
 
-    Column(
+    Column (
         modifier = Modifier
             .fillMaxSize()
-            .padding(20.dp),
-        verticalArrangement = Arrangement.Center,
-
-        ) {
-
-        Row(
-            horizontalArrangement = Arrangement.Center,
-            modifier = Modifier
-                .fillMaxWidth()
-        ) {
-            Image(
-                painter = painterResource(id = R.drawable.logo),
-                contentDescription = "Logo",
-                modifier = Modifier
-                    .size(150.dp)
-            )
-        }
-
-        Spacer(modifier = Modifier.height(50.dp))
-        Text(
-            text = "Daftar",
-            style = TextStyle(
-                fontSize = 24.sp,
-                fontFamily = FontFamily(Font(R.font.roboto_black)),
-                fontWeight = FontWeight(700),
-                color = Color(0xFF000000)
-            )
-        )
-
-        Spacer(modifier = Modifier.height(4.dp))
-        Text(
-            text = "Masukkan email dan kata sandi dengan benar",
-            style = TextStyle(
-                fontSize = 12.sp,
-                fontFamily = FontFamily(Font(R.font.roboto_light)),
-                fontWeight = FontWeight(700),
-                color = Color(0xFF000000),
-            )
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        ContentForm(
-            value = username,
-            onValueChange = { username = it },
-            labelText = "Username",
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        Spacer(modifier = Modifier.height(14.dp))
-
-        ContentForm(
-            value = email,
-            onValueChange = { email = it },
-            labelText = "E-mail",
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        Spacer(modifier = Modifier.height(14.dp))
-
-        ContentForm(
-            value = password,
-            onValueChange = { password = it },
-            labelText = "Kata Sandi",
-            modifier = Modifier.fillMaxWidth(),
-            isPassword = true,
-            katasandiVisible = remember { mutableStateOf(katasandiVisible) }
-        )
-
-        Spacer(modifier = Modifier.height(14.dp))
-        ContentForm(
-            value = confPassword,
-            onValueChange = { confPassword = it },
-            labelText = "Konfirmasi Kata Sandi",
-            modifier = Modifier.fillMaxWidth(),
-            isPassword = true,
-            katasandiVisible = remember { mutableStateOf(konfirmasiKataSandiVisible) }
-        )
-
-        Spacer(modifier = Modifier.height(70.dp))
-
-        Button(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(55.dp)
-                .background(color = Color(0xFF005695), shape = RoundedCornerShape(size = 5.dp))
-                .padding(start = 15.dp, top = 10.dp, end = 15.dp, bottom = 10.dp),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color(0xFF005695)
+            .background(
+                color = Color(0xFFFFFFFF)
             ),
-            onClick = {
-                coroutineScope.launch {
-                    if (email.isBlank() || password.isBlank()) {
-                        Toast.makeText(
-                            context,
-                            "Email dan Password Wajib Diisi",
-                            Toast.LENGTH_SHORT
-                        )
-                            .show()
-                    } else if (password != confPassword) {
-                        Toast.makeText(
-                            context,
-                            "Password dan Konfirmasi Password tidak cocok",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    } else {
-                        val request = RegisterRequest(
-                            username = username,
-                            email = email,
-                            password = password,
-                            confPassword = confPassword
-                        )
-                        viewModel.registerUser(request, {
-                            val sharedPreferencesManager = SharedPreferencesManager(context)
-                            sharedPreferencesManager.name = it.username
-                            navController.navigate(Screen.Login.route)
-                            Toast.makeText(context, "Registration Success : ${it.username}", Toast.LENGTH_SHORT).show()
-                        }, {
-                            message = "Registration Failed : $it"
-                        })
-                    }
-                }
-            },
-        ) {
+    ){
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(20.dp)
+                .background(
+                    color = Color(0xFFFFFFFF)
+                ),
+            verticalArrangement = Arrangement.Center,
+
+            ) {
+
+            Row(
+                horizontalArrangement = Arrangement.Center,
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.logo_login),
+                    contentDescription = "Logo",
+                    modifier = Modifier
+                        .size(150.dp)
+                )
+            }
+
+            Spacer(modifier = Modifier.height(50.dp))
             Text(
                 text = "Daftar",
                 style = TextStyle(
-                    fontSize = 16.sp,
-                    fontFamily = FontFamily(Font(R.font.roboto_medium)),
+                    fontSize = 24.sp,
+                    fontFamily = FontFamily(Font(R.font.roboto_black)),
                     fontWeight = FontWeight(700),
-                    color = Color(0xFFFFFFFF),
+                    color = Color(0xFF000000)
                 )
             )
-        }
-        Spacer(modifier = Modifier.height(10.dp))
-        Row(
-            horizontalArrangement = Arrangement.Center,
-            modifier = Modifier
-                .fillMaxWidth()
-        ) {
+
             Spacer(modifier = Modifier.height(4.dp))
             Text(
-                text = "Sudah punya akun? ",
+                text = "Masukkan email dan kata sandi dengan benar",
                 style = TextStyle(
                     fontSize = 12.sp,
                     fontFamily = FontFamily(Font(R.font.roboto_light)),
@@ -225,17 +112,133 @@ fun RegistrasiScreen(
                     color = Color(0xFF000000),
                 )
             )
-            Spacer(modifier = Modifier.width(2.dp))
-            Text(
-                text = "Masuk",
-                modifier = Modifier.clickable { navController.navigate(Screen.Login.route) },
-                style = TextStyle(
-                    fontSize = 12.sp,
-                    fontFamily = FontFamily(Font(R.font.roboto_bold)),
-                    fontWeight = FontWeight(600),
-                    color = Color(0xFF0097B2),
-                )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            ContentForm(
+                value = username,
+                onValueChange = { username = it },
+                labelText = "Username",
+                modifier = Modifier.fillMaxWidth()
             )
+
+            Spacer(modifier = Modifier.height(14.dp))
+
+            ContentForm(
+                value = email,
+                onValueChange = { email = it },
+                labelText = "E-mail",
+                modifier = Modifier.fillMaxWidth()
+            )
+
+            Spacer(modifier = Modifier.height(14.dp))
+
+            ContentForm(
+                value = password,
+                onValueChange = { password = it },
+                labelText = "Kata Sandi",
+                modifier = Modifier.fillMaxWidth(),
+                isPassword = true,
+                katasandiVisible = remember { mutableStateOf(katasandiVisible) }
+            )
+
+            Spacer(modifier = Modifier.height(14.dp))
+            ContentForm(
+                value = confPassword,
+                onValueChange = { confPassword = it },
+                labelText = "Konfirmasi Kata Sandi",
+                modifier = Modifier.fillMaxWidth(),
+                isPassword = true,
+                katasandiVisible = remember { mutableStateOf(konfirmasiKataSandiVisible) }
+            )
+
+            Spacer(modifier = Modifier.height(70.dp))
+
+            Button(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(55.dp)
+                    .background(color = Color(0xFF005695), shape = RoundedCornerShape(size = 5.dp))
+                    .padding(start = 15.dp, top = 10.dp, end = 15.dp, bottom = 10.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFF005695)
+                ),
+                onClick = {
+                    coroutineScope.launch {
+                        if (email.isBlank() || password.isBlank()) {
+                            Toast.makeText(
+                                context,
+                                "Email dan Password Wajib Diisi",
+                                Toast.LENGTH_SHORT
+                            )
+                                .show()
+                        } else if (password != confPassword) {
+                            Toast.makeText(
+                                context,
+                                "Password dan Konfirmasi Password tidak cocok",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        } else {
+                            val request = RegisterRequest(
+                                username = username,
+                                email = email,
+                                password = password,
+                                confPassword = confPassword
+                            )
+                            viewModel.registerUser(request, {
+                                val sharedPreferencesManager = SharedPreferencesManager(context)
+                                sharedPreferencesManager.name = it.username
+                                navController.navigate(Screen.Login.route)
+                                Toast.makeText(
+                                    context,
+                                    "Registration Success : ${it.username}",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }, {
+                                message = "Registration Failed : $it"
+                            })
+                        }
+                    }
+                },
+            ) {
+                Text(
+                    text = "Daftar",
+                    style = TextStyle(
+                        fontSize = 16.sp,
+                        fontFamily = FontFamily(Font(R.font.roboto_medium)),
+                        fontWeight = FontWeight(700),
+                        color = Color(0xFFFFFFFF),
+                    )
+                )
+            }
+            Spacer(modifier = Modifier.height(10.dp))
+            Row(
+                horizontalArrangement = Arrangement.Center,
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(
+                    text = "Sudah punya akun? ",
+                    style = TextStyle(
+                        fontSize = 12.sp,
+                        fontFamily = FontFamily(Font(R.font.roboto_light)),
+                        fontWeight = FontWeight(700),
+                        color = Color(0xFF000000),
+                    )
+                )
+                Spacer(modifier = Modifier.width(2.dp))
+                Text(
+                    text = "Masuk",
+                    modifier = Modifier.clickable { navController.navigate(Screen.Login.route) },
+                    style = TextStyle(
+                        fontSize = 12.sp,
+                        fontFamily = FontFamily(Font(R.font.roboto_bold)),
+                        fontWeight = FontWeight(600),
+                        color = Color(0xFF0097B2),
+                    )
+                )
+            }
         }
     }
 }

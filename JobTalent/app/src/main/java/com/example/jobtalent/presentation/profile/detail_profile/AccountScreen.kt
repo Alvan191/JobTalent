@@ -26,6 +26,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -73,7 +74,7 @@ fun AccountScreen(
 
     Column (
         modifier = Modifier
-            .background(Color(0xfff8f8f8))
+            .background(Color(0xFFFFFFFF))
             .fillMaxSize()
             .padding(15.dp)
     ){
@@ -92,6 +93,9 @@ fun AccountScreen(
                             modifier = Modifier.padding(start = 15.dp)
                         )
                     },
+                    colors = TopAppBarDefaults.topAppBarColors(
+                        Color(0xFFFFFFFF)
+                    ),
                     navigationIcon = {
                         Box(
                             modifier = Modifier
@@ -115,6 +119,7 @@ fun AccountScreen(
         ) {
             Column(
                 modifier = Modifier
+                    .background(Color(0xFFFFFFFF))
                     .fillMaxSize()
                     .padding(it),
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -123,6 +128,7 @@ fun AccountScreen(
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
+                        .background(Color(0xFFFFFFFF))
                         .padding(16.dp)
                 ) {
                     Text(

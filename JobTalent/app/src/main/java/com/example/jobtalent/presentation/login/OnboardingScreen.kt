@@ -2,20 +2,31 @@ package com.example.jobtalent.presentation.login
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowCircleRight
+import androidx.compose.material.icons.filled.ArrowForwardIos
+import androidx.compose.material.icons.filled.ArrowRight
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -29,15 +40,22 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
+import com.example.jobtalent.R
 import com.example.jobtalent.presentation.model.OnboardScreenItem
 import com.example.jobtalent.data.onboard.DataOnboard
 import com.example.jobtalent.navigation.Screen
@@ -84,7 +102,11 @@ fun SplashScreenNewContent(
     }
 
     Scaffold {
-        Column(modifier = modifier.padding(it)) {
+        Column(modifier = modifier
+            .background(
+                color = Color(0xFF8BC4ED)
+            )
+            .padding(it)) {
             HorizontalPager(
                 state = pagerState,
                 modifier = Modifier.weight(0.6f)
@@ -100,23 +122,40 @@ fun SplashScreenNewContent(
                     verticalArrangement = Arrangement.Center,
                     modifier = Modifier
                         .fillMaxWidth()
+                        .background(
+                            color = Color(0xFF8BC4ED)
+                        )
                         .padding(24.dp)
                 ) {
+                    Spacer(modifier = Modifier.height(35.dp))
+                    Row (
+                        horizontalArrangement = Arrangement.Start,
+                        modifier = Modifier.fillMaxWidth()
+                    ){
+                        Text(
+                            text = onBoardings[page].title,
+                            style = TextStyle(
+                                fontSize = 24.sp,
+                                fontFamily = FontFamily(Font(R.font.roboto_black)),
+                                fontWeight = FontWeight(700),
+                                color = Color(0xFFFFFFFF)
+                            )
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(18.dp))
+                    Text(
+                        text = onBoardings[page].description,
+                        style = TextStyle(
+                            fontSize = 16.sp,
+                            fontFamily = FontFamily(Font(R.font.roboto_medium)),
+                            fontWeight = FontWeight(400),
+                            color = Color(0xFFFFFFFF)
+                        )
+                    )
                     LottieAnimation(
                         composition,
                         iterations = LottieConstants.IterateForever,
                         modifier = Modifier.weight(1f)
-                    )
-                    Text(
-                        text = onBoardings[page].title,
-                        style = MaterialTheme.typography.titleLarge,
-                        textAlign = TextAlign.Center
-                    )
-                    Spacer(modifier = Modifier.height(24.dp))
-                    Text(
-                        text = onBoardings[page].description,
-                        style = MaterialTheme.typography.bodyMedium,
-                        textAlign = TextAlign.Center,
                     )
                 }
             }
@@ -135,7 +174,7 @@ fun SplashScreenNewContent(
                             .height(10.dp)
                             .clip(RoundedCornerShape(10.dp))
                             .background(
-                                if (i == selectedPage) Color(0xFF005695) else MaterialTheme.colorScheme.primary.copy(
+                                if (i == selectedPage) Color.White else MaterialTheme.colorScheme.primary.copy(
                                     alpha = 0.1f
                                 )
                             )
@@ -160,8 +199,12 @@ fun SplashScreenNewContent(
                     ) {
                         Text(
                             text = "Lewati",
-                            style = MaterialTheme.typography.bodyLarge,
-                            color = Color(0xFF0097B2)
+                            style = TextStyle(
+                                fontSize = 16.sp,
+                                fontFamily = FontFamily(Font(R.font.roboto_medium)),
+                                fontWeight = FontWeight(400),
+                                color = Color(0xFFF8F8F8)
+                            )
                         )
                     }
 
@@ -172,7 +215,9 @@ fun SplashScreenNewContent(
                                 pagerState.animateScrollToPage(nextPage)
                             }
                         },
-                        modifier = Modifier.height(48.dp),
+                        modifier = Modifier
+                            .height(48.dp)
+                            .border(1.dp, Color.White, RoundedCornerShape(21.dp)),
                         colors = ButtonDefaults.buttonColors(
                             containerColor = Color(0xFF005695)
                         )
@@ -186,23 +231,34 @@ fun SplashScreenNewContent(
             }
 
             if (selectedPage == onBoardings.size - 1) {
-                Button(
-                    onClick = {
-                        moveToLogin()
-                    },
+                Row (
+                    horizontalArrangement = Arrangement.End,
                     modifier = Modifier
-                        .padding(16.dp)
                         .fillMaxWidth()
-                        .height(48.dp)
-                        .clip(MaterialTheme.shapes.extraLarge),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFF005695)
-                    )
-                ) {
-                    Text(
-                        text = "Mulai",
-                        style = MaterialTheme.typography.bodyLarge,
-                    )
+                        .padding(top = 10.dp, bottom = 15.dp, end = 20.dp)
+                        .wrapContentHeight()
+                ){
+                    Box(
+                        modifier = Modifier
+                            .size(54.dp)
+                            .clip(CircleShape)
+                            .border(2.dp, Color.White, CircleShape)
+                    ) {
+                        IconButton(
+                            onClick = { moveToLogin() },
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .background(Color(0xFF005695), CircleShape)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.ArrowRight,
+                                contentDescription = "Mulai",
+                                modifier = Modifier
+                                    .size(53.dp),
+                                tint = Color.White
+                            )
+                        }
+                    }
                 }
             }
         }

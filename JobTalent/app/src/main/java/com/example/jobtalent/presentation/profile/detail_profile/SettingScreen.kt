@@ -26,6 +26,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
@@ -70,79 +71,89 @@ fun SettingsScreen(
 
     Column (
         modifier = Modifier
-            .background(Color(0xfff8f8f8))
             .fillMaxSize()
-            .padding(15.dp)
+            .background(Color(0xFFFFFFFF))
     ){
-        Scaffold(
-            topBar = {
-                TopAppBar(
-                    title = {
-                        Text(
-                            text = "Pengaturan",
-                            style = TextStyle(
-                                fontSize = 16.sp,
-                                fontFamily = FontFamily(Font(R.font.roboto_bold)),
-                                fontWeight = FontWeight(600),
-                                color = Color(0xFF000000)
-                            ),
-                            modifier = Modifier.padding(start = 15.dp)
-                        )
-                    },
-                    navigationIcon = {
-                        Box(
-                            modifier = Modifier
-                                .size(44.dp)
-                                .clip(CircleShape)
-                                .background(Color.White)
-                                .clickable(onClick = { navController.popBackStack() })
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.ArrowBack,
-                                contentDescription = "Back",
-                                tint = Color.Black,
-                                modifier = Modifier
-                                    .size(24.dp)
-                                    .align(Alignment.Center)
-                            )
-                        }
-                    }
-                )
-            }
+        Column(
+            modifier = Modifier
+                .background(Color(0xFFFFFFFF))
+                .fillMaxSize()
+                .padding(15.dp)
         ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(it),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
-            ) {
-                SettingsItem(
-                    iconRes = R.drawable.language,
-                    label = "Bahasa",
-                    onClick = { navController.navigate(Screen.Bahasasc.route) }
-                )
-                SettingsItemWithSwitch(
-                    iconRes = R.drawable.notifications,
-                    label = "Notifikasi",
-                    checked = true,
-                    onCheckedChange = { }
-                )
-                SettingsItem(
-                    iconRes = R.drawable.logout,
-                    label = "Keluar Akun",
-                    onClick = {
-                        sharedPreferencesManager.clear()
-                        coroutineScope.launch {
-                            dataStore.clearStatus()
-                        }
-                        navController.navigate(Screen.Login.route)
-                        {
-                            popUpTo(Screen.Profile.route) {
-                                inclusive = true
+            Scaffold(
+                topBar = {
+                    TopAppBar(
+                        title = {
+                            Text(
+                                text = "Pengaturan",
+                                style = TextStyle(
+                                    fontSize = 16.sp,
+                                    fontFamily = FontFamily(Font(R.font.roboto_bold)),
+                                    fontWeight = FontWeight(600),
+                                    color = Color(0xFF000000)
+                                ),
+                                modifier = Modifier.padding(start = 15.dp)
+                            )
+                        },
+                        colors = TopAppBarDefaults.topAppBarColors(
+                            Color(0xFFFFFFFF)
+                        ),
+                        navigationIcon = {
+                            Box(
+                                modifier = Modifier
+                                    .size(44.dp)
+                                    .clip(CircleShape)
+                                    .background(Color.White)
+                                    .clickable(onClick = { navController.popBackStack() })
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.ArrowBack,
+                                    contentDescription = "Back",
+                                    tint = Color.Black,
+                                    modifier = Modifier
+                                        .size(24.dp)
+                                        .align(Alignment.Center)
+                                )
                             }
                         }
-                    }
-                )
+                    )
+                }
+            ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color(0xFFFFFFFF))
+                        .padding(it),
+                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
+                    SettingsItem(
+                        iconRes = R.drawable.language,
+                        label = "Bahasa",
+                        onClick = { navController.navigate(Screen.Bahasasc.route) }
+                    )
+                    SettingsItemWithSwitch(
+                        iconRes = R.drawable.notifications,
+                        label = "Notifikasi",
+                        checked = true,
+                        onCheckedChange = { }
+                    )
+                    SettingsItem(
+                        iconRes = R.drawable.logout,
+                        label = "Keluar Akun",
+                        onClick = {
+                            sharedPreferencesManager.clear()
+                            coroutineScope.launch {
+                                dataStore.clearStatus()
+                            }
+                            navController.navigate(Screen.Login.route)
+                            {
+                                popUpTo(Screen.Profile.route) {
+                                    inclusive = true
+                                }
+                            }
+                        }
+                    )
+                }
             }
         }
     }

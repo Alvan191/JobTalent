@@ -2,10 +2,9 @@ package com.example.jobtalent.presentation.login
 
 import android.annotation.SuppressLint
 import androidx.compose.animation.core.Animatable
-import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,14 +14,11 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -32,7 +28,6 @@ import com.example.jobtalent.R
 import com.example.jobtalent.data.datastore.DataStore
 import com.example.jobtalent.navigation.Screen
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 @SuppressLint("CoroutineCreationDuringComposition")
 @Composable
@@ -69,17 +64,29 @@ fun SplashScreen(navController: NavController) {
         }
     )
 
-    Surface(
+    Column (
         modifier = Modifier
-            .padding(16.dp)
-            .scale(scale.value)
             .fillMaxSize()
-    ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+            .background(
+            color = Color(0xFFFFFFFF)
+        ),
+    ){
+        Surface(
+            modifier = Modifier
+                .scale(scale.value)
+                .fillMaxSize(),
+            color = Color.White
         ) {
-            Image(painter = painterResource(id = R.drawable.logo), contentDescription = null)
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center,
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.logo),
+                    contentDescription = null,
+                    modifier = Modifier.size(150.dp)
+                )
+            }
         }
     }
 }

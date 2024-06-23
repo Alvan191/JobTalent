@@ -79,9 +79,9 @@ fun PortofolioScreen(
 ) {
     val context = LocalContext.current
     val sharedPreferencesManager = remember { SharedPreferencesManager(context) }
-    val currentUser = FirebaseAuth.getInstance().currentUser?.email?.substringBefore("@") ?: "N/A"
+    val currentUserSec = sharedPreferencesManager.email?.substringBefore("@") ?: "N/A"
 
-    val namaTampil = if (sharedPreferencesManager.name.isNullOrEmpty()) currentUser else sharedPreferencesManager.name
+    val namaTampil = if (sharedPreferencesManager.name.isNullOrEmpty()) currentUserSec else sharedPreferencesManager.name
 
     var isExpanded by remember { mutableStateOf(false) }
     val imageUri = rememberSaveable { mutableStateOf("") }
@@ -97,12 +97,16 @@ fun PortofolioScreen(
         }
     }
 
-    LazyColumn {
+    LazyColumn (
+        modifier = Modifier
+            .background(Color(0xFFFFFFFF))
+    ){
         item {
             Column (
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
                     .fillMaxSize()
+                    .background(Color(0xFFFFFFFF))
             ){
                 Box(
                     modifier = Modifier
@@ -232,7 +236,9 @@ fun PortofolioScreen(
                         .padding(top = 10.dp)
                         .shadow(4.dp, RoundedCornerShape(16.dp)),
                     shape = RoundedCornerShape(16.dp),
-                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
+                    colors = CardDefaults.cardColors(
+                        containerColor = Color.White
+                    ),
                 ) {
                     Column(
                         modifier = Modifier

@@ -56,113 +56,124 @@ fun KomentarScreen(
     val (commentText, setCommentText) = remember { mutableStateOf("") }
     val coroutineScope = rememberCoroutineScope()
 
-    Column(
-        verticalArrangement = Arrangement.SpaceBetween,
+    Column (
         modifier = Modifier
             .fillMaxSize()
-            .padding(15.dp)
-    ) {
-        Column {
-            Box(
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Row(
-                    horizontalArrangement = Arrangement.End,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .offset(y = 2.dp)
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Close,
-                        contentDescription = "Back Icon",
-                        tint = Color.Black,
-                        modifier = Modifier
-                            .background(Color(0xFFDFE9F1), CircleShape)
-                            .size(40.dp)
-                            .padding(8.dp)
-                            .clickable {navController.popBackStack() }
-                    )
-                }
-            }
-            Spacer(modifier = Modifier.height(15.dp))
-            CommentRow(
-                imageResource = R.drawable.sundari,
-                name = "Sundari",
-                time = "10 menit",
-                comment = "Semangat Para Ibu” 🔥🔥🔥"
-            )
-            CommentRow(
-                imageResource = R.drawable.ummy,
-                name = "Ummy",
-                time = "4 menit",
-                comment = "Bagus Banget 🔥🔥🔥"
-            )
-            CommentRow(
-                imageResource = R.drawable.muhammad,
-                name = "Pak Muh",
-                time = "1 menit",
-                comment = "Menyalah kakak ku🔥🔥🔥"
-            )
-        }
-
-        Box(
+            .background(
+                color = Color(0xFFF8F8F8)
+            ),
+    ){
+        Column(
+            verticalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier
-                .fillMaxWidth()
-                .requiredHeight(height = 100.dp)
-                .clip(shape = RoundedCornerShape(15.dp))
-                .background(color = Color(0xffDCE3E9))
+                .fillMaxSize()
+                .padding(15.dp)
+                .background(
+                    color = Color(0xFFF8F8F8)
+                ),
         ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
+            Column {
+                Box(
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Row(
+                        horizontalArrangement = Arrangement.End,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .offset(y = 2.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Close,
+                            contentDescription = "Back Icon",
+                            tint = Color.Black,
+                            modifier = Modifier
+                                .background(Color(0xFFDFE9F1), CircleShape)
+                                .size(40.dp)
+                                .padding(8.dp)
+                                .clickable { navController.popBackStack() }
+                        )
+                    }
+                }
+                Spacer(modifier = Modifier.height(15.dp))
+                CommentRow(
+                    imageResource = R.drawable.sundari,
+                    name = "Sundari",
+                    time = "10 menit",
+                    comment = "Semangat Para Ibu” 🔥🔥🔥"
+                )
+                CommentRow(
+                    imageResource = R.drawable.ummy,
+                    name = "Ummy",
+                    time = "4 menit",
+                    comment = "Bagus Banget 🔥🔥🔥"
+                )
+                CommentRow(
+                    imageResource = R.drawable.muhammad,
+                    name = "Pak Muh",
+                    time = "1 menit",
+                    comment = "Menyalah kakak ku🔥🔥🔥"
+                )
+            }
+
+            Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(Color.White)
-                    .padding(horizontal = 16.dp, vertical = 8.dp)
+                    .requiredHeight(height = 100.dp)
+                    .clip(shape = RoundedCornerShape(15.dp))
+                    .background(color = Color(0xffDCE3E9))
             ) {
-                Image(
-                    painter = painterResource(id = R.drawable.antobulat),
-                    contentDescription = "Profile Anto",
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier
-                        .size(45.dp)
-                        .padding(end = 8.dp)
-                        .clip(shape = CircleShape)
-                )
-                TextField(
-                    value = commentText,
-                    onValueChange = setCommentText,
-                    placeholder = {
-                        Text(
-                            text = "Berikan komentar",
-                            style = TextStyle(
-                                fontSize = 14.sp,
-                                fontFamily = FontFamily(Font(R.font.roboto_light)),
-                                fontWeight = FontWeight(800),
-                                color = Color(0xFFBEBEBE),
-                            )
-                        )
-                    },
-                    modifier = Modifier
-                        .height(90.dp)
-                        .offset(y = 4.dp)
-                        .weight(1f),
-                    colors = TextFieldDefaults.textFieldColors(
-                        containerColor = Color(0xE8F3F3F3),
-                        focusedIndicatorColor = Color.Transparent,
-                        unfocusedIndicatorColor = Color.Transparent
-                    )
-                )
-                IconButton(
-                    onClick = {
-                        coroutineScope.launch {
-                            setCommentText("")
-                        }
-                    }
+                        .fillMaxWidth()
+                        .background(Color.White)
+                        .padding(horizontal = 16.dp, vertical = 8.dp)
                 ) {
-                    Icon(
-                        imageVector = Icons.Default.Send,
-                        contentDescription = "Send",
-                        tint = Color(0xFF005695)
+                    Image(
+                        painter = painterResource(id = R.drawable.antobulat),
+                        contentDescription = "Profile Anto",
+                        modifier = Modifier
+                            .size(45.dp)
+                            .padding(end = 8.dp)
+                            .clip(shape = CircleShape)
                     )
+                    TextField(
+                        value = commentText,
+                        onValueChange = setCommentText,
+                        placeholder = {
+                            Text(
+                                text = "Berikan komentar",
+                                style = TextStyle(
+                                    fontSize = 14.sp,
+                                    fontFamily = FontFamily(Font(R.font.roboto_light)),
+                                    fontWeight = FontWeight(800),
+                                    color = Color(0xFF000000)
+                                )
+                            )
+                        },
+                        modifier = Modifier
+                            .height(90.dp)
+                            .offset(y = 4.dp)
+                            .weight(1f),
+                        colors = TextFieldDefaults.textFieldColors(
+                            containerColor = Color(0xE8F3F3F3),
+                            focusedIndicatorColor = Color.Transparent,
+                            unfocusedIndicatorColor = Color.Transparent
+                        )
+                    )
+                    IconButton(
+                        onClick = {
+                            coroutineScope.launch {
+                                setCommentText("")
+                            }
+                        }
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Send,
+                            contentDescription = "Send",
+                            tint = Color(0xFF005695)
+                        )
+                    }
                 }
             }
         }
@@ -185,6 +196,7 @@ fun CommentRow(imageResource: Int, name: String, time: String, comment: String) 
             )
             Text(
                 text = "$name .",
+                color = Color(0xFF000000),
                 style = TextStyle(
                     fontSize = 15.sp,
                     fontWeight = FontWeight.Bold
@@ -204,6 +216,7 @@ fun CommentRow(imageResource: Int, name: String, time: String, comment: String) 
             )
             Text(
                 text = comment,
+                color = Color(0xFF000000),
                 style = TextStyle(
                     fontSize = 13.sp,
                     fontWeight = FontWeight.Medium
