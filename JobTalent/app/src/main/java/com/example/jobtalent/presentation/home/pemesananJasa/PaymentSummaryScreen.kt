@@ -229,7 +229,7 @@ fun PaymentSummaryScreen(
                                     fontSize = 14.sp,
                                     fontFamily = FontFamily(Font(R.font.roboto_medium)),
                                     fontWeight = FontWeight(500),
-                                    color = Color(0xFF000000)
+                                    color = Color(0xFF525252)
                                 )
                             )
                             Spacer(modifier = Modifier.height(8.dp))

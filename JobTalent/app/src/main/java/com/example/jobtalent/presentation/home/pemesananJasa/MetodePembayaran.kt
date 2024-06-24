@@ -97,6 +97,7 @@ fun MetodePembayaranScreen(
         Spacer(modifier = Modifier.height(10.dp))
         Box(
             modifier = Modifier
+                .clickable { navController.navigate(Screen.Paymentsum.route) }
                 .requiredHeight(height = 60.dp)
                 .shadow(5.dp)
                 .clip(shape = RoundedCornerShape(5.dp))
@@ -168,7 +169,7 @@ fun MetodePembayaranScreen(
                     .background(color = Color(0xffd9e7f2))
                     .align(alignment = Alignment.CenterStart)
 
-            ){}
+            )
             Image(
                 painter = painterResource(id = R.drawable.logodana),
                 contentDescription = "Logo Dana",
@@ -195,6 +196,7 @@ fun MetodePembayaranScreen(
             modifier = Modifier.height(15.dp))
         Box (
             modifier = Modifier
+                .clickable { navController.navigate(Screen.Paymentsum.route) }
                 .fillMaxWidth()
                 .shadow(5.dp)
                 .requiredHeight(height = 60.dp)
@@ -239,6 +241,7 @@ fun MetodePembayaranScreen(
             modifier = Modifier.height(15.dp))
         Box (
             modifier = Modifier
+                .clickable { navController.navigate(Screen.Paymentsum.route) }
                 .fillMaxWidth()
                 .shadow(5.dp)
                 .requiredHeight(height = 60.dp)
