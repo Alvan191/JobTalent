@@ -118,6 +118,7 @@ fun KategoriPesananDesainScreen(
                         )
                     },
                     placeholder = { Text(text = "Cari", color = Color(0xFF848484)) },
+                    textStyle = TextStyle(color = Color(0xFF000000)),
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(50.dp)

@@ -203,7 +203,7 @@ fun SplashScreenNewContent(
                                 fontSize = 16.sp,
                                 fontFamily = FontFamily(Font(R.font.roboto_medium)),
                                 fontWeight = FontWeight(400),
-                                color = Color(0xFFF8F8F8)
+                                color = Color(0xFFFFFFFF)
                             )
                         )
                     }
@@ -216,15 +216,19 @@ fun SplashScreenNewContent(
                             }
                         },
                         modifier = Modifier
-                            .height(48.dp)
-                            .border(1.dp, Color.White, RoundedCornerShape(21.dp)),
+                            .height(48.dp),
                         colors = ButtonDefaults.buttonColors(
                             containerColor = Color(0xFF005695)
                         )
                     ) {
                         Text(
                             text = "Next",
-                            style = MaterialTheme.typography.bodyLarge
+                            style = TextStyle(
+                                fontSize = 16.sp,
+                                fontFamily = FontFamily(Font(R.font.roboto_medium)),
+                                fontWeight = FontWeight(400),
+                                color = Color(0xFFFFFFFF)
+                            )
                         )
                     }
                 }
@@ -232,32 +236,30 @@ fun SplashScreenNewContent(
 
             if (selectedPage == onBoardings.size - 1) {
                 Row (
-                    horizontalArrangement = Arrangement.End,
+                    horizontalArrangement = Arrangement.Center,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 10.dp, bottom = 15.dp, end = 20.dp)
-                        .wrapContentHeight()
                 ){
-                    Box(
+                    Button(
+                        onClick = {
+                            moveToLogin()
+                        },
                         modifier = Modifier
-                            .size(54.dp)
-                            .clip(CircleShape)
-                            .border(2.dp, Color.White, CircleShape)
+                            .padding(16.dp)
+                            .height(48.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color(0xFF005695)
+                        )
                     ) {
-                        IconButton(
-                            onClick = { moveToLogin() },
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .background(Color(0xFF005695), CircleShape)
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.ArrowRight,
-                                contentDescription = "Mulai",
-                                modifier = Modifier
-                                    .size(53.dp),
-                                tint = Color.White
+                        Text(
+                            text = "Mulai",
+                            style = TextStyle(
+                                fontSize = 16.sp,
+                                fontFamily = FontFamily(Font(R.font.roboto_medium)),
+                                fontWeight = FontWeight(400),
+                                color = Color(0xFFFFFFFF)
                             )
-                        }
+                        )
                     }
                 }
             }

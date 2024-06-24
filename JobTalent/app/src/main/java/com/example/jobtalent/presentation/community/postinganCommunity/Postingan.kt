@@ -143,6 +143,7 @@ fun Postingan(
                     focusedIndicatorColor = Color.Transparent,
                     unfocusedIndicatorColor = Color.Transparent
                 ),
+                textStyle = TextStyle(color = Color(0xFF000000)),
                 modifier = Modifier
                     .align(alignment = Alignment.TopStart)
                     .offset(x = 48.dp, y = 6.dp)

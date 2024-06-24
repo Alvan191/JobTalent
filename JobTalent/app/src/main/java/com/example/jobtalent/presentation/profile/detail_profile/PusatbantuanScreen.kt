@@ -124,6 +124,7 @@ fun HelpCenterScreen(
                         OutlinedTextField(
                             value = textState.value,
                             onValueChange = { textState.value = it },
+                            textStyle = TextStyle(color = Color(0xFF000000)),
                             leadingIcon = {
                                 Icon(
                                     Icons.Default.Search,

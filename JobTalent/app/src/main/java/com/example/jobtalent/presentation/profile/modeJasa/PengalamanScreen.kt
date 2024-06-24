@@ -179,7 +179,7 @@ fun PengalamanScreen(
                     focusedIndicatorColor = Color.Transparent,
                     unfocusedIndicatorColor = Color.Transparent
                 ),
-                textStyle = TextStyle(color = Color.Black),
+                textStyle = TextStyle(color = Color(0xFF000000)),
                 placeholder = {
                     Text(
                         text = "Tonjolkan kelebihan Anda secara umum untuk\nmembantu calon klien mempertimbangkan\njasa yang Anda tawarkan",

@@ -165,6 +165,7 @@ fun HomeScreen(
                             )
                         },
                         placeholder = { Text(text = "Cari Pekerjaan", color = Color(0xFF848484)) },
+                        textStyle = TextStyle(color = Color(0xFF000000)),
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(top = 16.dp)

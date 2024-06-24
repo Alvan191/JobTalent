@@ -47,6 +47,7 @@ fun ContentForm(
                 )
             )
         },
+        textStyle = TextStyle(color = Color(0xFF000000)),
         colors = TextFieldDefaults.outlinedTextFieldColors(
             focusedBorderColor = Color(0xFFAEAEAE),
             unfocusedBorderColor = Color(0xFFAEAEAE),

@@ -144,6 +144,7 @@ fun AccountScreen(
                         value = namaLengkap,
                         onValueChange = { namaLengkap = it },
                         label = { Text("") },
+                        textStyle = TextStyle(color = Color(0xFF000000)),
                         leadingIcon = {
                             Icon(
                                 painter = painterResource(id = R.drawable.user1),
@@ -167,6 +168,7 @@ fun AccountScreen(
                         value = nomorTelepon,
                         onValueChange = { nomorTelepon = it },
                         label = { Text("") },
+                        textStyle = TextStyle(color = Color(0xFF000000)),
                         leadingIcon = {
                             Icon(
                                 painter = painterResource(id = R.drawable.phone),
@@ -190,6 +192,7 @@ fun AccountScreen(
                         value = email,
                         onValueChange = { email = it },
                         label = { Text("") },
+                        textStyle = TextStyle(color = Color(0xFF000000)),
                         leadingIcon = {
                             Icon(
                                 painter = painterResource(id = R.drawable.email),
@@ -213,6 +216,7 @@ fun AccountScreen(
                         value = kataSandi,
                         onValueChange = { kataSandi = it },
                         label = { Text("") },
+                        textStyle = TextStyle(color = Color(0xFF000000)),
                         leadingIcon = {
                             Icon(
                                 painter = painterResource(id = R.drawable.password),

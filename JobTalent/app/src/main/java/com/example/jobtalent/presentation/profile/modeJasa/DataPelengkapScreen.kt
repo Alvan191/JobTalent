@@ -150,7 +150,7 @@ fun DataPelengkapScreen(
                         focusedIndicatorColor = Color.Transparent,
                         unfocusedIndicatorColor = Color.Transparent
                     ),
-                    textStyle = TextStyle(color = Color.Black),
+                    textStyle = TextStyle(color = Color(0xFF000000)),
                     placeholder = {
                         Text(
                             text = "Masukkan Nama Lengkap",
@@ -185,7 +185,7 @@ fun DataPelengkapScreen(
                         focusedIndicatorColor = Color.Transparent,
                         unfocusedIndicatorColor = Color.Transparent
                     ),
-                    textStyle = TextStyle(color = Color.Black),
+                    textStyle = TextStyle(color = Color(0xFF000000)),
                     placeholder = {
                         Text(
                             text = "Masukkan Nomor KTP/NIK",
@@ -220,7 +220,7 @@ fun DataPelengkapScreen(
                         focusedIndicatorColor = Color.Transparent,
                         unfocusedIndicatorColor = Color.Transparent
                     ),
-                    textStyle = TextStyle(color = Color.Black),
+                    textStyle = TextStyle(color = Color(0xFF000000)),
                     placeholder = {
                         Text(
                             text = "Masukkan No Rekening",
@@ -264,7 +264,7 @@ fun DataPelengkapScreen(
                         focusedIndicatorColor = Color.Transparent,
                         unfocusedIndicatorColor = Color.Transparent
                     ),
-                    textStyle = TextStyle(color = Color.Black),
+                    textStyle = TextStyle(color = Color(0xFF000000)),
                     placeholder = {
                         Text(
                             text = "Masukkan Alamat Detail",
@@ -298,7 +298,7 @@ fun DataPelengkapScreen(
                         focusedIndicatorColor = Color.Transparent,
                         unfocusedIndicatorColor = Color.Transparent
                     ),
-                    textStyle = TextStyle(color = Color.Black),
+                    textStyle = TextStyle(color = Color(0xFF000000)),
                     placeholder = {
                         Text(
                             text = "Masukkan Kota Asal",

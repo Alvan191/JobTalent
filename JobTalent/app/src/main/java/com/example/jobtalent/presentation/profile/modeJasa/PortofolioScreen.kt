@@ -100,6 +100,7 @@ fun PortofolioScreen(
     LazyColumn (
         modifier = Modifier
             .background(Color(0xFFFFFFFF))
+            .fillMaxSize()
     ){
         item {
             Column (

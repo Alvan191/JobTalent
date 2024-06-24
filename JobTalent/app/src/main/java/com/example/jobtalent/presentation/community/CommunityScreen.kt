@@ -36,6 +36,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -106,6 +107,7 @@ fun CommunityScreen(
                         )
                     },
                     placeholder = { Text(text = "Cari", color = Color(0xFF848484)) },
+                    textStyle = TextStyle(color = Color(0xFF000000)),
                     modifier = Modifier
                         .weight(1f)
                         .height(50.dp)

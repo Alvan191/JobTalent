@@ -39,6 +39,7 @@ import com.example.jobtalent.presentation.community.CommunityScreen
 import com.example.jobtalent.presentation.home.pemesananJasa.MetodePembayaranScreen
 import com.example.jobtalent.presentation.profile.detail_profile.AccountScreen
 import com.example.jobtalent.presentation.chat.detail_chat.DetailChatScreen
+import com.example.jobtalent.presentation.community.postinganCommunity.KomentarScreen
 import com.example.jobtalent.presentation.profile.detail_profile.LanguageSettingsScreen
 import com.example.jobtalent.presentation.home.detail_home.NotificationScreen
 import com.example.jobtalent.presentation.profile.detail_profile.SettingsScreen
