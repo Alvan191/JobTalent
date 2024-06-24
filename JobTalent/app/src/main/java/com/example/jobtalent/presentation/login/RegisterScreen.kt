@@ -55,8 +55,10 @@ fun RegistrasiScreen(
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var confPassword by remember { mutableStateOf("") }
-    var message by remember { mutableStateOf("") }
+    val status = "seeker"
 
+
+    var message by remember { mutableStateOf("") }
     var katasandiVisible by remember { mutableStateOf(false) }
     var konfirmasiKataSandiVisible by remember { mutableStateOf(false) }
 
@@ -183,7 +185,8 @@ fun RegistrasiScreen(
                                 username = username,
                                 email = email,
                                 password = password,
-                                confPassword = confPassword
+                                confPassword = confPassword,
+                                status = status
                             )
                             viewModel.registerUser(request, {
                                 val sharedPreferencesManager = SharedPreferencesManager(context)

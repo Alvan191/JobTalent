@@ -104,7 +104,7 @@ fun SplashScreenNewContent(
     Scaffold {
         Column(modifier = modifier
             .background(
-                color = Color(0xFF8BC4ED)
+                color = Color(0xFF005695)
             )
             .padding(it)) {
             HorizontalPager(
@@ -123,7 +123,7 @@ fun SplashScreenNewContent(
                     modifier = Modifier
                         .fillMaxWidth()
                         .background(
-                            color = Color(0xFF8BC4ED)
+                            color = Color(0xFF005695)
                         )
                         .padding(24.dp)
                 ) {
@@ -174,9 +174,7 @@ fun SplashScreenNewContent(
                             .height(10.dp)
                             .clip(RoundedCornerShape(10.dp))
                             .background(
-                                if (i == selectedPage) Color.White else MaterialTheme.colorScheme.primary.copy(
-                                    alpha = 0.1f
-                                )
+                                if (i == selectedPage) Color.White else Color(0xFFB3B3B3)
                             )
                     )
                 }
@@ -245,10 +243,11 @@ fun SplashScreenNewContent(
                             moveToLogin()
                         },
                         modifier = Modifier
-                            .padding(16.dp)
+                            .padding(vertical = 16.dp, horizontal = 75.dp)
+                            .fillMaxWidth()
                             .height(48.dp),
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = Color(0xFF005695)
+                            containerColor = Color(0xFFFFFFFF)
                         )
                     ) {
                         Text(
@@ -257,7 +256,7 @@ fun SplashScreenNewContent(
                                 fontSize = 16.sp,
                                 fontFamily = FontFamily(Font(R.font.roboto_medium)),
                                 fontWeight = FontWeight(400),
-                                color = Color(0xFFFFFFFF)
+                                color = Color(0xFF005695)
                             )
                         )
                     }
