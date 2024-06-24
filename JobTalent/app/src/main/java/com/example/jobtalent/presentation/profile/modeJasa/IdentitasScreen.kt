@@ -53,11 +53,12 @@ import coil.compose.rememberAsyncImagePainter
 import com.example.jobtalent.R
 import com.example.jobtalent.navigation.Screen
 import com.example.jobtalent.presentation.profile.model_view.SharedViewModel
+import com.example.jobtalent.presentation.profile.model_view.SharedViewModelIdentity
 
 @Composable
 fun IdentitasScreen(
     modifier: Modifier,
-    sharedViewModel: SharedViewModel,
+    sharedViewModelIdentity: SharedViewModelIdentity,
     navController: NavController
 ) {
     val imageUriIdentity = rememberSaveable { mutableStateOf("") }
@@ -75,7 +76,7 @@ fun IdentitasScreen(
     ) { uri: Uri? ->
         uri?.let {
             imageUriIdentity.value = it.toString()
-            sharedViewModel.updateImageUri(it.toString())
+            sharedViewModelIdentity.updateImageUri(it.toString())
         }
     }
     val launcherKTP = rememberLauncherForActivityResult(
@@ -83,7 +84,7 @@ fun IdentitasScreen(
     ) { uri: Uri? ->
         uri?.let {
             imageUriKTP.value = it.toString()
-            sharedViewModel.updateImageUri(it.toString())
+            sharedViewModelIdentity.updateImageUri(it.toString())
         }
     }
 
@@ -353,5 +354,5 @@ fun IdentitasScreen(
 @Preview
 @Composable
 private fun IdentitasScreenPreview() {
-    IdentitasScreen(modifier = Modifier, sharedViewModel = SharedViewModel(), navController = rememberNavController())
+    IdentitasScreen(modifier = Modifier, sharedViewModelIdentity = SharedViewModelIdentity(), navController = rememberNavController())
 }

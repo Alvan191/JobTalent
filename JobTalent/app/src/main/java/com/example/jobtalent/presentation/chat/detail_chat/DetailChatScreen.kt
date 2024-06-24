@@ -15,12 +15,14 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
@@ -48,6 +50,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -77,18 +80,20 @@ fun DetailChatScreen(
     val newChatList = ChatItem.dataChat.filter { tampilchat ->
         tampilchat.id == tampilchatId
     }
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     Column(
         verticalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier
+            .fillMaxSize()
             .background(Color(0xFFE4E4E4))
     ) {
-        Column (
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .weight(1f)
+                .wrapContentHeight()
                 .padding(15.dp)
-        ){
+        ) {
             HeaderChat(newChatList, navController)
             Box(modifier = Modifier
                 .fillMaxWidth()
@@ -101,13 +106,13 @@ fun DetailChatScreen(
             onMessageSent = { message ->
                 scope.launch {
                     messages = messages + Pair(message, true)
+                    keyboardController?.hide()
                 }
             },
             modifier = Modifier
-                .weight(1f)
+                .imePadding()
                 .fillMaxWidth()
                 .padding(bottom = 3.dp)
-                .imePadding()
         )
     }
 }
@@ -182,16 +187,15 @@ private fun DetailChat(messages: List<Pair<String, Boolean>>) {
         item {
             ContentChat()
         }
-        item {
-            messages.forEachIndexed { index, message ->
-                AnimatedVisibility(
-                    visible = true,
-                    enter = expandVertically() + fadeIn(),
-                    exit = shrinkVertically() + fadeOut(),
-                    initiallyVisible = false
-                ) {
-                    ChatBubblee(message = message.first, isUserMe = message.second)
-                }
+        items(messages.size) { index ->
+            val message = messages[index]
+            AnimatedVisibility(
+                visible = true,
+                enter = expandVertically() + fadeIn(),
+                exit = shrinkVertically() + fadeOut(),
+                initiallyVisible = false
+            ) {
+                ChatBubblee(message = message.first, isUserMe = message.second)
             }
         }
     }
@@ -233,7 +237,7 @@ fun ContentChat() {
         }
         Spacer(modifier = Modifier.height(8.dp))
         Row(
-            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Start,
             modifier = Modifier
                 .fillMaxWidth()
         ) {
@@ -250,16 +254,6 @@ fun ContentChat() {
                     fontSize = 16.sp
                 )
             }
-            Spacer(modifier = Modifier.width(15.dp))
-            Text(
-                text = "13.00",
-                style = TextStyle(
-                    fontSize = 12.sp,
-                    fontFamily = FontFamily(Font(R.font.roboto_medium)),
-                    fontWeight = FontWeight(300),
-                    color = Color(0xFFB2B2B2)
-                )
-            )
         }
     }
 }
@@ -328,7 +322,7 @@ fun ChatBubblee(
     }
 
     Row (
-        horizontalArrangement = Arrangement.End,
+        horizontalArrangement = if (isUserMe) Arrangement.End else Arrangement.Start,
         modifier = Modifier
             .fillMaxWidth()
     ){
@@ -336,7 +330,7 @@ fun ChatBubblee(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(8.dp),
-            contentAlignment = Alignment.TopEnd
+            contentAlignment = if (isUserMe) Alignment.TopEnd else Alignment.TopStart
         ) {
             Text(
                 text = message,

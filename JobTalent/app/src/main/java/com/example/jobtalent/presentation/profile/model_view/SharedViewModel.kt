@@ -12,3 +12,12 @@ class SharedViewModel : ViewModel() {
         _imageUri.value = uri
     }
 }
+
+class SharedViewModelIdentity : ViewModel() {
+    private val _imageUri = MutableLiveData<String>()
+    val imageUri: LiveData<String> = _imageUri
+
+    fun updateImageUri(uri: String) {
+        _imageUri.value = uri
+    }
+}

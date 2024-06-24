@@ -65,6 +65,7 @@ import com.example.jobtalent.presentation.login.OnboardingScreen
 import com.example.jobtalent.presentation.profile.ProfileScreen
 import com.example.jobtalent.presentation.profile.detail_profile.HelpCenterScreen
 import com.example.jobtalent.presentation.profile.model_view.SharedViewModel
+import com.example.jobtalent.presentation.profile.model_view.SharedViewModelIdentity
 import com.example.jobtalent.utils.shouldShowBottomBar
 
 @Composable
@@ -73,6 +74,7 @@ fun JobTalentApp(
     navController: NavHostController = rememberNavController()
 ) {
     val sharedViewModel: SharedViewModel = viewModel()
+    val sharedViewModelIdentity: SharedViewModelIdentity = viewModel()
 
     val navBackStack by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStack?.destination?.route
@@ -156,7 +158,7 @@ fun JobTalentApp(
                 PengalamanScreen(modifier = Modifier, navController)
             }
             composable(Screen.Identitas.route){
-                IdentitasScreen(modifier = Modifier, sharedViewModel, navController)
+                IdentitasScreen(modifier = Modifier, sharedViewModelIdentity, navController)
             }
             composable(Screen.DataPelengkap.route){
                 DataPelengkapScreen(modifier = Modifier, navController)
